@@ -1,0 +1,1 @@
+// https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js
