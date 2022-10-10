@@ -1,5 +1,3 @@
-
-
 class questions {
     constructor(prompt,sectionA,sectionB,sectionC,sectionD,answer) {
         this.prompt = prompt
