@@ -12,6 +12,19 @@ var x = setInterval(function() {
   // Find the distance between now and the count down date
 
   var distance = countDownDate - now;
+
+  // When countdown is finished, proceed to the next 24 h 
+  if (distance <= 0) {
+    // clearInterval(x);
+    // document.getElementById("demo").innerHTML = "EXPIRED";
+    countDownDate += (24 * 60 * 60 * 1000);
+    distance = countDownDate - now;
+
+    // start the game if timer = 0
+    startGame();
+  }
+
+
   // Time calculations for days, hours, minutes and seconds
   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -28,16 +41,4 @@ var x = setInterval(function() {
   document.getElementById("minutes").innerText = minutes;
   document.getElementById("seconds").innerText = seconds;
 
-    
-  // When countdown is finished, proceed to the next 24 h 
-  // TODO: Fix:
-  // This momentarily displays -1d -1h ... and then moves on
-  if (distance <= 0) {
-    // clearInterval(x);
-    // document.getElementById("demo").innerHTML = "EXPIRED";
-    countDownDate += (24 * 60 * 60 * 1000);
-    distance = countDownDate - now;
-
-    startGame();
-  }
 }, 1000);
