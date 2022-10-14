@@ -1,4 +1,4 @@
-// https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js
+// https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 
 const startButton = document.getElementById("start-btn")
 const nextButton = document.getElementById("next-btn")
@@ -53,7 +53,7 @@ const selectAnswer = (e) => {
     if()
     */
 }
-const setStatusClass = (element,correct) {
+const setStatusClass = (element,correct) => {
     clearStatusClass(element)
     if(correct){
         element.classList.add("correct")
