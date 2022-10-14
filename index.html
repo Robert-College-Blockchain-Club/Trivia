@@ -1,10 +1,28 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <script defer src="trivia_script.js"></script>
+    <title>Quiz HTML</title>
+</head>
 <body>
-    <p1 id="prompt"></p1>
-    <button id ="A">Choice A</button>
-    <button id="B">Choice B</button>
-    <button id = "C">Choice C</button>
-    <button id="D">Choice D</button>
-
-    <button id="start game">Start Game</button>
+    <div class="container">
+        <div id="question-container" class="hide">
+            <div id="question">Question</div>
+            <div id = "answer-buttons" class="btn-grid">
+                <button class="btn">Choice A</button>
+                <button class="btn">Choice B</button>
+                <button class="btn">Choice C</button>
+                <button class="btn">Choice D</button>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="start-btn" class="start-btn btn">Start</button>
+            <button id="next-btn" class="next-btn btn hide">Next</button>
+        </div>
+    </div>
 </body>
+</html>

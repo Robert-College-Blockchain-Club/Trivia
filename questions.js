@@ -1,10 +1,7 @@
 class questions {
-    constructor(prompt,sectionA,sectionB,sectionC,sectionD,answer) {
+    constructor(prompt,choices,answer) {
         this.prompt = prompt
-        this.sectionA = sectionA
-        this.sectionB = sectionB
-        this.sectionC = sectionC
-        this.sectionD = sectionD
+        this.choices = choices
         this.answer = answer //0, 1, 2, or 3 | respectively A, B, C, or D
     }
 }
