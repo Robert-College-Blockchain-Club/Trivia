@@ -8,6 +8,7 @@ const questionElement = document.getElementById("question")
 const answerButtonsElement = document.getElementById("answer-buttons")
 const timerElement = document.getElementById("countdown")
 const connectButton = document.getElementById("connect-btn")
+const scoreCount = document.getElementById("score")
 //startButton.addEventListener("click",startGame)
 nextButton.addEventListener("click",()=>{
     currentQuestionIndex++
@@ -17,10 +18,10 @@ nextButton.addEventListener("click",()=>{
 connectButton.addEventListener("click",connect)
 //const testButton = document.getElementById("test-btn")
 
-let shuffledQuestions, currentQuestionIndex
-
+let shuffledQuestions, currentQuestionIndex, numCorrect
 export function startGame(){
     //console.log("start game triggered")
+    numCorrect = 0
     _populateQlist()
     timerElement.classList.add("hide")
     //startButton.classList.add("hide")
@@ -32,6 +33,7 @@ export function startGame(){
 
 function setNextQuestion(){
     resetState()
+    scoreCount.innerText = numCorrect + "/" + currentQuestionIndex
     showQuestion(shuffledQuestions[currentQuestionIndex])
 }
 
@@ -52,6 +54,9 @@ function showQuestion(question){
 function selectAnswer(e){
     const selectedButton = e.target
     const correct = selectedButton.dataset.correct
+    if(correct){
+        numCorrect += 1
+    }
     setStatusClass(document.body,correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button,button.dataset.correct)
