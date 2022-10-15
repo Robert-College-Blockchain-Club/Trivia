@@ -17,6 +17,7 @@ nextButton.addEventListener("click",()=>{
 let shuffledQuestions, currentQuestionIndex
 
 function startGame(){
+    _populateQlist()
     startButton.classList.add("hide")
     shuffledQuestions = questions_list.sort(() => Math.random()-.5)
     currentQuestionIndex = 0
