@@ -1,11 +1,13 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions,generateSampleQuestion } from "./questions.js"
-const startButton = document.getElementById("start-btn")
+
+//const startButton = document.getElementById("start-btn")
 const nextButton = document.getElementById("next-btn")
 const questionContainerElement = document.getElementById("question-container")
 const questionElement = document.getElementById("question")
 const answerButtonsElement = document.getElementById("answer-buttons")
-startButton.addEventListener("click",startGame)
+const timerElement = document.getElementById("countdown")
+//startButton.addEventListener("click",startGame)
 nextButton.addEventListener("click",()=>{
     
     currentQuestionIndex++
@@ -16,9 +18,11 @@ nextButton.addEventListener("click",()=>{
 
 let shuffledQuestions, currentQuestionIndex
 
-function startGame(){
+export function startGame(){
+    console.log("start game triggered")
     _populateQlist()
-    startButton.classList.add("hide")
+    timerElement.classList.add("hide")
+    //startButton.classList.add("hide")
     shuffledQuestions = questions_list.sort(() => Math.random()-.5)
     currentQuestionIndex = 0
     questionContainerElement.classList.remove("hide")
@@ -55,8 +59,9 @@ function selectAnswer(e){
     if(shuffledQuestions.length > currentQuestionIndex+1){
         nextButton.classList.remove("hide")
     } else {
-        startButton.innerText = "restart"
-        startButton.classList.remove("hide")
+        //startButton.innerText = "restart"
+        //startButton.classList.remove("hide")
+        timerScreen()
     }
 }
 function setStatusClass(element,correct){
@@ -92,9 +97,11 @@ function populateQList(qList){
     for(let i = 0; i <10;i++){
         qList.push(generateSampleQuestion())
     }
-    qList.forEach(q => {
-        console.log(q.answer)
-    }
-    )
+}
+const qElement = document.getElementById("question-container")
+function timerScreen(){
+    qElement.classList.add("hide")
+    timerElement.classList.remove("hide")
+    nextButton.classList.add("hide")
 }
 //testButton.addEventListener("click",_populateQlist)

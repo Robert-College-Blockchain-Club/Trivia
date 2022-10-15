@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles.css" rel="stylesheet">
-    <script defer src="trivia_script.js" type="module"></script>
+    <!--<script defer src="trivia_script.js" type="module"></script>-->
     <title>Quiz HTML</title>
 </head>
 <body>
@@ -13,17 +13,26 @@
         <div id="question-container" class="hide">
             <div id="question">Question</div>
             <div id = "answer-buttons" class="btn-grid">
-                <button class="btn">Choice A</button>
-                <button class="btn">Choice B</button>
-                <button class="btn">Choice C</button>
-                <button class="btn">Choice D</button>
             </div>
         </div>
         <div class="controls">
-            <button id="start-btn" class="start-btn btn">Start</button>
+            <!--<button id="start-btn" class="start-btn btn">Start</button>-->
             <!--<button id="test-btn">test button</button>-->
             <button id="next-btn" class="next-btn btn hide">Next</button>
         </div>
+        
+        <div id="countdown">
+            <h1 id="headline">For the next round to begin:</h1>
+            <ul>
+                <li><span id="days"></span> days</li>
+                <li><span id="hours"></span> Hours</li>
+                <li><span id="minutes"></span> Minutes</li>
+                <li><span id="seconds"></span> Seconds</li>
+            </ul>
+        </div>
+        
     </div>
+    <script src="timer.js" type="module"></script>
+    <script src="trivia_script.js"></script>
 </body>
 </html>
