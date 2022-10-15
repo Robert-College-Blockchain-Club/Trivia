@@ -12,7 +12,7 @@ nextButton.addEventListener("click",()=>{
     setNextQuestion()
     
 })
-const testButton = document.getElementById("test-btn")
+//const testButton = document.getElementById("test-btn")
 
 let shuffledQuestions, currentQuestionIndex
 
@@ -83,14 +83,17 @@ function clearStatusClass(element) {
 
 
 const questions_list = []
-
+function _populateQlist(){
+    populateQList(questions_list)
+}
 function populateQList(qList){
+    //testButton.classList.add("hide")
     for(let i = 0; i <10;i++){
         qList.push(generateSampleQuestion())
     }
     qList.forEach(q => {
-        console.log(q.choices)
+        console.log(q.answer)
     }
     )
 }
-testButton.addEventListener("click",populateQList(questions_list))
+//testButton.addEventListener("click",_populateQlist)
