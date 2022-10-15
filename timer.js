@@ -5,6 +5,7 @@ var countDownDate = new Date("Oct 15, 2022 21:24:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
+  let count = 0
 
   // Get today's date and time
   var now = new Date().getTime();
@@ -19,9 +20,11 @@ var x = setInterval(function() {
     // document.getElementById("demo").innerHTML = "EXPIRED";
     countDownDate += (24 * 60 * 60 * 1000);
     distance = countDownDate - now;
-
     // start the game if timer = 0
-    startGame();
+    if(count !== 0){
+      startGame();
+    }
+    count++
   }
 
 
