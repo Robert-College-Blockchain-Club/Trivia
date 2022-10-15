@@ -7,13 +7,14 @@ const questionContainerElement = document.getElementById("question-container")
 const questionElement = document.getElementById("question")
 const answerButtonsElement = document.getElementById("answer-buttons")
 const timerElement = document.getElementById("countdown")
+const connectButton = document.getElementById("connect-btn")
 //startButton.addEventListener("click",startGame)
 nextButton.addEventListener("click",()=>{
-    
     currentQuestionIndex++
     setNextQuestion()
-    
 })
+
+connectButton.addEventListener("click",connect)
 //const testButton = document.getElementById("test-btn")
 
 let shuffledQuestions, currentQuestionIndex
@@ -103,5 +104,15 @@ function timerScreen(){
     qElement.classList.add("hide")
     timerElement.classList.remove("hide")
     nextButton.classList.add("hide")
+}
+async function connect(){
+    if(typeof window.ethereum == "undefined"){
+        connectButton.innerText = "Please Install Metamask"
+    }
+    else{
+        const accounts = await ethereum.request({ method: "eth_requestAccounts" })
+        const account = accounts[0]
+        connectButton.innerText = "connected"
+    }
 }
 //testButton.addEventListener("click",_populateQlist)
