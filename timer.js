@@ -1,11 +1,10 @@
 import {startGame} from "./trivia_script.js";
 
 // Set the date we're counting down to
-var countDownDate = new Date("Oct 15, 2022 21:24:00").getTime();
-
+var countDownDate = new Date("Oct 15, 2022 22:02:35").getTime();
+let count = 0
 // Update the count down every 1 second
 var x = setInterval(function() {
-  let count = 0
 
   // Get today's date and time
   var now = new Date().getTime();
@@ -22,10 +21,12 @@ var x = setInterval(function() {
     distance = countDownDate - now;
     // start the game if timer = 0
     if(count !== 0){
+      console.log("yes")
       startGame();
     }
-    count++
   }
+  count = count + 1
+  //console.log(count)
 
 
   // Time calculations for days, hours, minutes and seconds

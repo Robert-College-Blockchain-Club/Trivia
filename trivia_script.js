@@ -20,7 +20,7 @@ connectButton.addEventListener("click",connect)
 let shuffledQuestions, currentQuestionIndex
 
 export function startGame(){
-    console.log("start game triggered")
+    //console.log("start game triggered")
     _populateQlist()
     timerElement.classList.add("hide")
     //startButton.classList.add("hide")
