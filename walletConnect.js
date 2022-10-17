@@ -1,3 +1,4 @@
+//consider adding DOM elements back to trivia_script.js
 
 connectButton.addEventListener("click",connect)
 const connectButton = document.getElementById("connect-btn")
