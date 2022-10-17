@@ -1,20 +1,19 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions,generateSampleQuestion } from "./questions.js"
 
-//const startButton = document.getElementById("start-btn")
+const startButton = document.getElementById("start-btn")
 const nextButton = document.getElementById("next-btn")
 const questionContainerElement = document.getElementById("question-container")
 const questionElement = document.getElementById("question")
 const answerButtonsElement = document.getElementById("answer-buttons")
 const timerElement = document.getElementById("countdown")
 const connectButton = document.getElementById("connect-btn")
-const scoreCount = document.getElementById("score")
-//startButton.addEventListener("click",startGame)
+const scoreCount = document.getElementById("scoreboard")
+startButton.addEventListener("click",startGame)
 nextButton.addEventListener("click",()=>{
     currentQuestionIndex++
     setNextQuestion()
 })
-
 connectButton.addEventListener("click",connect)
 //const testButton = document.getElementById("test-btn")
 
@@ -22,12 +21,12 @@ let shuffledQuestions, currentQuestionIndex, numCorrect
 export function startGame(){
     //console.log("start game triggered")
     numCorrect = 0
-    _populateQlist()
     timerElement.classList.add("hide")
     //startButton.classList.add("hide")
     shuffledQuestions = questions_list.sort(() => Math.random()-.5)
     currentQuestionIndex = 0
     questionContainerElement.classList.remove("hide")
+    scoreCount.classList.remove("hide")
     setNextQuestion()
 }
 
@@ -104,11 +103,13 @@ function populateQList(qList){
         qList.push(generateSampleQuestion())
     }
 }
+_populateQlist()
 const qElement = document.getElementById("question-container")
 function timerScreen(){
     qElement.classList.add("hide")
     timerElement.classList.remove("hide")
     nextButton.classList.add("hide")
+    scoreCount.classList.add("hide")
 }
 async function connect(){
     if(typeof window.ethereum == "undefined"){
