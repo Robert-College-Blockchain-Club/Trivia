@@ -7,14 +7,13 @@ const questionContainerElement = document.getElementById("question-container")
 const questionElement = document.getElementById("question")
 const answerButtonsElement = document.getElementById("answer-buttons")
 const timerElement = document.getElementById("countdown")
-const connectButton = document.getElementById("connect-btn")
 const scoreCount = document.getElementById("scoreboard")
 startButton.addEventListener("click",startGame)
 nextButton.addEventListener("click",()=>{
     currentQuestionIndex++
     setNextQuestion()
 })
-connectButton.addEventListener("click",connect)
+
 //const testButton = document.getElementById("test-btn")
 
 let shuffledQuestions, currentQuestionIndex, numCorrect
