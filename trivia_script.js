@@ -111,14 +111,5 @@ function timerScreen(){
     nextButton.classList.add("hide")
     scoreCount.classList.add("hide")
 }
-async function connect(){
-    if(typeof window.ethereum == "undefined"){
-        connectButton.innerText = "Please Install Metamask"
-    }
-    else{
-        const accounts = await ethereum.request({ method: "eth_requestAccounts" })
-        const account = accounts[0]
-        connectButton.innerText = "connected"
-    }
-}
+
 //testButton.addEventListener("click",_populateQlist)
