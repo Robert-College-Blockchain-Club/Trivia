@@ -20,7 +20,7 @@ body {
   height: 100vh;
   justify-content: center;
   align-items: center;
-  background-color: hsl(var(--hue), 100%, 20%);
+  background-color: #ffd54f;
 }
 
 body.correct {
@@ -34,7 +34,7 @@ body.wrong {
 .container {
   width: 800px;
   max-width: 80%;
-  background-color: white;
+  background-color: lightyellow;
   border-radius: 5px;
   padding: 10px;
   box-shadow: 0 0 10px 2px;
@@ -53,7 +53,7 @@ body.wrong {
   background-color: hsl(var(--hue), 100%, 50%);
   border-radius: 5px;
   padding: 5px 10px;
-  color: white;
+  color: rgb(255, 255, 255);
   outline: none;
 }
 
