@@ -1,7 +1,6 @@
 //consider adding DOM elements back to trivia_script.js
-
-connectButton.addEventListener("click",connect)
 const connectButton = document.getElementById("connect-btn")
+connectButton.addEventListener("click",connect)
 export async function connect(){
     if(typeof window.ethereum == "undefined"){
         connectButton.innerText = "Please Install Metamask"
