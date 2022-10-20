@@ -1,17 +1,23 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
-import { questions,generateSampleQuestion } from "./questions.js"
+import { questions,generateSampleQuestion } from "./questions.js";
 
-const startButton = document.getElementById("start-btn")
-const nextButton = document.getElementById("next-btn")
-const questionContainerElement = document.getElementById("question-container")
-const questionElement = document.getElementById("question")
-const answerButtonsElement = document.getElementById("answer-buttons")
-const timerElement = document.getElementById("countdown")
-const scoreCount = document.getElementById("scoreboard")
-startButton.addEventListener("click",startGame)
+const container = document.getElementById("container");
+const startButton = document.getElementById("start-btn");
+const nextButton = document.getElementById("next-btn");
+const questionContainerElement = document.getElementById("question-container");
+const questionElement = document.getElementById("question");
+const answerButtonsElement = document.getElementById("answer-buttons");
+const timerElement = document.getElementById("countdown");
+const scoreCount = document.getElementById("scoreboard");
+const notice = document.getElementById("troubleshoot");
+
+// will be displayed if wallet isn't connected
+startButton.addEventListener("click",startGame);
+
+
 nextButton.addEventListener("click",()=>{
-    currentQuestionIndex++
-    setNextQuestion()
+    currentQuestionIndex++;
+    setNextQuestion();
 })
 
 //const testButton = document.getElementById("test-btn")
@@ -20,6 +26,7 @@ let shuffledQuestions, currentQuestionIndex, numCorrect
 export function startGame(){
     //console.log("start game triggered")
     numCorrect = 0
+    notice.classList.add("hide")
     timerElement.classList.add("hide")
     //startButton.classList.add("hide")
     shuffledQuestions = questions_list.sort(() => Math.random()-.5)
@@ -28,6 +35,12 @@ export function startGame(){
     scoreCount.classList.remove("hide")
     setNextQuestion()
 }
+
+function walletAlternate() {
+    timerElement.classList.add("hide");
+    notice.classList.remove("hide");
+}
+
 
 function setNextQuestion(){
     resetState()

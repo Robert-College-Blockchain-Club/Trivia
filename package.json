@@ -1,6 +1,7 @@
 {
     "type": "module",
     "dependencies": {
+        "ethers": "^5.7.1",
         "firebase": "^9.12.1"
     }
 }
