@@ -22,7 +22,7 @@ export async function connect(){
 /* Handle chain (network) and chainChanged (per EIP-1193) */
 /**********************************************************/
 
-import { trivia_script, walletAlternate } from "./trivia_script.js";
+import { startGame, walletAlternate } from "./trivia_script.js";
 
 const chainId = await ethereum.request({ method: 'eth_chainId' });
 
@@ -52,6 +52,7 @@ if(window.ethereum !== "undefined"){
 }
 else{
     //Metamask isn't installed
+    // TODO: add also an error message?
 }
 
 // Note that this event is emitted on page load.
@@ -64,14 +65,17 @@ function handleAccountsChanged(accounts) {
   if (accounts.length === 0) {
     // MetaMask is locked or the user has not connected any accounts
     walletAlternate();
-    // TODO: Please connect your wallet, you can't play the game before connecting your wallet.
-    //headline.innerText("Please connect your wallet, you can't play the game before connecting!");
+    //connectButton.innerText = ("Connected");
+  
   } else if (accounts[0] !== currentAccount) {
     currentAccount = accounts[0];
+    //connectButton.innerText = ("Connected");
     // Do any other work!
   }
 
-  connectButton.innerText("Connected")
+
+
+  
 }
 
 /*********************************************/
@@ -86,7 +90,7 @@ function handleAccountsChanged(accounts) {
 //document.getElementById('connect-btn', connect);
 
 //eren's code:
-const connectButton = document.getElementById("connect-btn")
+export const connectButton = document.getElementById("connect-btn")
 connectButton.addEventListener("click",connect)
 
 // While you are awaiting the call to eth_requestAccounts, you should disable
@@ -107,5 +111,4 @@ function connect() {
       }
     });
 }
-Footer
 
