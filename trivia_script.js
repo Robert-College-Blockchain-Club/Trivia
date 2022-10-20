@@ -41,7 +41,6 @@ export function walletAlternate() {
     notice.classList.remove("hide");
     
     // TODO: fix:
-    connectButton.innerText = ("Connected");
 }
 
 
