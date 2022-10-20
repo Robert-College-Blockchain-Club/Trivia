@@ -8,7 +8,7 @@ const nextButton = document.getElementById("next-btn");
 const questionContainerElement = document.getElementById("question-container");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
-const timerElement = document.getElementById("countdown");
+export const timerElement = document.getElementById("countdown");
 const scoreCount = document.getElementById("scoreboard");
 const notice = document.getElementById("notice"); // will be displayed if wallet isn't connected
 
@@ -39,8 +39,8 @@ export function startGame(){
 export function walletAlternate() {
     timerElement.classList.add("hide");
     notice.classList.remove("hide");
-    
-    // TODO: fix:
+    //timerElement.classList.remove("hide");
+
 }
 
 

@@ -22,7 +22,7 @@ export async function connect(){
 /* Handle chain (network) and chainChanged (per EIP-1193) */
 /**********************************************************/
 
-import { startGame, walletAlternate } from "./trivia_script.js";
+import { startGame, walletAlternate, timerElement } from "./trivia_script.js";
 
 const chainId = await ethereum.request({ method: 'eth_chainId' });
 
@@ -90,8 +90,8 @@ function handleAccountsChanged(accounts) {
 //document.getElementById('connect-btn', connect);
 
 //eren's code:
-export const connectButton = document.getElementById("connect-btn")
-connectButton.addEventListener("click",connect)
+export const connectButton = document.getElementById("connect-btn");
+connectButton.addEventListener("click", connect);
 
 // While you are awaiting the call to eth_requestAccounts, you should disable
 // any buttons the user can click to initiate the request.
@@ -110,5 +110,8 @@ function connect() {
         console.error(err);
       }
     });
+  timerElement.classList.add("hide");
+  connectButton.innerText = ("Connected");
+
 }
 
