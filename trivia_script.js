@@ -1,5 +1,6 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions,generateSampleQuestion } from "./questions.js"
+import {counterStart} from "./countdown_timer.js"
 
 const startButton = document.getElementById("start-btn")
 const nextButton = document.getElementById("next-btn")
