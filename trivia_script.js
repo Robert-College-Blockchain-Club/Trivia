@@ -1,6 +1,6 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions,generateSampleQuestion } from "./questions.js"
-import {counterStart} from "./countdown_timer.js"
+import {counterStop} from "./countdown_timer.js"
 
 const startButton = document.getElementById("start-btn")
 const nextButton = document.getElementById("next-btn")
@@ -110,6 +110,7 @@ function timerScreen(){
     timerElement.classList.remove("hide")
     nextButton.classList.add("hide")
     scoreCount.classList.add("hide")
+    counterStop()
 }
 
 //testButton.addEventListener("click",_populateQlist)

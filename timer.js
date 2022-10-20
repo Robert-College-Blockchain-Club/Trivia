@@ -1,10 +1,10 @@
 import {startGame} from "./trivia_script.js";
-import { counterStart } from "./countdown_timer.js";
+import { counterCall } from "./countdown_timer.js";
 // Set the date we're counting down to
 const right_now = new Date()
 const trivia_time_today = new Date()
-const trivia_hour = 16
-const trivia_minute = 58
+const trivia_hour = 0
+const trivia_minute = 39
 trivia_time_today.setHours(trivia_hour)
 trivia_time_today.setMinutes(trivia_minute)
 trivia_time_today.setSeconds(0)
@@ -35,7 +35,7 @@ const x = setInterval(function() {
     distance = trivia_time_in_milliseconds - now;
     // start the game if timer = 0
     startGame()
-    counterStart()
+    counterCall()
   }
   //count = count + 1
   //console.log(count)
