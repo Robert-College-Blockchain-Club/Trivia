@@ -28,7 +28,7 @@ const db = getFirestore(app)
 
 //format: the day and wallet address parameters have type String, timeToComplete is a number (unit seconds) 
 //and quizScore is the number of questions gotten correct
-const addUserDataPoint = async (day,walletAddress,timeToComplete,quizScore) => {
+export const addUserDataPoint = async (day,walletAddress,timeToComplete,quizScore) => {
     const docData = {
         address: walletAddress,
         time: timeToComplete,
@@ -36,11 +36,11 @@ const addUserDataPoint = async (day,walletAddress,timeToComplete,quizScore) => {
     }
     const docRef = await setDoc(doc(db,day,walletAddress),docData);
 };
-const deleteUserDataPoint = async (day,walletAddress) => {
+export const deleteUserDataPoint = async (day,walletAddress) => {
     await deleteDoc(doc(db,day,walletAddress))
 }
 
-const fetchUserDataPoint = async (day,walletAddress) => {
+export const fetchUserDataPoint = async (day,walletAddress) => {
     const docRef = doc(db,day,walletAddress);
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()){
