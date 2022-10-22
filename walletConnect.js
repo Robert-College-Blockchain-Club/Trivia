@@ -61,7 +61,7 @@ else{
 //ethereum.on('accountsChanged', handleAccountsChanged);
 
 // For now, 'eth_accounts' will continue to always return an array
-function handleAccountsChanged(accounts) {
+export function handleAccountsChanged(accounts) {
   if (accounts.length === 0) {
     // MetaMask is locked or the user has not connected any accounts
     walletAlternate();
@@ -110,7 +110,7 @@ function connect() {
         console.error(err);
       }
     });
-  timerElement.classList.add("hide");
+  //timerElement.classList.add("hide");
   connectButton.innerText = ("Connected");
 
 }

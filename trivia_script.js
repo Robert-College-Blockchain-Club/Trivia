@@ -1,6 +1,6 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions, generateSampleQuestion } from "./questions.js";
-import { connectButton } from "./walletConnect.js";
+import { connectButton, handleAccountsChanged } from "./walletConnect.js";
 
 //const container = document.getElementById("container");
 const startButton = document.getElementById("start-btn");
@@ -22,18 +22,38 @@ nextButton.addEventListener("click",()=>{
 
 //const testButton = document.getElementById("test-btn")
 
-let shuffledQuestions, currentQuestionIndex, numCorrect
+let shuffledQuestions, currentQuestionIndex, numCorrect;
+let currentAccount = null;
 export function startGame(){
-    //console.log("start game triggered")
-    numCorrect = 0
-    notice.classList.add("hide")
-    timerElement.classList.add("hide")
-    //startButton.classList.add("hide")
-    shuffledQuestions = questions_list.sort(() => Math.random()-.5)
-    currentQuestionIndex = 0
-    questionContainerElement.classList.remove("hide")
-    scoreCount.classList.remove("hide")
-    setNextQuestion()
+    console.log("start game triggered")
+    if(window.ethereum !== "undefined"){
+        ethereum.request({ method: 'eth_accounts' }).then(validatorForGame).catch((err) => {
+        console.error(err);
+      });
+    }
+    
+}
+
+function validatorForGame(accounts) {
+    if (accounts.length === 0) {
+        // MetaMask is locked or the user has not connected any accounts
+        walletAlternate();
+      
+    } else if (accounts[0] !== currentAccount) {
+        currentAccount = accounts[0];
+    }
+    else {
+        // set up game
+        console.log("We are connected!");
+        numCorrect = 0;
+        notice.classList.add("hide");
+        timerElement.classList.add("hide");
+        shuffledQuestions = questions_list.sort(() => Math.random()-.5);
+        currentQuestionIndex = 0;
+        questionContainerElement.classList.remove("hide");
+        scoreCount.classList.remove("hide");
+        setNextQuestion();
+    }
 }
 
 export function walletAlternate() {
