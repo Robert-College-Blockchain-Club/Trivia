@@ -1,6 +1,6 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions, generateSampleQuestion } from "./questions.js";
-import { connectButton, handleAccountsChanged } from "./walletConnect.js";
+import { checkConnection, connectButton, handleAccountsChanged } from "./walletConnect.js";
 
 //const container = document.getElementById("container");
 const startButton = document.getElementById("start-btn");
@@ -26,10 +26,11 @@ let shuffledQuestions, currentQuestionIndex, numCorrect;
 let currentAccount = null;
 export function startGame(){
     console.log("start game triggered")
+    //checkConnection();
     if(window.ethereum !== "undefined"){
         ethereum.request({ method: 'eth_accounts' }).then(validatorForGame).catch((err) => {
         console.error(err);
-      });
+        });
     }
     
 }

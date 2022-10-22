@@ -42,18 +42,21 @@ function handleChainChanged(_chainId) {
 
 // I think this makes enables a metamask popup as soon as the site loads
 let currentAccount = null;
-if(window.ethereum !== "undefined"){
+export function checkConnection() {
+  if(window.ethereum !== "undefined"){
     ethereum.request({ method: 'eth_accounts' }).then(handleAccountsChanged).catch((err) => {
     // Some unexpected error.
     // For backwards compatibility reasons, if no accounts are available,
     // eth_accounts will return an empty array.
     console.error(err);
-  });
-}
-else{
+    });
+  }
+  else{
     //Metamask isn't installed
     // TODO: add also an error message?
+  }
 }
+
 
 // Note that this event is emitted on page load.
 // If the array of accounts is non-empty, you're already
@@ -65,12 +68,14 @@ export function handleAccountsChanged(accounts) {
   if (accounts.length === 0) {
     // MetaMask is locked or the user has not connected any accounts
     walletAlternate();
+    connectButton.disabled = false;
     //connectButton.innerText = ("Connected");
   
   } else if (accounts[0] !== currentAccount) {
-    currentAccount = accounts[0];
-    //connectButton.innerText = ("Connected");
-    // Do any other work!
+      currentAccount = accounts[0];
+      connectButton.disabled = true;
+      //connectButton.innerText = ("Connected");
+      // Do any other work!
   }
 
 
@@ -92,6 +97,7 @@ export function handleAccountsChanged(accounts) {
 //eren's code:
 export const connectButton = document.getElementById("connect-btn");
 connectButton.addEventListener("click", connect);
+checkConnection();
 
 // While you are awaiting the call to eth_requestAccounts, you should disable
 // any buttons the user can click to initiate the request.
@@ -111,7 +117,7 @@ function connect() {
       }
     });
   //timerElement.classList.add("hide");
-  connectButton.innerText = ("Connected");
+  //connectButton.innerText = ("Connected");
 
 }
 
