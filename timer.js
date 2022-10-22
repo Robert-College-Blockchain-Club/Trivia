@@ -18,7 +18,7 @@ while(right_now.getTime()>trivia_time_today.getTime()){
 
 // Update the count down every 1 second
 let trivia_time_in_milliseconds = trivia_time_today.getTime()
-const x = setInterval(function() {
+const x = setInterval(async function() {
 
   // Get today's date and time
   let now = new Date().getTime();
@@ -34,7 +34,7 @@ const x = setInterval(function() {
     trivia_time_in_milliseconds += (24 * 60 * 60 * 1000);
     distance = trivia_time_in_milliseconds - now;
     // start the game if timer = 0
-    startGame()
+    /*await */startGame()
   }
   //count = count + 1
   //console.log(count)

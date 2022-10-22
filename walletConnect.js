@@ -1,21 +1,3 @@
-//import detectEthereumProvider from '@metamask/detect-provider';
-
-// PREVIOUS CODE:
-//consider adding DOM elements back to trivia_script.js
-/*
-const connectButton = document.getElementById("connect-btn")
-connectButton.addEventListener("click",connect)
-export async function connect(){
-    if(typeof window.ethereum == "undefined"){
-        connectButton.innerText = "Please Install Metamask"
-    }
-    else{
-        const accounts = await ethereum.request({ method: "eth_requestAccounts" })
-        const account = accounts[0]
-        connectButton.innerText = "connected"
-    }
-}
-*/
 
 // eren's code!
 /**********************************************************/
@@ -41,7 +23,7 @@ function handleChainChanged(_chainId) {
 /***********************************************************/
 
 // I think this makes enables a metamask popup as soon as the site loads
-let currentAccount = null;
+export let currentAccount = null;
 export function checkConnection() {
   if(window.ethereum !== "undefined"){
     ethereum.request({ method: 'eth_accounts' }).then(handleAccountsChanged).catch((err) => {
@@ -103,8 +85,8 @@ checkConnection();
 // any buttons the user can click to initiate the request.
 // MetaMask will reject any additional requests while the first is still
 // pending.
-function connect() {
-  ethereum
+export async function connect() {
+  await ethereum
     .request({ method: 'eth_requestAccounts' })
     .then(handleAccountsChanged)
     .catch((err) => {

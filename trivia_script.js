@@ -1,6 +1,6 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions, generateSampleQuestion } from "./questions.js";
-import { checkConnection, connectButton, handleAccountsChanged } from "./walletConnect.js";
+import { currentAccount, checkConnection, connectButton, handleAccountsChanged, connect } from "./walletConnect.js";
 
 //const container = document.getElementById("container");
 const startButton = document.getElementById("start-btn");
@@ -23,28 +23,32 @@ nextButton.addEventListener("click",()=>{
 //const testButton = document.getElementById("test-btn")
 
 let shuffledQuestions, currentQuestionIndex, numCorrect;
-let currentAccount = null;
-export function startGame(){
+
+export async function startGame(){
     console.log("start game triggered")
     //checkConnection();
     if(window.ethereum !== "undefined"){
-        ethereum.request({ method: 'eth_accounts' }).then(validatorForGame).catch((err) => {
-        console.error(err);
-        });
+        try {
+            validatorForGame(await ethereum.request({method: 'eth_accounts'}), "start")
+        }
+        catch(error){
+            console.log(err)
+        }
     }
     
 }
 
-function validatorForGame(accounts) {
+function validatorForGame(accounts, arg) {
     if (accounts.length === 0) {
         // MetaMask is locked or the user has not connected any accounts
-        walletAlternate();
+        walletAlternate(arg);
       
-    } else if (accounts[0] !== currentAccount) {
-        currentAccount = accounts[0];
     }
     else {
         // set up game
+        if(currentAccount !== accounts[0]){
+            currentAccount == accounts[0]
+        }
         console.log("We are connected!");
         numCorrect = 0;
         notice.classList.add("hide");
@@ -56,12 +60,19 @@ function validatorForGame(accounts) {
         setNextQuestion();
     }
 }
-
-export function walletAlternate() {
+export async function walletAlternate(arg) {
     timerElement.classList.add("hide");
     notice.classList.remove("hide");
     //timerElement.classList.remove("hide");
-
+    while (connectButton.disabled == false){
+        await connect()
+    }
+    if(arg == "start"){
+        startGame()
+    }
+    else{
+        timerScreen()
+    }
 }
 
 
@@ -101,6 +112,7 @@ function selectAnswer(e){
     } else {
         //startButton.innerText = "restart"
         //startButton.classList.remove("hide")
+        console.log(currentAccount)
         timerScreen()
     }
 }
@@ -141,6 +153,7 @@ function populateQList(qList){
 _populateQlist()
 const qElement = document.getElementById("question-container")
 function timerScreen(){
+    notice.classList.add("hide")
     qElement.classList.add("hide")
     timerElement.classList.remove("hide")
     nextButton.classList.add("hide")
