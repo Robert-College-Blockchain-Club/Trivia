@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles.css" rel="stylesheet">
     <!--<script defer src="trivia_script.js" type="module"></script>-->
-    <title>Quiz HTML</title>
+    <title>Trivia dApp</title>
 </head>
+
 <body>
     <div class="container">
         <div id="question-container" class="hide">
             <div id="question">Question</div>
-            <div id = "answer-buttons" class="btn-grid">
+            <div id="answer-buttons" class="btn-grid">
                 <button class="btn">Answer 1</button>
                 <button class="btn">Answer 2</button>
                 <button class="btn">Answer 3</button>
@@ -25,8 +27,8 @@
             <!--<button id="test-btn">test button</button>-->
             <button id="next-btn" class="next-btn btn hide">Next</button>
         </div>
-        
-        <div id="countdown">
+
+        <div class="countdown">
             <h1 id="headline">For the next round to begin:</h1>
             <ul>
                 <li><span id="days"></span> days</li>
@@ -36,25 +38,39 @@
             </ul>
         </div>
 
-        <button id="connect-btn" class="top-right">Connect</button>
-
-        <div id="scoreboard" class="hide">
-            <p1 id="score"></p1>
-        </div>
-
-        <div id="notice" class="hide">
-            <h1>Please connect to your wallet.</h1>
-            <h2>You cannot start the game without connecting!</h2>
-            <!--<button id="connect-btn2" class="top-right">Connect</button>-->
-        </div>
+        <div class="board">
+            <div class="row">
+                <div class="column">
+                    <h1>Your score:</h1>
+                    <p>Score</p>
+                </div>
         
-    </div>
+                <div class="column">
+                    <h1>Your time:</h1>
+                    <p>Time</p>
+                </div>
+            </div>
 
-    <button id="start-btn"></button>
-    <script src="timer.js" type="module"></script>
-    <script src="trivia_script.js"></script>
-    <script src="walletConnect.js" type="module"></script>
+            <div>Thanks for playing the game!</div>
+        </div>
+
+            <button id="connect-btn" class="top-right">Connect</button>
+
+            <!--<div id="scoreboard" class="hide">
+                <p1 id="score"></p1>
+            </div>
+        -->
+            <div id="notice" class="hide">
+                <h1>Please connect to your wallet.</h1>
+                <h2>You cannot start the game without connecting!</h2>
+                <!--<button id="connect-btn2" class="top-right">Connect</button>-->
+            </div>
+
+        <button id="start-btn"></button>
+        <script src="timer.js" type="module"></script>
+        <script src="trivia_script.js"></script>
+        <script src="walletConnect.js" type="module"></script>
 </body>
 
-    
+
 </html>

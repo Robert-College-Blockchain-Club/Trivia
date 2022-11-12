@@ -10,6 +10,9 @@ const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 export const timerElement = document.getElementById("countdown");
 const scoreCount = document.getElementById("scoreboard");
+
+const scoreDisplay = document.getElementById("board"); // fix this
+
 const notice = document.getElementById("notice"); // will be displayed if wallet isn't connected
 
 startButton.addEventListener("click", startGame);
@@ -54,6 +57,8 @@ function validatorForGame(accounts, arg) {
         numCorrect = 0;
         notice.classList.add("hide");
         timerElement.classList.add("hide");
+        scoreDisplay.add("hide"); 
+        console.log("Score display hidden!")
         shuffledQuestions = questions_list.sort(() => Math.random() - .5);
         currentQuestionIndex = 0;
         questionContainerElement.classList.remove("hide");
@@ -63,6 +68,7 @@ function validatorForGame(accounts, arg) {
 };
 export async function walletAlternate(arg) {
     timerElement.classList.add("hide");
+    scoreDisplay.add("hide"); // added
     notice.classList.remove("hide");
     //timerElement.classList.remove("hide");
     while (connectButton.disabled === false) {
@@ -103,16 +109,16 @@ function selectAnswer(e) {
 
     if (!correct) {
         Array.from(answerButtonsElement.children).forEach(button => {
-            if(button.dataset.correct){
-                setStatusClass(button,button.dataset.correct)
+            if (button.dataset.correct) {
+                setStatusClass(button, button.dataset.correct)
             }
-            button.disabled = true
+            button.disabled = true;
         });
     }
-    else{
+    else {
         numCorrect += 1;
     }
-    setStatusClass(selectedButton,correct)
+    setStatusClass(selectedButton, correct);
 
     //if the answer isn't selected, it's made red
     /*
@@ -128,7 +134,9 @@ function selectAnswer(e) {
         //startButton.innerText = "restart"
         //startButton.classList.remove("hide")
         console.log(currentAccount);
-        timerScreen();
+        // timerScreen();
+        // console.log("Executed timerscreen function!");
+        displayResult();
     };
 };
 
@@ -162,23 +170,6 @@ function clearStatusClass(element) {
 
 //Generates one sample question for now 
 const questions_list = [];
-/*
-const questions_list = [
-    {
-        question: "How many cats does Eren have?",
-        choice1: "0",
-        choice2: "2",
-        choice3: "5",
-        choice4: "6",
-        answers: [
-            { text: "6", correct: true},
-            { text: "0", correct: false},
-            { text: "2", correct: false},
-            { text: "5", correct: false}
-        ]
-    }
-];
-*/
 
 function _populateQlist() {
     populateQList(questions_list);
@@ -202,6 +193,20 @@ function timerScreen() {
     timerElement.classList.remove("hide");
     nextButton.classList.add("hide");
     scoreCount.classList.add("hide");
+    scoreDisplay.add("hide"); // added
 };
+
+// Display the result of the player for 10s
+function displayResult() {
+    // hide everything
+    notice.classList.add("hide");
+    qElement.classList.add("hide");
+    timerElement.classList.add("hide");
+    nextButton.classList.add("hide");
+    scoreCount.classList.add("hide");
+
+    scoreDisplay.remove("hide"); // added
+
+}
 
 //testButton.addEventListener("click",_populateQlist)
