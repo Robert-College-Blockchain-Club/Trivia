@@ -18,7 +18,7 @@ startButton.addEventListener("click", startGame);
 nextButton.addEventListener("click", () => {
     currentQuestionIndex++;
     setNextQuestion();
-})
+});
 
 //const testButton = document.getElementById("test-btn")
 
@@ -30,14 +30,14 @@ export async function startGame() {
     //checkConnection();
     if (window.ethereum !== "undefined") {
         try {
-            validatorForGame(await ethereum.request({ method: 'eth_accounts' }), "start")
+            validatorForGame(await ethereum.request({ method: 'eth_accounts' }), "start");
         }
         catch (error) {
             console.log(err)
-        }
-    }
+        };
+    };
 
-}
+};
 
 function validatorForGame(accounts, arg) {
     if (accounts.length === 0) {
@@ -59,89 +59,93 @@ function validatorForGame(accounts, arg) {
         questionContainerElement.classList.remove("hide");
         scoreCount.classList.remove("hide");
         setNextQuestion();
-    }
-}
+    };
+};
 export async function walletAlternate(arg) {
     timerElement.classList.add("hide");
     notice.classList.remove("hide");
     //timerElement.classList.remove("hide");
     while (connectButton.disabled === false) {
         await connect()
-    }
+    };
     if (arg === "start") {
         startGame();
     }
     else {
         timerScreen();
-    }
-}
+    };
+};
 
-
-// Sets the new question (increments the total q # as well, fix it)
 function setNextQuestion() {
-    resetState()
-    scoreCount.innerText = numCorrect + "/" + currentQuestionIndex
-    showQuestion(shuffledQuestions[currentQuestionIndex])
-}
+    resetState();
+    scoreCount.innerText = numCorrect + "/" + currentQuestionIndex;
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+};
 
 function showQuestion(question) {
-    questionElement.innerText = question.prompt //check
+    questionElement.innerText = question.prompt; //check
     question.choices.forEach(choice => {
-        const button = document.createElement("button")
-        button.innerText = choice
-        button.classList.add('btn')
+        const button = document.createElement("button");
+        button.innerText = choice;
+        button.classList.add('btn');
         if (question.choices.indexOf(choice) == question.answer) {
-            button.dataset.correct = question.choices.indexOf(choice) == question.answer
-        }
-        button.addEventListener("click", selectAnswer)
-        answerButtonsElement.appendChild(button)
-    })
+            button.dataset.correct = question.choices.indexOf(choice) == question.answer;
+        };
+        button.addEventListener("click", selectAnswer);
+        answerButtonsElement.appendChild(button);
+    });
 
-}
+};
 
 function selectAnswer(e) {
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
-    
-    if (correct) {
-        numCorrect += 1
-    }
+    const selectedButton = e.target;
+    const correct = selectedButton.dataset.correct;
 
-    setStatusClass(document.body, correct)
+    if (correct) {
+        numCorrect += 1;
+    };
+
+    //setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    })
-    nextButton.classList.remove("hide")
+        setStatusClass(button, button.dataset.correct);
+    });
+    nextButton.classList.remove("hide");
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
-        nextButton.classList.remove("hide")
+        nextButton.classList.remove("hide");
     } else {
         //startButton.innerText = "restart"
         //startButton.classList.remove("hide")
-        console.log(currentAccount)
-        timerScreen()
-    }
-}
+        console.log(currentAccount);
+        timerScreen();
+    };
+};
+
 function setStatusClass(element, correct) {
-    clearStatusClass(element)
+    clearStatusClass(element);
     if (correct) {
-        element.classList.add("correct")
+        element.classList.add("correct");
+        console.log("added correct!");
     }
     else {
-        element.classList.add("wrong")
-    }
-}
+        element.classList.add("wrong");
+        console.log("added wrong");
+    };
+};
 
 function resetState() {
-    clearStatusClass(document.body)
-    nextButton.classList.add("hide")
+    //clearStatusClass(document.body)
+    nextButton.classList.add("hide");
     while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild(answerButtonsElement.firstChild)
-    }
-}
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    };
+};
+
 function clearStatusClass(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
-}
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
+    console.log("removed correct/wrong");
+};
+
 
 
 //Generates one sample question for now 
@@ -165,27 +169,27 @@ const questions_list = [
 */
 
 function _populateQlist() {
-    populateQList(questions_list)
-}
+    populateQList(questions_list);
+};
 
 function populateQList(qList) {
     //testButton.classList.add("hide")
     for (let i = 0; i < 10; i++) {
-        qList.push(generateSampleQuestion())
-    }
-}
-_populateQlist()
+        qList.push(generateSampleQuestion());
+    };
+};
+_populateQlist();
 
 
 
 /* Return to timer screen */
-const qElement = document.getElementById("question-container")
+const qElement = document.getElementById("question-container");
 function timerScreen() {
-    notice.classList.add("hide")
-    qElement.classList.add("hide")
-    timerElement.classList.remove("hide")
-    nextButton.classList.add("hide")
-    scoreCount.classList.add("hide")
-}
+    notice.classList.add("hide");
+    qElement.classList.add("hide");
+    timerElement.classList.remove("hide");
+    nextButton.classList.add("hide");
+    scoreCount.classList.add("hide");
+};
 
 //testButton.addEventListener("click",_populateQlist)
