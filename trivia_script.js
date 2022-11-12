@@ -101,14 +101,26 @@ function selectAnswer(e) {
     const selectedButton = e.target;
     const correct = selectedButton.dataset.correct;
 
-    if (correct) {
+    if (!correct) {
+        Array.from(answerButtonsElement.children).forEach(button => {
+            if(button.dataset.correct){
+                setStatusClass(button,button.dataset.correct)
+            }
+            button.disabled = true
+        });
+    }
+    else{
         numCorrect += 1;
-    };
+    }
+    setStatusClass(selectedButton,correct)
 
-    //setStatusClass(document.body, correct)
+    //if the answer isn't selected, it's made red
+    /*
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct);
     });
+    */
+
     nextButton.classList.remove("hide");
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove("hide");
