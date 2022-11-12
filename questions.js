@@ -7,6 +7,7 @@ export class questions {
     }
 }
 
+// Need to change this
 export const generateSampleQuestion = () => {
     let prompt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     let choices = ["A","B","C","D"]
