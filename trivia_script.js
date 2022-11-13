@@ -65,8 +65,14 @@ function selectAnswer(e){
     } else {
         //startButton.innerText = "restart"
         //startButton.classList.remove("hide")
-        timerScreen()
+        endGame()
     }
+}
+async function endGame(){
+    const address = "0x1fe04F7C964F1E111887Db4ca281475243149D88"
+    const time = 110
+    await addUserToFirebase(getTodayDate(), address, time, numCorrect)
+    timerScreen()
 }
 function setStatusClass(element,correct){
     clearStatusClass(element)
@@ -85,17 +91,32 @@ function resetState(){
         answerButtonsElement.removeChild(answerButtonsElement.firstChild)
     }
 }
+
 function clearStatusClass(element) {
     element.classList.remove('correct')
     element.classList.remove('wrong')
 }
 
+async function addUserToFirebase(day, address, time, score) {
+    const baseDomain = "http://localhost:3000/add_user/"
+    const extention = day + "/" + address + "/" + time + "/" + score
+    let response = await fetch(baseDomain+extention);
+    let data = await response.json()
+    return data;
+}
 
+function getTodayDate() {
+    const date = new Date();
+    const formattedDate = date.getDay() + "_" + date.getMonth() + "_" + date.getFullYear();
+    return formattedDate;
+}
 
 const questions_list = []
+
 function _populateQlist(){
     populateQList(questions_list)
 }
+
 function populateQList(qList){
     //testButton.classList.add("hide")
     for(let i = 0; i <10;i++){
@@ -103,7 +124,9 @@ function populateQList(qList){
     }
 }
 _populateQlist()
+
 const qElement = document.getElementById("question-container")
+
 function timerScreen(){
     qElement.classList.add("hide")
     timerElement.classList.remove("hide")
