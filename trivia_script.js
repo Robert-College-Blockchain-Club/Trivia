@@ -1,8 +1,6 @@
-// https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
-import { questions, generateSampleQuestion } from "./questions.js";
+import { generateSampleQuestion } from "./questions.js";
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
-//const container = document.getElementById("container");
 const startButton = document.getElementById("start-btn");
 const nextButton = document.getElementById("next-btn");
 const questionContainerElement = document.getElementById("question-container");
@@ -11,23 +9,19 @@ const answerButtonsElement = document.getElementById("answer-buttons");
 export const timerElement = document.getElementById("countdown");
 const scoreCount = document.getElementById("scoreboard");
 const notice = document.getElementById("notice"); // will be displayed if wallet isn't connected
-
-const displayResult = document.getElementById("results");
+const displayResult = document.getElementById("results"); // displaying results of the player in the end
 
 startButton.addEventListener("click", startGame);
-
 
 nextButton.addEventListener("click", () => {
     currentQuestionIndex++;
     setNextQuestion();
 });
 
-//const testButton = document.getElementById("test-btn")
-
 let shuffledQuestions, currentQuestionIndex, numCorrect;
 
 let final_score = 300
-let record = 100
+let record = 100 // record of the player (in s)
 
 /* Setting up the game */
 export async function startGame() {
@@ -58,7 +52,6 @@ function validatorForGame(accounts, arg) {
         console.log("We are connected!");
         numCorrect = 0;
         notice.classList.add("hide");
-        //displayResult.classList.add("hide");
         timerElement.classList.add("hide");
         shuffledQuestions = questions_list.sort(() => Math.random() - .5);
         currentQuestionIndex = 0;
@@ -67,9 +60,10 @@ function validatorForGame(accounts, arg) {
         setNextQuestion();
     };
 };
+
+// Called if the wallet is not connected
 export async function walletAlternate(arg) {
     timerElement.classList.add("hide");
-    //displayResult.classList.add("hide");
     notice.classList.remove("hide");
     while (connectButton.disabled === false) {
         await connect()
@@ -89,7 +83,7 @@ function setNextQuestion() {
 };
 
 function showQuestion(question) {
-    questionElement.innerText = question.prompt; //check
+    questionElement.innerText = question.prompt;
     question.choices.forEach(choice => {
         const button = document.createElement("button");
         button.innerText = choice;
@@ -109,16 +103,16 @@ function selectAnswer(e) {
 
     if (!correct) {
         Array.from(answerButtonsElement.children).forEach(button => {
-            if(button.dataset.correct){
-                setStatusClass(button,button.dataset.correct)
+            if (button.dataset.correct) {
+                setStatusClass(button, button.dataset.correct)
             }
             button.disabled = true
         });
     }
-    else{
+    else {
         numCorrect += 1;
     }
-    setStatusClass(selectedButton,correct)
+    setStatusClass(selectedButton, correct)
 
     //if the answer isn't selected, it's made red
     /*
@@ -131,11 +125,8 @@ function selectAnswer(e) {
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove("hide");
     } else {
-        //startButton.innerText = "restart"
-        //startButton.classList.remove("hide")
         console.log(currentAccount);
-        //timerScreen();
-        displayResults();
+        displayResults(); // displaying the results of the player in the very end
     };
 };
 
@@ -143,16 +134,13 @@ function setStatusClass(element, correct) {
     clearStatusClass(element);
     if (correct) {
         element.classList.add("correct");
-        console.log("added correct!");
     }
     else {
         element.classList.add("wrong");
-        console.log("added wrong");
     };
 };
 
 function resetState() {
-    //clearStatusClass(document.body)
     nextButton.classList.add("hide");
     while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
@@ -162,49 +150,25 @@ function resetState() {
 function clearStatusClass(element) {
     element.classList.remove('correct');
     element.classList.remove('wrong');
-    console.log("removed correct/wrong");
 };
 
-
-
-//Generates one sample question for now 
 const questions_list = [];
-/*
-const questions_list = [
-    {
-        question: "How many cats does Eren have?",
-        choice1: "0",
-        choice2: "2",
-        choice3: "5",
-        choice4: "6",
-        answers: [
-            { text: "6", correct: true},
-            { text: "0", correct: false},
-            { text: "2", correct: false},
-            { text: "5", correct: false}
-        ]
-    }
-];
-*/
 
+/* Setting the questions */
 function _populateQlist() {
     populateQList(questions_list);
 };
 
 function populateQList(qList) {
-    //testButton.classList.add("hide")
     for (let i = 0; i < 10; i++) {
         qList.push(generateSampleQuestion());
     };
 };
 _populateQlist();
 
-
-
 /* Return to timer screen */
 const qElement = document.getElementById("question-container");
 function timerScreen() {
-    console.log("Timer screen is called!");
     notice.classList.add("hide");
     qElement.classList.add("hide");
     displayResult.classList.add("hide");
@@ -225,9 +189,7 @@ function displayResults() {
     document.getElementById("player-time").innerText = record;
     setTimeout(() => {
         timerScreen()
-      }, 10000);
-      
+    }, 10000);
+
 
 }
-
-//testButton.addEventListener("click",_populateQlist)
