@@ -1,5 +1,7 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions,generateSampleQuestion } from "./questions.js"
+import {counterStop} from "./countdown_timer.js"
+import {counterCall} from "./countdown_timer.js"
 
 const startButton = document.getElementById("start-btn")
 const nextButton = document.getElementById("next-btn")
@@ -27,6 +29,7 @@ export function startGame(){
     questionContainerElement.classList.remove("hide")
     scoreCount.classList.remove("hide")
     setNextQuestion()
+    counterCall()
 }
 
 function setNextQuestion(){
@@ -132,6 +135,7 @@ function timerScreen(){
     timerElement.classList.remove("hide")
     nextButton.classList.add("hide")
     scoreCount.classList.add("hide")
+    counterStop()
 }
 
 //testButton.addEventListener("click",_populateQlist)

@@ -1,5 +1,5 @@
 import {startGame} from "./trivia_script.js";
-
+import { counterCall } from "./countdown_timer.js";
 // Set the date we're counting down to
 const right_now = new Date()
 const trivia_time_today = new Date()
