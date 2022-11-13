@@ -207,7 +207,7 @@ function timerScreen() {
     console.log("Timer screen is called!");
     notice.classList.add("hide");
     qElement.classList.add("hide");
-    //displayResult.classList.add("hide");
+    displayResult.classList.add("hide");
     timerElement.classList.remove("hide");
     nextButton.classList.add("hide");
     scoreCount.classList.add("hide");
@@ -223,6 +223,10 @@ function displayResults() {
     displayResult.classList.remove("hide");
     document.getElementById("player-score").innerText = final_score;
     document.getElementById("player-time").innerText = record;
+    setTimeout(() => {
+        timerScreen()
+      }, 10000);
+      
 
 }
 
