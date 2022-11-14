@@ -11,7 +11,6 @@ const qElement = document.getElementById("question-container")
 let timeSeconds = 120
 let countdownTime = timeSeconds
 let counterInterval
-let userTime
 let userTimeStart
 let userTimeEnd
 
@@ -26,7 +25,7 @@ export function counterCall() {
 }
 
 function counterStart() {
-    countdownTime = countdownTime-1
+    
     countdownContainer.classList.remove("hide")
     let minutes = Math.floor((countdownTime / (60)));
     let seconds = (countdownTime % (60));
@@ -37,16 +36,17 @@ function counterStart() {
     }
     if (countdownTime == 0) {
         counterStop()
-     }
+    }
+    countdownTime = countdownTime-1
 }
 export function counterStop() {
     userTimeEnd = new Date()
-    userTime = userTimeEnd - userTimeStart
-    //document.getElementById("test").innerText = userTime;
+    let userTime = (userTimeEnd.getTime() - userTimeStart.getTime())/1000;
     clearInterval(counterInterval);
     countdownContainer.classList.add("hide")
     qElement.classList.add("hide")
-    timerElement.classList.remove("hide")
+    //timerElement.classList.remove("hide")
     nextButton.classList.add("hide")
     scoreCount.classList.add("hide")
+    return userTime
 }

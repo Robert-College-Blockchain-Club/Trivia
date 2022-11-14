@@ -1,15 +1,22 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions,generateSampleQuestion } from "./questions.js"
-import {counterStop} from "./countdown_timer.js"
-import {counterCall} from "./countdown_timer.js"
+import {counterStop, counterCall} from "./countdown_timer.js"
+
+import { currentAccount, connectButton, connect } from "./walletConnect.js";
+
 
 const startButton = document.getElementById("start-btn")
 const nextButton = document.getElementById("next-btn")
 const questionContainerElement = document.getElementById("question-container")
 const questionElement = document.getElementById("question")
 const answerButtonsElement = document.getElementById("answer-buttons")
-const timerElement = document.getElementById("countdown")
+export const timerElement = document.getElementById("countdown")
 const scoreCount = document.getElementById("scoreboard")
+const notice = document.getElementById("notice"); // will be displayed if wallet isn't connected
+const displayResult = document.getElementById("results"); // displaying results of the player in the end
+let userTime
+
+
 startButton.addEventListener("click",startGame)
 nextButton.addEventListener("click",()=>{
     currentQuestionIndex++
@@ -19,18 +26,61 @@ nextButton.addEventListener("click",()=>{
 //const testButton = document.getElementById("test-btn")
 
 let shuffledQuestions, currentQuestionIndex, numCorrect
-export function startGame(){
+
+let final_score = 300
+let record = 100 // record of the player (in s)
+
+export async function startGame(){
     //console.log("start game triggered")
-    numCorrect = 0
-    timerElement.classList.add("hide")
-    //startButton.classList.add("hide")
-    shuffledQuestions = questions_list.sort(() => Math.random()-.5)
-    currentQuestionIndex = 0
-    questionContainerElement.classList.remove("hide")
-    scoreCount.classList.remove("hide")
-    setNextQuestion()
-    counterCall()
+    console.log("start game triggered")
+    //checkConnection();
+    if (window.ethereum !== "undefined") {
+        try {
+            validatorForGame(await ethereum.request({ method: 'eth_accounts' }), "start");
+        }
+        catch (error) {
+            console.log(error)
+        };
+    };
 }
+
+function validatorForGame(accounts, arg) {
+    if (accounts.length === 0) {
+        // MetaMask is locked or the user has not connected any accounts
+        walletAlternate(arg);
+
+    }
+    else {
+        // set up game
+        if (currentAccount !== accounts[0]) {
+            currentAccount == accounts[0];
+        }
+        console.log("We are connected!");
+        numCorrect = 0;
+        notice.classList.add("hide");
+        timerElement.classList.add("hide");
+        shuffledQuestions = questions_list.sort(() => Math.random() - .5);
+        currentQuestionIndex = 0;
+        questionContainerElement.classList.remove("hide");
+        scoreCount.classList.remove("hide");
+        setNextQuestion();
+        counterCall();
+    };
+};
+
+export async function walletAlternate(arg) {
+    timerElement.classList.add("hide");
+    notice.classList.remove("hide");
+    while (connectButton.disabled === false) {
+        await connect()
+    };
+    if (arg === "start") {
+        startGame();
+    }
+    else {
+        timerScreen();
+    };
+};
 
 function setNextQuestion(){
     resetState()
@@ -43,6 +93,7 @@ function showQuestion(question){
     question.choices.forEach(choice => {
         const button = document.createElement("button")
         button.innerText = choice
+        button.classList.add('btn');
         if(question.choices.indexOf(choice) == question.answer) {
             button.dataset.correct = question.choices.indexOf(choice) == question.answer
         }
@@ -55,13 +106,24 @@ function showQuestion(question){
 function selectAnswer(e){
     const selectedButton = e.target
     const correct = selectedButton.dataset.correct
-    if(correct){
-        numCorrect += 1
+    if (!correct) {
+        Array.from(answerButtonsElement.children).forEach(button => {
+            if (button.dataset.correct) {
+                setStatusClass(button, button.dataset.correct)
+            }
+            button.disabled = true
+        });
     }
+    else {
+        numCorrect += 1;
+    }
+    setStatusClass(selectedButton, correct)
+    /*
     setStatusClass(document.body,correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button,button.dataset.correct)
     })
+    */
     nextButton.classList.remove("hide")
     if(shuffledQuestions.length > currentQuestionIndex+1){
         nextButton.classList.remove("hide")
@@ -72,10 +134,11 @@ function selectAnswer(e){
     }
 }
 async function endGame(){
-    const address = "0x1fe04F7C964F1E111887Db4ca281475243149D88"
+    //console.log(currentAccount)
+    //const address = "0x1fe04F7C964F1E111887Db4ca281475243149D88"
     const time = 110
-    await addUserToFirebase(getTodayDate(), address, time, numCorrect)
-    timerScreen()
+    await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect)
+    displayResults()
 }
 function setStatusClass(element,correct){
     clearStatusClass(element)
@@ -110,7 +173,7 @@ async function addUserToFirebase(day, address, time, score) {
 
 function getTodayDate() {
     const date = new Date();
-    const formattedDate = date.getDay() + "_" + date.getMonth() + "_" + date.getFullYear();
+    const formattedDate = date.getDate() + "_" + (date.getMonth()+1) + "_" + date.getFullYear();
     return formattedDate;
 }
 
@@ -131,11 +194,31 @@ _populateQlist()
 const qElement = document.getElementById("question-container")
 
 function timerScreen(){
+    notice.classList.add("hide");
     qElement.classList.add("hide")
+    displayResult.classList.add("hide");
     timerElement.classList.remove("hide")
     nextButton.classList.add("hide")
     scoreCount.classList.add("hide")
-    counterStop()
+
+    
+}
+
+function displayResults() {
+    notice.classList.add("hide");
+    qElement.classList.add("hide");
+    timerElement.classList.add("hide");
+    nextButton.classList.add("hide");
+    scoreCount.classList.add("hide");
+
+    displayResult.classList.remove("hide");
+    document.getElementById("player-score").innerText = final_score;
+    document.getElementById("player-time").innerText = record;
+    userTime = counterStop()
+    console.log(userTime)
+    setTimeout(() => {
+        timerScreen()
+    }, 10000);
 }
 
 //testButton.addEventListener("click",_populateQlist)
