@@ -1,5 +1,5 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
-import { questions,generateSampleQuestion } from "./questions.js"
+import { questions,generateSampleQuestion, getOpenDbQuestions } from "./questions.js"
 import {counterStop, counterCall} from "./countdown_timer.js"
 
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
@@ -31,9 +31,8 @@ let final_score = 300
 let record = 100 // record of the player (in s)
 
 export async function startGame(){
-    //console.log("start game triggered")
-    console.log("start game triggered")
     //checkConnection();
+    questions_list = await getOpenDbQuestions()
     if (window.ethereum !== "undefined") {
         try {
             validatorForGame(await ethereum.request({ method: 'eth_accounts' }), "start");
@@ -55,7 +54,6 @@ function validatorForGame(accounts, arg) {
         if (currentAccount !== accounts[0]) {
             currentAccount == accounts[0];
         }
-        console.log("We are connected!");
         numCorrect = 0;
         notice.classList.add("hide");
         timerElement.classList.add("hide");
@@ -90,6 +88,7 @@ function setNextQuestion(){
 
 function showQuestion(question){
     questionElement.innerText = question.prompt //check
+    console.log(question)
     question.choices.forEach(choice => {
         const button = document.createElement("button")
         button.innerText = choice
@@ -134,8 +133,6 @@ function selectAnswer(e){
     }
 }
 async function endGame(){
-    //console.log(currentAccount)
-    //const address = "0x1fe04F7C964F1E111887Db4ca281475243149D88"
     const time = 110
     await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect)
     displayResults()
@@ -177,8 +174,8 @@ function getTodayDate() {
     return formattedDate;
 }
 
-const questions_list = []
-
+let questions_list
+/*
 function _populateQlist(){
     populateQList(questions_list)
 }
@@ -190,6 +187,7 @@ function populateQList(qList){
     }
 }
 _populateQlist()
+*/
 
 const qElement = document.getElementById("question-container")
 
@@ -215,7 +213,6 @@ function displayResults() {
     document.getElementById("player-score").innerText = final_score;
     document.getElementById("player-time").innerText = record;
     userTime = counterStop()
-    console.log(userTime)
     setTimeout(() => {
         timerScreen()
     }, 10000);
