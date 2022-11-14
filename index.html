@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="container">
+        <!--<p id="test"></p>-->
         <div id="question-container" class="hide">
             <div id="question">Question</div>
             <div id = "answer-buttons" class="btn-grid">
@@ -31,13 +32,20 @@
             </ul>
         </div>
         <button id="connect-btn" class="top-right">Connect to Metamask</button>
+        <button id="start-btn">Birden fazla basma</button>
         <div id="scoreboard" class="hide">
             <p1 id="score"></p1>
         </div>
+        <div id="twomin-timer" class="hide">
+            <ul>
+                <li><span id="countdown_minutes"></span></li>
+                <li><span id="countdown_seconds"></span></li>
+            </ul>
+        </div>
     </div>
-    <button id="start-btn"></button>
     <script src="timer.js" type="module"></script>
     <script src="trivia_script.js"></script>
     <script src="walletConnect.js" type="module"></script>
+    <script src="countdown_timer.js" type="module"></script>
 </body>
 </html>
