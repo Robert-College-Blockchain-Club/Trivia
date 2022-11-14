@@ -14,7 +14,7 @@ export const generateSampleQuestion = () => {
     return new questions(prompt,choices,answer)
 }
 const fetchQuestion = async () => {
-    const data = await fetch("https://opentdb.com/api.php?amount=10&type=multiple")
+    const data = await fetch("https://opentdb.com/api.php?amount=10&type=multiple&encode=base64")
     const ret = await data.json()
     return ret;
 }
@@ -23,14 +23,14 @@ export const getOpenDbQuestions = async () => {
     const qArr = qObjects.results;
     const retArr = []
     qArr.forEach(q => {
-        let prompt = q.question;
+        let prompt = b64_to_utf8(q.question);
         let answer = Math.floor(Math.random()*3)+1;
         let choices = ["","","",""];
-        choices[answer] = q.correct_answer
+        choices[answer] = b64_to_utf8(q.correct_answer)
         let j = 0;
         for(let i = 0; i < choices.length; i++){
             if(i !== answer){
-                choices[i] = q.incorrect_answers[j];
+                choices[i] = b64_to_utf8(q.incorrect_answers[j]);
                 j++;
             }
         }
@@ -38,4 +38,8 @@ export const getOpenDbQuestions = async () => {
         retArr.push(question);
     })
     return retArr;
+}
+
+function b64_to_utf8(str) {
+    return decodeURIComponent(escape(window.atob(str)));
 }
