@@ -50,7 +50,7 @@ body.wrong {
 .btn {
   --hue: var(--hue-neutral);
   border: 1px solid hsl(var(--hue), 100%, 30%);
-  background-color: rgb(34, 69, 150);
+  background-color: hsl(var(--hue), 100%, 35%);
   border-radius: 5px;
   padding: 5px 10px;
   color: rgb(255, 255, 255);
@@ -70,6 +70,57 @@ body.wrong {
   --hue: var(--hue-wrong);
 }
 
+#connect-btn {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 30px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s, transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 15px;
+}
+
+#connect-btn:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+#connect-btn:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+#connect-btn:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+#connect-btn:disabled {
+  box-shadow: #b6befd 0 3px 7px inset;
+  transform: translateY(1px);
+}
+
+
 .start-btn,
 .next-btn {
   font-size: 1.5rem;
@@ -83,18 +134,43 @@ body.wrong {
   align-items: center;
 }
 
+#headline {
+  font-size: 40px;
+  line-height: 30px;
+  margin: 10px 0 10px 0;
+  text-shadow: 1px 1px 5px #789;
+  color: #132c87;
+}
+
+#twomin-timer {
+
+}
+
+#twomin-timer li {
+  
+}
+
+#twomin-timer li span {
+  
+}
+
 .hide {
   display: none;
 }
+
 .top-right {
   float: right;
 }
+
 li {
   display: inline-block;
   font-size: 1.5em;
   list-style-type: none;
   padding: 1em;
   text-transform: uppercase;
+  justify-content: center;
+  text-align: center;
+  color: #24146e;
 }
 
 li span {

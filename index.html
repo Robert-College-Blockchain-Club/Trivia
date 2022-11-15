@@ -42,16 +42,17 @@
         </div>
         
         <div id="countdown">
-            <h1 id="headline"> <strong>Countdown</strong> to the next round</h1>
+            <h1 id="headline">Next Round:</h1>
             <ul>
-                <li><span id="days"></span> days</li>
+                <li><span id="days"></span> Days</li>
                 <li><span id="hours"></span> Hours</li>
                 <li><span id="minutes"></span> Minutes</li>
                 <li><span id="seconds"></span> Seconds</li>
             </ul>
         </div>
-        <button id="connect-btn" class="top-right">Connect to Metamask</button>
-        <button id="start-btn">Birden fazla basma</button>
+        <button id="connect-btn" class="top-right">Connect to MetaMask</button> <!--commented out role="button"-->
+        <!--<button id="connect-btn" class="top-right">Connect to Metamask</button>-->
+        <button id="start-btn">Trigger Game</button>
         <div id="scoreboard" class="hide">
             <p1 id="score"></p1>
         </div>
@@ -63,6 +64,7 @@
         <div id="twomin-timer" class="hide">
             <ul>
                 <li><span id="countdown_minutes"></span></li>
+                <li><span id="separator">:</span></li>
                 <li><span id="countdown_seconds"></span></li>
             </ul>
         </div>
