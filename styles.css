@@ -2,7 +2,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
+  font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
 }
 
 :root {
@@ -20,7 +20,7 @@ body {
   height: 100vh;
   justify-content: center;
   align-items: center;
-  background-color: #ffd54f;
+  background-color: #20c4e5;
 }
 
 body.correct {
@@ -50,7 +50,7 @@ body.wrong {
 .btn {
   --hue: var(--hue-neutral);
   border: 1px solid hsl(var(--hue), 100%, 30%);
-  background-color: hsl(var(--hue), 100%, 50%);
+  background-color: rgb(34, 69, 150);
   border-radius: 5px;
   padding: 5px 10px;
   color: rgb(255, 255, 255);
