@@ -5,20 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles.css" rel="stylesheet">
-    <!--<script defer src="trivia_script.js" type="module"></script>-->
     <title>Quiz HTML</title>
 </head>
 <body>
     <div class="container">
-        <!--<p id="test"></p>-->
         <div id="question-container" class="hide">
             <div id="question">Question</div>
             <div id = "answer-buttons" class="btn-grid">
             </div>
         </div>
         <div class="controls">
-            <!--<button id="start-btn" class="start-btn btn">Start</button>-->
-            <!--<button id="test-btn">test button</button>-->
             <button id="next-btn" class="next-btn btn hide">Next</button>
         </div>
         <div id="results" class="hide">
@@ -50,8 +46,7 @@
                 <li><span id="seconds"></span> Seconds</li>
             </ul>
         </div>
-        <button id="connect-btn" class="top-right">Connect to MetaMask</button> <!--commented out role="button"-->
-        <!--<button id="connect-btn" class="top-right">Connect to Metamask</button>-->
+        <button id="connect-btn" class="top-right">Connect to MetaMask</button> 
         <button id="start-btn">Trigger Game</button>
         <button onclick= "window.location.href='leaderboard/leaderboard.html'">Leaderboard</button>
         <div id="scoreboard" class="hide">
@@ -60,7 +55,6 @@
         <div id="notice" class="hide">
             <h1>Please connect to your wallet.</h1>
             <h2>You cannot start the game without connecting!</h2>
-            <!--<button id="connect-btn2" class="top-right">Connect</button>-->
         </div>
         <div id="twomin-timer" class="hide">
             <ul>

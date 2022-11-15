@@ -1,4 +1,3 @@
-// eren's code!
 /**********************************************************/
 /* Handle chain (network) and chainChanged (per EIP-1193) */
 /**********************************************************/
@@ -34,7 +33,6 @@ export function checkConnection() {
   }
   else{
     //Metamask isn't installed
-    // TODO: add also an error message?
   }
 }
 
@@ -50,18 +48,12 @@ export function handleAccountsChanged(accounts) {
     // MetaMask is locked or the user has not connected any accounts
     walletAlternate();
     connectButton.disabled = false;
-    //connectButton.innerText = ("Connected");
   
   } else if (accounts[0] !== currentAccount) {
       currentAccount = accounts[0];
       connectButton.disabled = true;
-      //connectButton.innerText = ("Connected");
-      // Do any other work!
   }
 
-
-
-  
 }
 
 /*********************************************/
@@ -75,7 +67,6 @@ export function handleAccountsChanged(accounts) {
 // to initiate the attempt.
 //document.getElementById('connect-btn', connect);
 
-//eren's code:
 export const connectButton = document.getElementById("connect-btn");
 connectButton.addEventListener("click", connect);
 checkConnection();
@@ -97,7 +88,5 @@ export async function connect() {
         console.error(err);
       }
     });
-  //timerElement.classList.add("hide");
-  //connectButton.innerText = ("Connected");
 
 }

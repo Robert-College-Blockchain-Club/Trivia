@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 const { initializeApp } = require("firebase/app");
-//import { getAnalytics } from "firebase/analytics";
 const { getFirestore } = require("firebase/firestore");
 const { doc, setDoc, deleteDoc, getDoc } = require("firebase/firestore");
 // TODO: Add SDKs for Firebase products that you want to use
@@ -73,16 +72,14 @@ async function getDataFromDay(day) {
 
 }
 
-// t = 110 score = 31
-
+/* Demo */
 //await addUserDataPoint("0_10_2022", "0xb8372983edce03ce839613fffba74279579268", 32, 100);
 //await addUserDataPoint("0_10_2022", "0aw8372983edce03ce839613fffba74279579268", 45, 100);
-
 //await getDataFromDay("0_10_2022");
 
 // if we assume the data is in address, time, score order
 function compare(player1, player2) {
-    // player 1 stats > player 2 stats = return -1
+    // player 1 stats > player 2 stats = return -1 (sort player1 before player2)
     if (player1[2] > player2[2]) {
         return -1;
     }
@@ -93,7 +90,7 @@ function compare(player1, player2) {
 
     return 1;
 
-    // no condition for if they are equal
+    // CHECK: no condition for if they are equal
 }
 
 

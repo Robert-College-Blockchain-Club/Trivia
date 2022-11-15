@@ -1,3 +1,5 @@
+
+// Sample data set for the code without the backend
 /*let player_list = [
     ["0x1c4F628498299159B5Ce8EB43fA7a27b59A08BE79259A8a58", 31, 6969],
     ["0x1c4F628498299159B5Ce8EB43fA7a27b59A08BE79259A8a58", 33, 6969],
@@ -37,9 +39,9 @@ function addPlayer(attributes) {
     }
     else {
         ranking.id = "ranking";
-        
+
     }
-    ranking.innerText = player_list.indexOf(attributes)+1;
+    ranking.innerText = player_list.indexOf(attributes) + 1;
 
     player.appendChild(ranking);
 

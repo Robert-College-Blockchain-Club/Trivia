@@ -1,6 +1,5 @@
-// https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
-import { questions,generateSampleQuestion, getOpenDbQuestions } from "./questions.js";
-import {counterStop, counterCall} from "./timer/countdown_timer.js";
+import { getOpenDbQuestions } from "./questions.js";
+import { counterStop, counterCall } from "./timer/countdown_timer.js";
 
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
@@ -14,25 +13,19 @@ export const timerElement = document.getElementById("countdown");
 const scoreCount = document.getElementById("scoreboard");
 const notice = document.getElementById("notice"); // will be displayed if wallet isn't connected
 const displayResult = document.getElementById("results"); // displaying results of the player in the end
-let userTime
+let userTime;
 
-
-
-
-startButton.addEventListener("click",startGame);
-nextButton.addEventListener("click",()=>{
+startButton.addEventListener("click", startGame);
+nextButton.addEventListener("click", () => {
     currentQuestionIndex++;
     setNextQuestion();
 })
-
-//const testButton = document.getElementById("test-btn")
 
 let shuffledQuestions, currentQuestionIndex, numCorrect;
 
 let final_score;
 
-export async function startGame(){
-    //checkConnection();
+export async function startGame() {
     questions_list = await getOpenDbQuestions();
     if (window.ethereum !== "undefined") {
         try {
@@ -81,29 +74,29 @@ export async function walletAlternate(arg) {
     }
 }
 
-function setNextQuestion(){
+function setNextQuestion() {
     resetState();
     scoreCount.innerText = numCorrect + "/" + currentQuestionIndex;
     showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
-function showQuestion(question){
+function showQuestion(question) {
     questionElement.innerText = question.prompt; //check
     console.log(question);
     question.choices.forEach(choice => {
         const button = document.createElement("button");
         button.innerText = choice;
         button.classList.add('btn');
-        if(question.choices.indexOf(choice) == question.answer) {
+        if (question.choices.indexOf(choice) == question.answer) {
             button.dataset.correct = question.choices.indexOf(choice) == question.answer;
         }
-        button.addEventListener("click",selectAnswer);
+        button.addEventListener("click", selectAnswer);
         answerButtonsElement.appendChild(button);
     })
 
 }
 
-function selectAnswer(e){
+function selectAnswer(e) {
     const selectedButton = e.target;
     const correct = selectedButton.dataset.correct;
     if (!correct) {
@@ -118,29 +111,21 @@ function selectAnswer(e){
         numCorrect += 1;
     }
     setStatusClass(selectedButton, correct);
-    /*
-    setStatusClass(document.body,correct)
-    Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button,button.dataset.correct)
-    })
-    */
+
     nextButton.classList.remove("hide");
-    if(shuffledQuestions.length > currentQuestionIndex+1){
+    if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove("hide");
     } else {
-        //startButton.innerText = "restart"
-        //startButton.classList.remove("hide")
         endGame();
     }
 }
-async function endGame(){
-    const time = 110;
+async function endGame() {
     await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect);
     displayResults();
 }
-function setStatusClass(element,correct){
+function setStatusClass(element, correct) {
     clearStatusClass(element);
-    if(correct){
+    if (correct) {
         element.classList.add("correct");
     }
     else {
@@ -148,10 +133,10 @@ function setStatusClass(element,correct){
     }
 }
 
-function resetState(){
+function resetState() {
     clearStatusClass(document.body);
     nextButton.classList.add("hide");
-    while (answerButtonsElement.firstChild){
+    while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
@@ -164,48 +149,32 @@ function clearStatusClass(element) {
 async function addUserToFirebase(day, address, time, score) {
     const baseDomain = "http://localhost:3000/add_user/";
     const extention = day + "/" + address + "/" + time + "/" + score;
-    let response = await fetch(baseDomain+extention);
+    let response = await fetch(baseDomain + extention);
     let data = await response.json();
     return data;
 }
 
 function getTodayDate() {
     const date = new Date();
-    const formattedDate = date.getDate() + "_" + (date.getMonth()+1) + "_" + date.getFullYear();
+    const formattedDate = date.getDate() + "_" + (date.getMonth() + 1) + "_" + date.getFullYear();
     return formattedDate;
 }
 
 let questions_list;
-/*
-function _populateQlist(){
-    populateQList(questions_list)
-}
-
-function populateQList(qList){
-    //testButton.classList.add("hide")
-    for(let i = 0; i <10;i++){
-        qList.push(generateSampleQuestion())
-    }
-}
-_populateQlist()
-*/
 
 const qElement = document.getElementById("question-container");
 
-function timerScreen(){
+function timerScreen() {
     notice.classList.add("hide");
     qElement.classList.add("hide");
     displayResult.classList.add("hide");
     timerElement.classList.remove("hide");
     nextButton.classList.add("hide");
     scoreCount.classList.add("hide");
-
-    
 }
 
-
 function displayResults() {
-    userTime = counterStop(); // TODO: Fix placement
+    userTime = counterStop(); // TODO: Is this in the right place?
     notice.classList.add("hide");
     qElement.classList.add("hide");
     timerElement.classList.add("hide");
@@ -214,13 +183,10 @@ function displayResults() {
 
     displayResult.classList.remove("hide");
 
-    final_score = numCorrect * 10;
+    final_score = numCorrect * 10; // TODO: determine a scoring system
     document.getElementById("player-score").innerText = final_score;
-    
     document.getElementById("player-time").innerText = userTime;
     setTimeout(() => {
         timerScreen();
     }, 10000);
 }
-
-//testButton.addEventListener("click",_populateQlist)

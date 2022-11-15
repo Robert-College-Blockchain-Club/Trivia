@@ -116,7 +116,8 @@ body.wrong {
 }
 
 #connect-btn:disabled {
-  box-shadow: #b6befd 0 3px 7px inset;
+  box-shadow: #caceed 0 3px 7px inset;
+  background-image: radial-gradient(75% 75% at 80% 0, #5adaff 0, #5468ff 130%);
   transform: translateY(1px);
 }
 
@@ -142,15 +143,9 @@ body.wrong {
   color: #132c87;
 }
 
-/*#twomin-timer {
-  position: relative;
-  margin: auto;
-  margin-top: 100px;
-  height: 40px;
-  width: 40px;
-  text-align: center;
+#twomin-timer { /* Needs fixing here*/
+  padding: 0%;
 }
-*/
 
 #twomin-timer li {
   display: inline-block;
@@ -168,16 +163,16 @@ body.wrong {
   font-size: 1.5rem;
 }
 
-svg {
-  position: absolute;
-  top: 100;
-  left: 1500;
+#twomin-timer svg { /* Position is incorrect */
+  position: relative;
+  top: 20px;
+  left: 600px;
   width: 40px;
   height: 40px;
   transform: rotateY(-180deg) rotateZ(-90deg);
 }
 
-svg circle {
+#twomin-timer svg circle {
   stroke-dasharray: 113px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
@@ -205,7 +200,7 @@ svg circle {
   float: right;
 }
 
-li {
+#countdown li {
   display: inline-block;
   font-size: 1.5em;
   list-style-type: none;
@@ -216,7 +211,7 @@ li {
   color: #24146e;
 }
 
-li span {
+#countdown li span {
   display: block;
   font-size: 4.5rem;
 }
