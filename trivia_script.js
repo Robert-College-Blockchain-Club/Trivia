@@ -17,6 +17,8 @@ const displayResult = document.getElementById("results"); // displaying results 
 let userTime
 
 
+
+
 startButton.addEventListener("click",startGame)
 nextButton.addEventListener("click",()=>{
     currentQuestionIndex++
@@ -27,8 +29,7 @@ nextButton.addEventListener("click",()=>{
 
 let shuffledQuestions, currentQuestionIndex, numCorrect
 
-let final_score = 300
-let record = 100 // record of the player (in s)
+let final_score
 
 export async function startGame(){
     //checkConnection();
@@ -202,7 +203,9 @@ function timerScreen(){
     
 }
 
+
 function displayResults() {
+    userTime = counterStop(); // TODO: Fix placement
     notice.classList.add("hide");
     qElement.classList.add("hide");
     timerElement.classList.add("hide");
@@ -210,9 +213,11 @@ function displayResults() {
     scoreCount.classList.add("hide");
 
     displayResult.classList.remove("hide");
+
+    final_score = numCorrect * 10;
     document.getElementById("player-score").innerText = final_score;
-    document.getElementById("player-time").innerText = record;
-    userTime = counterStop()
+    
+    document.getElementById("player-time").innerText = userTime;
     setTimeout(() => {
         timerScreen()
     }, 10000);

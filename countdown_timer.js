@@ -22,22 +22,23 @@ export function counterCall() {
     document.getElementById("countdown_minutes").innerText = minutes;
     document.getElementById("countdown_seconds").innerText = seconds;
     counterInterval = setInterval(counterStart, 1000);
+    if (countdownTime == timeSeconds) {
+        userTimeStart = new Date();
+    }
 }
 
 function counterStart() {
-
+    countdownTime = countdownTime - 1;
     countdownContainer.classList.remove("hide")
     let minutes = Math.floor((countdownTime / (60)));
     let seconds = (countdownTime % (60));
     document.getElementById("countdown_minutes").innerText = minutes;
     document.getElementById("countdown_seconds").innerText = seconds;
-    if (countdownTime == timeSeconds) {
-        userTimeStart = new Date()
-    }
+
     if (countdownTime == 0) {
         counterStop()
     }
-    countdownTime = countdownTime - 1
+
 }
 export function counterStop() {
     userTimeEnd = new Date()
