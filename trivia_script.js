@@ -1,17 +1,17 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
-import { questions,generateSampleQuestion, getOpenDbQuestions } from "./questions.js"
-import {counterStop, counterCall} from "./countdown_timer.js"
+import { questions,generateSampleQuestion, getOpenDbQuestions } from "./questions.js";
+import {counterStop, counterCall} from "./timer/countdown_timer.js";
 
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
 
-const startButton = document.getElementById("start-btn")
-const nextButton = document.getElementById("next-btn")
-const questionContainerElement = document.getElementById("question-container")
-const questionElement = document.getElementById("question")
-const answerButtonsElement = document.getElementById("answer-buttons")
-export const timerElement = document.getElementById("countdown")
-const scoreCount = document.getElementById("scoreboard")
+const startButton = document.getElementById("start-btn");
+const nextButton = document.getElementById("next-btn");
+const questionContainerElement = document.getElementById("question-container");
+const questionElement = document.getElementById("question");
+const answerButtonsElement = document.getElementById("answer-buttons");
+export const timerElement = document.getElementById("countdown");
+const scoreCount = document.getElementById("scoreboard");
 const notice = document.getElementById("notice"); // will be displayed if wallet isn't connected
 const displayResult = document.getElementById("results"); // displaying results of the player in the end
 let userTime
@@ -19,29 +19,29 @@ let userTime
 
 
 
-startButton.addEventListener("click",startGame)
+startButton.addEventListener("click",startGame);
 nextButton.addEventListener("click",()=>{
-    currentQuestionIndex++
-    setNextQuestion()
+    currentQuestionIndex++;
+    setNextQuestion();
 })
 
 //const testButton = document.getElementById("test-btn")
 
-let shuffledQuestions, currentQuestionIndex, numCorrect
+let shuffledQuestions, currentQuestionIndex, numCorrect;
 
-let final_score
+let final_score;
 
 export async function startGame(){
     //checkConnection();
-    questions_list = await getOpenDbQuestions()
+    questions_list = await getOpenDbQuestions();
     if (window.ethereum !== "undefined") {
         try {
             validatorForGame(await ethereum.request({ method: 'eth_accounts' }), "start");
         }
         catch (error) {
-            console.log(error)
-        };
-    };
+            console.log(error);
+        }
+    }
 }
 
 function validatorForGame(accounts, arg) {
@@ -64,108 +64,108 @@ function validatorForGame(accounts, arg) {
         scoreCount.classList.remove("hide");
         setNextQuestion();
         counterCall();
-    };
-};
+    }
+}
 
 export async function walletAlternate(arg) {
     timerElement.classList.add("hide");
     notice.classList.remove("hide");
     while (connectButton.disabled === false) {
-        await connect()
-    };
+        await connect();
+    }
     if (arg === "start") {
         startGame();
     }
     else {
         timerScreen();
-    };
-};
+    }
+}
 
 function setNextQuestion(){
-    resetState()
-    scoreCount.innerText = numCorrect + "/" + currentQuestionIndex
-    showQuestion(shuffledQuestions[currentQuestionIndex])
+    resetState();
+    scoreCount.innerText = numCorrect + "/" + currentQuestionIndex;
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
 function showQuestion(question){
-    questionElement.innerText = question.prompt //check
-    console.log(question)
+    questionElement.innerText = question.prompt; //check
+    console.log(question);
     question.choices.forEach(choice => {
-        const button = document.createElement("button")
-        button.innerText = choice
+        const button = document.createElement("button");
+        button.innerText = choice;
         button.classList.add('btn');
         if(question.choices.indexOf(choice) == question.answer) {
-            button.dataset.correct = question.choices.indexOf(choice) == question.answer
+            button.dataset.correct = question.choices.indexOf(choice) == question.answer;
         }
-        button.addEventListener("click",selectAnswer)
-        answerButtonsElement.appendChild(button)
+        button.addEventListener("click",selectAnswer);
+        answerButtonsElement.appendChild(button);
     })
 
 }
 
 function selectAnswer(e){
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
+    const selectedButton = e.target;
+    const correct = selectedButton.dataset.correct;
     if (!correct) {
         Array.from(answerButtonsElement.children).forEach(button => {
             if (button.dataset.correct) {
-                setStatusClass(button, button.dataset.correct)
+                setStatusClass(button, button.dataset.correct);
             }
-            button.disabled = true
+            button.disabled = true;
         });
     }
     else {
         numCorrect += 1;
     }
-    setStatusClass(selectedButton, correct)
+    setStatusClass(selectedButton, correct);
     /*
     setStatusClass(document.body,correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button,button.dataset.correct)
     })
     */
-    nextButton.classList.remove("hide")
+    nextButton.classList.remove("hide");
     if(shuffledQuestions.length > currentQuestionIndex+1){
-        nextButton.classList.remove("hide")
+        nextButton.classList.remove("hide");
     } else {
         //startButton.innerText = "restart"
         //startButton.classList.remove("hide")
-        endGame()
+        endGame();
     }
 }
 async function endGame(){
-    const time = 110
-    await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect)
-    displayResults()
+    const time = 110;
+    await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect);
+    displayResults();
 }
 function setStatusClass(element,correct){
-    clearStatusClass(element)
+    clearStatusClass(element);
     if(correct){
-        element.classList.add("correct")
+        element.classList.add("correct");
     }
     else {
-        element.classList.add("wrong")
+        element.classList.add("wrong");
     }
 }
 
 function resetState(){
-    clearStatusClass(document.body)
-    nextButton.classList.add("hide")
+    clearStatusClass(document.body);
+    nextButton.classList.add("hide");
     while (answerButtonsElement.firstChild){
-        answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
 
 function clearStatusClass(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
 }
 
 async function addUserToFirebase(day, address, time, score) {
-    const baseDomain = "http://localhost:3000/add_user/"
-    const extention = day + "/" + address + "/" + time + "/" + score
+    const baseDomain = "http://localhost:3000/add_user/";
+    const extention = day + "/" + address + "/" + time + "/" + score;
     let response = await fetch(baseDomain+extention);
-    let data = await response.json()
+    let data = await response.json();
     return data;
 }
 
@@ -175,7 +175,7 @@ function getTodayDate() {
     return formattedDate;
 }
 
-let questions_list
+let questions_list;
 /*
 function _populateQlist(){
     populateQList(questions_list)
@@ -190,15 +190,15 @@ function populateQList(qList){
 _populateQlist()
 */
 
-const qElement = document.getElementById("question-container")
+const qElement = document.getElementById("question-container");
 
 function timerScreen(){
     notice.classList.add("hide");
-    qElement.classList.add("hide")
+    qElement.classList.add("hide");
     displayResult.classList.add("hide");
-    timerElement.classList.remove("hide")
-    nextButton.classList.add("hide")
-    scoreCount.classList.add("hide")
+    timerElement.classList.remove("hide");
+    nextButton.classList.add("hide");
+    scoreCount.classList.add("hide");
 
     
 }
@@ -219,7 +219,7 @@ function displayResults() {
     
     document.getElementById("player-time").innerText = userTime;
     setTimeout(() => {
-        timerScreen()
+        timerScreen();
     }, 10000);
 }
 
