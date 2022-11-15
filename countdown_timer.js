@@ -14,34 +14,34 @@ let counterInterval
 let userTimeStart
 let userTimeEnd
 
-export function counterCall() { 
+export function counterCall() {
     countdownTime = timeSeconds
     countdownContainer.classList.remove("hide")
     let minutes = Math.floor((countdownTime / (60)));
     let seconds = (countdownTime % (60));
     document.getElementById("countdown_minutes").innerText = minutes;
-    document.getElementById("countdown_seconds").innerText = seconds; 
+    document.getElementById("countdown_seconds").innerText = seconds;
     counterInterval = setInterval(counterStart, 1000);
 }
 
 function counterStart() {
-    
+
     countdownContainer.classList.remove("hide")
     let minutes = Math.floor((countdownTime / (60)));
     let seconds = (countdownTime % (60));
     document.getElementById("countdown_minutes").innerText = minutes;
-    document.getElementById("countdown_seconds").innerText = seconds; 
+    document.getElementById("countdown_seconds").innerText = seconds;
     if (countdownTime == timeSeconds) {
         userTimeStart = new Date()
     }
     if (countdownTime == 0) {
         counterStop()
     }
-    countdownTime = countdownTime-1
+    countdownTime = countdownTime - 1
 }
 export function counterStop() {
     userTimeEnd = new Date()
-    let userTime = (userTimeEnd.getTime() - userTimeStart.getTime())/1000;
+    let userTime = (userTimeEnd.getTime() - userTimeStart.getTime()) / 1000;
     clearInterval(counterInterval);
     countdownContainer.classList.add("hide")
     qElement.classList.add("hide")
