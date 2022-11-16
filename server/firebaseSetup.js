@@ -56,10 +56,10 @@ async function getDataFromDay(day) {
 
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        player_list.push([doc.data().address, doc.data().time, doc.data().score]);
+        player_list.push([doc.data().address, Number(doc.data().time), Number(doc.data().score)]);
         accounts_list.push(doc.data().address);
         //console.log(player_list);
-        console.log(doc.id, " => ", doc.data());
+        //console.log(doc.id, " => ", doc.data());
     });
 
     //sorting
@@ -70,11 +70,6 @@ async function getDataFromDay(day) {
 }
 
 // t = 110 score = 31
-
-//await addUserDataPoint("0_10_2022", "0xb8372983edce03ce839613fffba74279579268", 32, 100);
-//await addUserDataPoint("0_10_2022", "0aw8372983edce03ce839613fffba74279579268", 45, 100);
-
-//await getDataFromDay("0_10_2022");
 
 // if we assume the data is in address, time, score order
 function compare(player1, player2) {

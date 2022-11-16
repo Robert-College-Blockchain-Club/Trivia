@@ -10,38 +10,39 @@
 const leaderboardButton = document.getElementById("leaderboard-btn")
 
 let current_player;
-let player_list;
+//let player_list;
 
 leaderboardButton.addEventListener("click", showLeaderboard)
 
 async function showLeaderboard() {
-    await getPlayerListInfo(getTodayDate())
-    sortforPlayerlength()
+    let player_list = await getPlayerListInfo(getTodayDate())
+    sortforPlayerlength(player_list)
 }
 
 function getTodayDate() {
     const date = new Date();
-    const formattedDate = date.getDate() + "_" + (date.getMonth()+1) + "_" + date.getFullYear();
+    const formattedDate = date.getDate() + "_" + (date.getMonth() + 1) + "_" + date.getFullYear();
     return formattedDate;
 }
 
 async function getPlayerListInfo(day) {
     const baseDomain = "http://localhost:3000/leaderboard/";
     const extention = day;
-    let response = await fetch(baseDomain+extention);
-    player_list = await response.json();
+    let response = await fetch(baseDomain + extention);
+    let player_list = await response.json();
     console.log(player_list)
     return player_list;
 }
 
-function sortforPlayerlength() {
+function sortforPlayerlength(player_list) {
     for (let i = 0; i < player_list.length; i++) {
         current_player = player_list[i];
-        addPlayer(current_player);
+        addPlayer(player_list, current_player);
     }
 }
 
-function addPlayer(attributes) {
+function addPlayer(player_list, attributes) {
+
     // attributes = [
     //     "wallet_address",
     //     time,
@@ -65,9 +66,9 @@ function addPlayer(attributes) {
     }
     else {
         ranking.id = "ranking";
-        
+
     }
-    ranking.innerText = player_list.indexOf(attributes)+1;
+    ranking.innerText = player_list.indexOf(attributes) + 1;
 
     player.appendChild(ranking);
 
