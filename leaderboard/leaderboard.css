@@ -68,10 +68,6 @@ table td:nth-child(2) {
     max-width: 5em;
 }
 
-tbody .player:nth-child(even) {
-    background-color: #101;
-}
-
 #winner {
     color: gold;
     font-weight: 800;
@@ -80,7 +76,6 @@ tbody .player:nth-child(even) {
 #runner-up {
     color: silver;
     font-weight: 800;
-
 }
 
 #second-runner-up {
