@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -20,17 +19,16 @@ contract triviaToken is ERC20, Ownable {
         // Similar to how
         // 1 dollar = 100 cents
         // 1 token = 1 * (10 ** decimals)
-        _mint(msg.sender, 100 * 10**uint(decimals()));
+        _mint(msg.sender, 100 * 10**uint256(decimals()));
     }
 
-    uint256 public constant tokenPrice=  0.01 ether;
-    mapping(address=> uint256) public rewardList;
+    uint256 public constant tokenPrice = 0.01 ether;
+    mapping(address => uint256) public rewardList;
     event hasPayed(address payer, uint256 blockTime);
-    mapping(address=> mapping(address=> uint256)) public allowedAmount;
+    mapping(address => mapping(address => uint256)) public allowedAmount;
     uint256 public constant enterPrice = 3e18;
-    address public treasuryAddress; 
-    
-            
+    address public treasuryAddress;
+
     function mint(uint256 amount) public payable {
         // the value of ether that should be equal or greater than tokenPrice * amount;
         uint256 _requiredAmount = tokenPrice * amount;
@@ -42,58 +40,50 @@ contract triviaToken is ERC20, Ownable {
     }
 
     function setTreasuryWallet(address _treasuryAddress) external onlyOwner {
-        treasuryAddress= _treasuryAddress;
+        treasuryAddress = _treasuryAddress;
     }
-    
-    function returnaddressvalue() view public returns(address) {
+
+    function returnaddressvalue() public view returns (address) {
         return msg.sender;
     }
 
-        function addPrizeBalance(address[] calldata _addressList, uint256[] calldata _prizeList ) onlyOwner external
-    {
-        require(_addressList.length == _prizeList.length, "arrays are not the same length");
-        
-        for (uint256 i = 0; i < _addressList.length; i++)
-        {
-            rewardList[_addressList[i]] += _prizeList[i];
-        }
+    modifier onlyTreasury() {
+        require(msg.sender == treasuryAddress);
+        _;
     }
 
+    function addPrizeBalance(
+        address[] calldata _addressList,
+        uint256[] calldata _prizeList
+    ) external onlyTreasury {
+        require(
+            _addressList.length == _prizeList.length,
+            "arrays are not the same length"
+        );
+
+        for (uint256 i = 0; i < _addressList.length; i++) {
+            rewardList[_addressList[i]] += _prizeList[i];
+            increaseAllowance(_addressList[i], _prizeList[i]);
+        }
+    }
 
     function claim(uint256 amount) external {
         //amount 1e18
         require(amount <= rewardList[msg.sender], "not enough balance");
-        transferFrom(treasuryAddress , msg.sender, amount);
+        transferFrom(treasuryAddress, msg.sender, amount);
         rewardList[msg.sender] -= amount;
     }
 
     function enterTrivia() external {
-        require( enterPrice<= balanceOf(msg.sender), "Not enough ");
+        require(enterPrice <= balanceOf(msg.sender), "Not enough ");
         transfer(treasuryAddress, enterPrice);
-        emit hasPayed(msg.sender,block.timestamp);
+        emit hasPayed(msg.sender, block.timestamp);
     }
 
-
-    function withdraw() public onlyOwner  {
+    function withdraw() public onlyOwner {
         address _owner = owner();
         uint256 amount = address(this).balance;
-        (bool sent, ) =  _owner.call{value: amount}("");
+        (bool sent, ) = _owner.call{value: amount}("");
         require(sent, "Failed to send Ether");
     }
-
-    function approve(address delegate, uint256 numTokens) public override returns (bool) {
-    allowedAmount[msg.sender][delegate] = numTokens;
-    emit Approval(msg.sender, delegate, numTokens);
-    return true;
-
-    }
-
-
-
-
-
-
-
- 
 }
-
