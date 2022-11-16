@@ -33,7 +33,6 @@ function counterStart() {
     let seconds = (countdownTime % (60));
     document.getElementById("countdown_minutes").innerText = minutes;
     document.getElementById("countdown_seconds").innerText = seconds;
-
     if (countdownTime == 0) {
         counterStop();
     }

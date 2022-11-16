@@ -3,6 +3,7 @@ const { initializeApp } = require("firebase/app");
 //import { getAnalytics } from "firebase/analytics";
 const { getFirestore } = require("firebase/firestore");
 const { doc, setDoc, deleteDoc, getDoc } = require("firebase/firestore");
+const { collection, getDocs } = require("firebase/firestore");
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,6 +27,7 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app)
 
+const player_list = [];
 //format: the day and wallet address parameters have type String, timeToComplete is a number (unit seconds) 
 //and quizScore is the number of questions gotten correct
 const addUserDataPoint = async (day, walletAddress, timeToComplete, quizScore) => {
@@ -35,24 +37,21 @@ const addUserDataPoint = async (day, walletAddress, timeToComplete, quizScore) =
         score: quizScore
     }
     const docRef = await setDoc(doc(db, day, walletAddress), docData);
+
 };
 const deleteUserDataPoint = async (day, walletAddress) => {
     await deleteDoc(doc(db, day, walletAddress))
 }
 
-const fetchUserDataPoint = async (day, walletAddress) => {
-    const docRef = doc(db, day, walletAddress);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        const ret = await docSnap.data();
-        return ret;
-    }
-    return "data point no exist";
+//await fetchUserDataPoint("0_10_2022", "0xb8372983edce03ce839613fffba74279579268")
+
+const fetchUserDataPoint = async (day) => {
+    return await getDataFromDay(day)
 }
 
 async function getDataFromDay(day) {
+    // address - time - score3
     const querySnapshot = await getDocs(collection(db, day));
-    const player_list = [];
     const accounts_list = [];
 
     querySnapshot.forEach((doc) => {
@@ -63,10 +62,7 @@ async function getDataFromDay(day) {
         console.log(doc.id, " => ", doc.data());
     });
 
-    // address - time - score
-
     //sorting
-
     player_list.sort(compare);
     console.log(player_list);
     return player_list;
