@@ -27,7 +27,6 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app)
 
-const player_list = [];
 //format: the day and wallet address parameters have type String, timeToComplete is a number (unit seconds) 
 //and quizScore is the number of questions gotten correct
 const addUserDataPoint = async (day, walletAddress, timeToComplete, quizScore) => {
@@ -53,6 +52,7 @@ async function getDataFromDay(day) {
     // address - time - score3
     const querySnapshot = await getDocs(collection(db, day));
     const accounts_list = [];
+    const player_list = [];
 
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots

@@ -134,7 +134,7 @@ function selectAnswer(e){
     }
 }
 async function endGame(){
-    const time = 110;
+    userTime = counterStop(); 
     await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect);
     displayResults();
 }
@@ -205,7 +205,7 @@ function timerScreen(){
 
 
 function displayResults() {
-    userTime = counterStop(); // TODO: Fix placement
+    // TODO: Fix placement
     notice.classList.add("hide");
     qElement.classList.add("hide");
     timerElement.classList.add("hide");
