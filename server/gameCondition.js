@@ -5,11 +5,9 @@ const provider = ethers.providers.getDefaultProvider(network, {
     alchemy: "luDlseYiGHkbNcCi612EzaukVWv6eYP_"
 });
 
-const contractAddress = "0x5395207Da038a094325946df9495e61766754e92";
-
-// The ERC-20 Contract ABI, which is a common contract interface
-// for tokens (this is the Human-Readable ABI format)
-const contractAbi = [
+// ERC20
+const contractAddressERC20 = "0x5395207Da038a094325946df9495e61766754e92";
+const contractAbiERC20 = [
 	{
 		"inputs": [
 			{
@@ -496,22 +494,28 @@ const contractAbi = [
 		"type": "function"
 	}
 ];
+const triviaContract = new ethers.Contract(contractAddressERC20, contractAbiERC20, provider);
 
-// The Contract object
-const triviaContract = new ethers.Contract(contractAddress, contractAbi, provider);
 
+// ERC1155
+const contractAddressERC1155 = "";
+const contractAbiERC1155 = [];
+const contractERC1155 = new ethers.Contract(contractAddressERC1155, contractAbiERC1155, provider);
+
+// Returns true if user has ERC1155 tokens (!=0)
 function hasERC1155(contractAddress, id) {
     
-    if (balanceOf(contractAddress, id) !== 0) {
+    if (contractERC1155.balanceOf(contractAddress, id) !== 0) {
         return true;
 
     } return false;
 }
 
+
 function claim(amount) {
     try {
 
-        triviaContract.claim(amount);
+        contractERC1155.claim(amount); // TODO: should we use a signer for enterTrivia?
         
     } catch (error) {
 
@@ -519,11 +523,15 @@ function claim(amount) {
 
     }
 
-function enterTrivia() {
+function enterTrivia() { // read or write-only?
     try {
-        triviaContract.enterTrivia();
+
+        contractERC1155.enterTrivia(); // TODO: should we use a signer for enterTrivia?
+
     } catch (error) {
-        
+
+        console.log(error);
+
     }
 }
     
