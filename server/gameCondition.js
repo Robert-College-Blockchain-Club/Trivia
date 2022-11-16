@@ -1,8 +1,8 @@
 const { ethers } = require("ethers");
 
-
-const provider = ethers.providers.getDefaultProvider(network, {
-    alchemy: "luDlseYiGHkbNcCi612EzaukVWv6eYP_"
+const network = "sepolia"
+const provider = ethers.providers.getDefaultProvider(network,{
+    infura:"6d0487f989c24331b317f7be72e17056"
 });
 
 // ERC20
@@ -534,6 +534,5 @@ function enterTrivia() { // read or write-only?
 
     }
 }
-    
 
 }
