@@ -18,7 +18,7 @@ contract triviaToken is ERC20, Ownable, ReentrancyGuard {
 
     uint256 public constant tokenPrice = 0.01 ether;
     mapping(address => uint256) public rewardList;
-    mapping(address => bool) public hasPayed;
+    event hasPayed(address indexed payer, uint256 indexed blockTime);
     uint256 public constant enterPrice = 3e18;
 
     function getReward(address _account) public view returns (uint256) {
@@ -63,5 +63,6 @@ contract triviaToken is ERC20, Ownable, ReentrancyGuard {
     function enterTrivia() external nonReentrant {
         require(enterPrice <= balanceOf(msg.sender), "Not enough");
         _transfer(msg.sender, address(this), enterPrice);
+        emit hasPayed(msg.sender,block.timestamp);
     }
 }
