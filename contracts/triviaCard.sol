@@ -4,8 +4,10 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract triviaCard is Ownable, ERC1155 {
+
+contract triviaCard is Ownable, ERC1155 , ReentrancyGuard{
     IERC20 public triviaToken;
     string public name;
     string public symbol;
@@ -32,7 +34,7 @@ contract triviaCard is Ownable, ERC1155 {
 
     //only allows users to mind tokens of id 0, and an amount of 1
     //requires 5 triviaTokens to mint a regular triviaCard
-    function mintRegular() public {
+    function mintRegular() public nonReentrant{
         require(
             balanceOf(msg.sender, 0) == 0,
             "You cannot own more than one regular TriviaCard"
@@ -46,7 +48,7 @@ contract triviaCard is Ownable, ERC1155 {
         _mint(msg.sender, 0, 1, "");
     }
 
-    function mintPremium() public {
+    function mintPremium() public nonReentrant{
         require(
             balanceOf(msg.sender, 1) == 0,
             "You cannot own more than one premium TriviaCard"
