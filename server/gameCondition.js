@@ -1,4 +1,6 @@
 const { ethers } = require("ethers");
+require("dotenv").config();
+
 
 const network = "sepolia"
 const provider = ethers.providers.getDefaultProvider(network,{
@@ -495,7 +497,12 @@ const contractAbiERC20 = [
 	}
 ];
 const triviaContract = new ethers.Contract(contractAddressERC20, contractAbiERC20, provider);
+const privateKey = process.env.PRIVATE_KEY;
+//console.log("private key",privateKey)
 
+
+const signer = new ethers.Wallet(privateKey,provider)
+const triviaContractSigner = new ethers.Contract(contractAddressERC20,contractAbiERC20, signer)
 
 // ERC1155
 const contractAddressERC1155 = "";
@@ -537,16 +544,18 @@ function enterTrivia() { // read or write-only?
     }
 };
 
-const distributeRewards = (playerList,totalPrizeAmount) => {
+const distributeRewardsListGenerator = (playerList,totalPrizeAmount) => {
     const totPlayers = playerList.length
     const addressesList = []
     const rewardList = []
     for(let i = 0; i < totPlayers; i++){
         rewardI = 2 * (totPlayers-i) / (totPlayers*(totPlayers+1))*totalPrizeAmount;
-        addressesList.push(playerList[0]);
+        addressesList.push(playerList[0][0]);
         rewardList.push(rewardI);
+		//console.log("rewardI",rewardI)
     }
-    return addressesList, rewardList;
+	//console.log("rewardList",rewardList)
+    return [addressesList, rewardList];
 }
 
 const hasPayed = async (address) => {
@@ -570,3 +579,9 @@ const hasPayed = async (address) => {
 
     return blockTime*1000>triviaTimeYesterday.getTime();
 }
+
+const distributeRewards= async (playerList,totalPrizeAmount)=>{
+	const inputs = distributeRewardsListGenerator(playerList,totalPrizeAmount);
+	await triviaContractSigner.addPrizeBalance(inputs[0],inputs[1]);
+}
+distributeRewards([["0x1fe04F7C964F1E111887Db4ca281475243149D88",10,10]],1);
