@@ -1,10 +1,10 @@
 import {startGame} from "../trivia_script.js";
-import { counterCall } from "./countdown_timer.js";
+
 // Set the date we're counting down to
 const right_now = new Date()
 const trivia_time_today = new Date()
-const trivia_hour = 15
-const trivia_minute = 4
+const trivia_hour = 19
+const trivia_minute = 0
 trivia_time_today.setHours(trivia_hour)
 trivia_time_today.setMinutes(trivia_minute)
 trivia_time_today.setSeconds(0)

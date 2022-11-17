@@ -46,12 +46,6 @@ table td {
     text-align: center;
     border-radius: 30px;
 }
-
-tbody .player {
-    box-shadow: 0 2px rgba(100, 100, 100, .5);
-    border-radius: 30px;
-}
-
 tbody .player:hover {
     transform: scale(1.025);
     transition: .2s ease-in-out;
@@ -67,7 +61,9 @@ tbody .player td:nth-child(2) p {
 table td:nth-child(2) {
     max-width: 5em;
 }
-
+tbody .player:nth-child(even) {
+    background-color: rgb(54, 194, 19);
+}
 #winner {
     color: gold;
     font-weight: 800;

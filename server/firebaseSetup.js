@@ -10,13 +10,13 @@ const { collection, getDocs } = require("firebase/firestore");
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDbMdpRMBvFVPwRMyp7-B11b39Qq79z27I",
-    authDomain: "trivia-test-9b9b5.firebaseapp.com",
-    projectId: "trivia-test-9b9b5",
-    storageBucket: "trivia-test-9b9b5.appspot.com",
-    messagingSenderId: "221612426515",
-    appId: "1:221612426515:web:fa6e0c144893c3cb0906e6",
-    measurementId: "G-XP157QN3WP"
+    apiKey: "AIzaSyAfLwx_P5QR0vAxKUEIbL9IWhSviOnh87c",
+    authDomain: "trivia-2-80403.firebaseapp.com",
+    projectId: "trivia-2-80403",
+    storageBucket: "trivia-2-80403.appspot.com",
+    messagingSenderId: "196141378908",
+    appId: "1:196141378908:web:5990f4fc16809422586599",
+    measurementId: "G-TZ6D26YB4S"
 };
 
 // Initialize Firebase
