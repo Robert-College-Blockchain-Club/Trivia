@@ -64,8 +64,8 @@ contract triviaCard is Ownable, ERC1155 , ReentrancyGuard{
 
     function burn(
         address _address,
-        uint _id,
-        uint _amount
+        uint256 _id,
+        uint256 _amount
     ) external onlyOwner {
         _burn(_address, _id, _amount);
     }

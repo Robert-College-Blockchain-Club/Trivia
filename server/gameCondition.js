@@ -1,4 +1,6 @@
 const { ethers } = require("ethers");
+require("dotenv").config();
+
 
 const network = "sepolia"
 const provider = ethers.providers.getDefaultProvider(network,{
@@ -6,6 +8,10 @@ const provider = ethers.providers.getDefaultProvider(network,{
 });
 
 // ERC20
+
+//status update:
+//claim, distributeRewards, enterTrivia works.
+//to-do: make sure this is in-line with user flow, as in, we use provider.getSigner(0); and getDefaultProvider(window.ethereum); etc.
 const contractAddressERC20 = "0x5395207Da038a094325946df9495e61766754e92";
 const contractAbiERC20 = [
 	{
@@ -495,7 +501,12 @@ const contractAbiERC20 = [
 	}
 ];
 const triviaContract = new ethers.Contract(contractAddressERC20, contractAbiERC20, provider);
+const privateKey = process.env.PRIVATE_KEY;
+//console.log("private key",privateKey)
 
+
+const signer = new ethers.Wallet(privateKey,provider)
+const triviaContractSigner = new ethers.Contract(contractAddressERC20,contractAbiERC20, signer)
 
 // ERC1155
 const contractAddressERC1155 = "";
@@ -516,7 +527,7 @@ function hasERC1155(contractAddress, id) {
 function claim(amount) {
     try {
 
-        contractERC1155.claim(amount); // TODO: should we use a signer for enterTrivia?
+        triviaContractSigner.claim(amount); // TODO: should we use a signer for enterTrivia?
         
     } catch (error) {
 
@@ -528,7 +539,7 @@ function claim(amount) {
 function enterTrivia() { // read or write-only?
     try {
 
-        contractERC1155.enterTrivia(); // TODO: should we use a signer for enterTrivia?
+        triviaContractSigner.enterTrivia(); // TODO: should we use a signer for enterTrivia?
 
     } catch (error) {
 
@@ -537,16 +548,18 @@ function enterTrivia() { // read or write-only?
     }
 };
 
-const distributeRewards = (playerList,totalPrizeAmount) => {
+const distributeRewardsListGenerator = (playerList,totalPrizeAmount) => {
     const totPlayers = playerList.length
     const addressesList = []
     const rewardList = []
     for(let i = 0; i < totPlayers; i++){
         rewardI = 2 * (totPlayers-i) / (totPlayers*(totPlayers+1))*totalPrizeAmount;
-        addressesList.push(playerList[0]);
+        addressesList.push(playerList[0][0]);
         rewardList.push(rewardI);
+		//console.log("rewardI",rewardI)
     }
-    return addressesList, rewardList;
+	//console.log("rewardList",rewardList)
+    return [addressesList, rewardList];
 }
 
 const hasPayed = async (address) => {
@@ -570,3 +583,8 @@ const hasPayed = async (address) => {
 
     return blockTime*1000>triviaTimeYesterday.getTime();
 }
+
+const distributeRewards= async (playerList,totalPrizeAmount)=>{
+	const inputs = distributeRewardsListGenerator(playerList,totalPrizeAmount);
+	await triviaContractSigner.addPrizeBalance(inputs[0],inputs[1]);
+};

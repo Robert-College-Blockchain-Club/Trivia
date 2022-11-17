@@ -6,18 +6,19 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
+
 contract triviaToken is ERC20, Ownable, ReentrancyGuard {
     constructor(string memory name, string memory symbol) ERC20(name, symbol) {
         // Mint 100 tokens to msg.sender
         // Similar to how
         // 1 dollar = 100 cents
         // 1 token = 1 * (10 ** decimals)
-        _mint(msg.sender, 100 * 10**uint256(decimals()));
+        _mint(msg.sender, 100 * 10**uint(decimals()));
     }
 
     uint256 public constant tokenPrice = 0.01 ether;
     mapping(address => uint256) public rewardList;
-    mapping(address => bool) public hasPayed;
+    event hasPayed(address indexed payer, uint256 indexed blockTime);
     uint256 public constant enterPrice = 3e18;
 
     function getReward(address _account) public view returns (uint256) {
@@ -52,7 +53,7 @@ contract triviaToken is ERC20, Ownable, ReentrancyGuard {
         }
     }
 
-    function claim(uint256 amount) external nonReentrant {
+    function claim(uint256 amount)  external nonReentrant {
         //amount 1e18
         require(amount <= rewardList[msg.sender], "not enough balance");
         rewardList[msg.sender] -= amount;
@@ -62,5 +63,6 @@ contract triviaToken is ERC20, Ownable, ReentrancyGuard {
     function enterTrivia() external nonReentrant {
         require(enterPrice <= balanceOf(msg.sender), "Not enough");
         _transfer(msg.sender, address(this), enterPrice);
+        emit hasPayed(msg.sender,block.timestamp);
     }
 }
