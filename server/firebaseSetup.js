@@ -9,13 +9,13 @@ const { doc, setDoc, deleteDoc, getDoc } = require("firebase/firestore");
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDbMdpRMBvFVPwRMyp7-B11b39Qq79z27I",
-  authDomain: "trivia-test-9b9b5.firebaseapp.com",
-  projectId: "trivia-test-9b9b5",
-  storageBucket: "trivia-test-9b9b5.appspot.com",
-  messagingSenderId: "221612426515",
-  appId: "1:221612426515:web:fa6e0c144893c3cb0906e6",
-  measurementId: "G-XP157QN3WP"
+    apiKey: "AIzaSyACvyGUz4g4KbIFYCBJ8sXIgzTAMeBzex0",
+    authDomain: "trivia-dapp.firebaseapp.com",
+    projectId: "trivia-dapp",
+    storageBucket: "trivia-dapp.appspot.com",
+    messagingSenderId: "396046274473",
+    appId: "1:396046274473:web:897f3f61b92fceec6bbeb8",
+    measurementId: "G-S6VZCXS4YZ"
 };
 
 // Initialize Firebase
