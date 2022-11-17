@@ -51,21 +51,20 @@ function validatorForGame(accounts, arg) {
 
     }
     // Second condition: has the user ERC1155?
-    else if (currentAccount.hasERC1155() === false) { // How can I pass arguments?
+    if (currentAccount.hasERC1155(currentAccount) === false) {
         timerElement.classList.add("hide");
         notice.innerText = "You do not have any ERC1155 tokens. The link to the marketplace to mint some is: " // link insertion needed
         notice.classList.remove("hide");
 
     }
-    else if(currentAccount.hasPayed() === false) { // arguments?
+    if(currentAccount.hasPayed(currentAccount) === false) {
 
-        try {
-            currentAccount.balanceOf() >= price; // TODO: price will be determined
-        } catch (error) {
+        if (currentAccount.balanceOf() >= price){ // TODO: price will be determined + balanceOf declaration correct?
+            enterTrivia(); 
+        } else {
             timerElement.classList.add("hide");
             notice.innerText = "You do not have enough balance. The link to the marketplace to mint some ERC20 is: " // link insertion needed
             notice.classList.remove("hide");            
-            // or just console.log(error)
         } 
 
     }
