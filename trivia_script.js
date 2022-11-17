@@ -1,6 +1,6 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
-import { questions,generateSampleQuestion, getOpenDbQuestions } from "./questions.js"
-import {counterStop, counterCall} from "./countdown_timer.js"
+import { questions, generateSampleQuestion, getOpenDbQuestions } from "./questions.js"
+import { counterStop, counterCall } from "./countdown_timer.js"
 
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
@@ -17,8 +17,8 @@ const displayResult = document.getElementById("results"); // displaying results 
 let userTime
 
 
-startButton.addEventListener("click",startGame)
-nextButton.addEventListener("click",()=>{
+startButton.addEventListener("click", startGame)
+nextButton.addEventListener("click", () => {
     currentQuestionIndex++
     setNextQuestion()
 })
@@ -30,7 +30,7 @@ let shuffledQuestions, currentQuestionIndex, numCorrect
 let final_score = 300
 let record = 100 // record of the player (in s)
 
-export async function startGame(){
+export async function startGame() {
     //checkConnection();
     questions_list = await getOpenDbQuestions()
     if (window.ethereum !== "undefined") {
@@ -44,9 +44,29 @@ export async function startGame(){
 }
 
 function validatorForGame(accounts, arg) {
+    // First condition: wallet connected?
     if (accounts.length === 0) {
         // MetaMask is locked or the user has not connected any accounts
         walletAlternate(arg);
+
+    }
+    // Second condition: has the user ERC1155?
+    else if (currentAccount.hasERC1155() === false) { // How can I pass arguments?
+        timerElement.classList.add("hide");
+        notice.innerText = "You do not have any ERC1155 tokens. The link to the marketplace to mint some is: " // link insertion needed
+        notice.classList.remove("hide");
+
+    }
+    else if(currentAccount.hasPayed() === false) { // arguments?
+
+        try {
+            currentAccount.balanceOf() >= price; // TODO: price will be determined
+        } catch (error) {
+            timerElement.classList.add("hide");
+            notice.innerText = "You do not have enough balance. The link to the marketplace to mint some ERC20 is: " // link insertion needed
+            notice.classList.remove("hide");            
+            // or just console.log(error)
+        } 
 
     }
     else {
@@ -80,29 +100,29 @@ export async function walletAlternate(arg) {
     };
 };
 
-function setNextQuestion(){
+function setNextQuestion() {
     resetState()
     scoreCount.innerText = numCorrect + "/" + currentQuestionIndex
     showQuestion(shuffledQuestions[currentQuestionIndex])
 }
 
-function showQuestion(question){
+function showQuestion(question) {
     questionElement.innerText = question.prompt //check
     console.log(question)
     question.choices.forEach(choice => {
         const button = document.createElement("button")
         button.innerText = choice
         button.classList.add('btn');
-        if(question.choices.indexOf(choice) == question.answer) {
+        if (question.choices.indexOf(choice) == question.answer) {
             button.dataset.correct = question.choices.indexOf(choice) == question.answer
         }
-        button.addEventListener("click",selectAnswer)
+        button.addEventListener("click", selectAnswer)
         answerButtonsElement.appendChild(button)
     })
 
 }
 
-function selectAnswer(e){
+function selectAnswer(e) {
     const selectedButton = e.target
     const correct = selectedButton.dataset.correct
     if (!correct) {
@@ -124,7 +144,7 @@ function selectAnswer(e){
     })
     */
     nextButton.classList.remove("hide")
-    if(shuffledQuestions.length > currentQuestionIndex+1){
+    if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove("hide")
     } else {
         //startButton.innerText = "restart"
@@ -132,14 +152,14 @@ function selectAnswer(e){
         endGame()
     }
 }
-async function endGame(){
+async function endGame() {
     const time = 110
     await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect)
     displayResults()
 }
-function setStatusClass(element,correct){
+function setStatusClass(element, correct) {
     clearStatusClass(element)
-    if(correct){
+    if (correct) {
         element.classList.add("correct")
     }
     else {
@@ -147,10 +167,10 @@ function setStatusClass(element,correct){
     }
 }
 
-function resetState(){
+function resetState() {
     clearStatusClass(document.body)
     nextButton.classList.add("hide")
-    while (answerButtonsElement.firstChild){
+    while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild)
     }
 }
@@ -163,14 +183,14 @@ function clearStatusClass(element) {
 async function addUserToFirebase(day, address, time, score) {
     const baseDomain = "http://localhost:3000/add_user/"
     const extention = day + "/" + address + "/" + time + "/" + score
-    let response = await fetch(baseDomain+extention);
+    let response = await fetch(baseDomain + extention);
     let data = await response.json()
     return data;
 }
 
 function getTodayDate() {
     const date = new Date();
-    const formattedDate = date.getDate() + "_" + (date.getMonth()+1) + "_" + date.getFullYear();
+    const formattedDate = date.getDate() + "_" + (date.getMonth() + 1) + "_" + date.getFullYear();
     return formattedDate;
 }
 
@@ -191,7 +211,7 @@ _populateQlist()
 
 const qElement = document.getElementById("question-container")
 
-function timerScreen(){
+function timerScreen() {
     notice.classList.add("hide");
     qElement.classList.add("hide")
     displayResult.classList.add("hide");
@@ -199,7 +219,7 @@ function timerScreen(){
     nextButton.classList.add("hide")
     scoreCount.classList.add("hide")
 
-    
+
 }
 
 function displayResults() {
