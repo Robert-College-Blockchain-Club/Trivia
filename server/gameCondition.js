@@ -512,6 +512,7 @@ function hasERC1155(contractAddress, id) {
 }
 
 
+
 function claim(amount) {
     try {
 
@@ -522,6 +523,7 @@ function claim(amount) {
         console.log(error);
 
     }
+}
 
 function enterTrivia() { // read or write-only?
     try {
@@ -533,6 +535,38 @@ function enterTrivia() { // read or write-only?
         console.log(error);
 
     }
+};
+
+const distributeRewards = (playerList,totalPrizeAmount) => {
+    const totPlayers = playerList.length
+    const addressesList = []
+    const rewardList = []
+    for(let i = 0; i < totPlayers; i++){
+        rewardI = 2 * (totPlayers-i) / (totPlayers*(totPlayers+1))*totalPrizeAmount;
+        addressesList.push(playerList[0]);
+        rewardList.push(rewardI);
+    }
+    return addressesList, rewardList;
 }
 
+const hasPayed = async (address) => {
+    const filter = triviaContract.filters.hasPayed(address,null);
+    const query = await triviaContract.queryFilter(filter);
+    let blockTime = query[0].args.blockTime.toNumber(); //check which index should be used
+
+    const triviaHour = 19
+    const triviaMinute = 0
+    const triviaTimeYesterday = new Date();
+    triviaTimeYesterday.setHours(triviaHour)
+    triviaTimeYesterday.setMinutes(triviaMinute)
+    triviaTimeYesterday.setSeconds(0)
+    triviaTimeYesterday.setUTCMilliseconds(0)
+    const rightNow = new Date();
+
+    while(rightNow.getTime()>triviaTimeYesterday.getTime()){
+        triviaTimeYesterday.setDate(triviaTimeYesterday.getDate()+1)
+    }
+    triviaTimeYesterday.setDate(triviaTimeYesterday.getDate()-1);
+
+    return blockTime*1000>triviaTimeYesterday.getTime();
 }
