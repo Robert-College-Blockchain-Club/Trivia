@@ -9,14 +9,16 @@ const { collection, getDocs } = require("firebase/firestore");
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+require('dotenv').config();
+
 const firebaseConfig = {
-    apiKey: "AIzaSyAfLwx_P5QR0vAxKUEIbL9IWhSviOnh87c",
-    authDomain: "trivia-2-80403.firebaseapp.com",
-    projectId: "trivia-2-80403",
-    storageBucket: "trivia-2-80403.appspot.com",
-    messagingSenderId: "196141378908",
-    appId: "1:196141378908:web:5990f4fc16809422586599",
-    measurementId: "G-TZ6D26YB4S"
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase

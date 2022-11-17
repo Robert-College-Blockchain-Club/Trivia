@@ -215,9 +215,10 @@ function displayResults() {
     displayResult.classList.remove("hide");
 
     final_score = numCorrect * 10;
-    document.getElementById("player-score").innerText = final_score;
-    
+    document.getElementById("player-score").innerText = final_score;    
     document.getElementById("player-time").innerText = userTime;
+    document.getElementById("player-time").innerText = record;
+    
     setTimeout(() => {
         timerScreen();
     }, 10000);
