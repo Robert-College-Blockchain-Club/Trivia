@@ -1,37 +1,63 @@
 import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.5.4.esm.min.js";
-//import { abi,token_address, card_address, prizes_address } from "../constants";
+import { abi,token_address, card_address} from "../constants";
 
 
- export async function getContract() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = await provider.getSigner(0);
-    console.log("can you see this man");
-    const userAddress = await signer.getAddress();
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = await provider.getSigner(0);
+console.log("can you see this man");
+const userAddress = await signer.getAddress();
+const tokenContract = new ethers.Contract(token_address, abi, signer);
+const cardContract = new ethers.Contract(card_address, abi, signer);
 
-    const tokenContract = new ethers.Contract(token_address, abi, signer);
-    const cardContract = new ethers.Contract(card_address, abi, signer);
 
-    return tokenContract, cardContract, signer;
+
+async function approveContract()  {
+    try {
+        const amountApproved = ethers.BigNumber.from("1000000000000000000000000");
+        await tokenContract.approve(cardContract.address, amountApproved);
+    } catch (err) {
+        console.log(err)
+    }
 }
 
  export async function mintRegularCard() {
     try {
-        tokenContract, cardContract, signer = getContract();
         let success= false;
         
+        await approveContract();
         await cardContract.mintRegular();
-        //if (await cardContract.balanceOf())
-        
+        if (await cardContract.balanceOf(signer.getAddress(), 0) == 1) 
+        {
+            success= true;
+            console.log("succesfully minted a regular card")
+        } else 
+        {
+            console.log("unsuccesful transaction, failed to mint")
+        }
+        return success;
 
     } catch (err) {
         console.log(err)
     }
 }
 
+
  export async function mintPremiumCard() {
     try {
-        tokenContract, cardContract= getContract();
 
+        let success= false;
+        
+        await approveContract();
+        await cardContract.mintPremium();
+        if (await cardContract.balanceOf(signer.getAddress(), 1) == 1) 
+        {
+            success= true;
+            console.log("succesfully minted a premium card")
+        } else 
+        {
+            console.log("unsuccesful transaction, failed to mint")
+        }
+        return success;
 
     } catch (err) {
         console.log(err)
@@ -40,7 +66,6 @@ import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.5.4.esm.min.js";
 
  export async function mintToken(_amount){
     try {
-        tokenContract, cardContract, signer = getContract();
         let success= false;
         //amount to be an int 
         const mintAmount = _amount.toString() + "00000000000000000";
@@ -68,17 +93,15 @@ import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.5.4.esm.min.js";
 
  export async function seeBalance() {
     try {
-        tokenContract, cardContract= getContract();
+        var tokenBalance;
+        var regularCardBalance;
+        var premiumCardBalance;
 
-    } catch (err) {
-        console.log(err)
-    }
-}
-
- export async function totalSupplyCard() {
-    try {
-        tokenContract, cardContract= getContract();
-
+        tokenBalance = await tokenContract.balanceOf(signer.getAddress());
+        regularCardBalance = await cardContract.balanceOf(signer.getAddress(), 0);
+        premiumCardBalance = await cardContract.balanceOf(signer.getAddress(), 1);
+        
+        return [tokenBalance, regularCardBalance, premiumCardBalance];
     } catch (err) {
         console.log(err)
     }
@@ -86,21 +109,15 @@ import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.5.4.esm.min.js";
 
  export async function totalSupplyToken() {
     try {
-        tokenContract, cardContract= getContract();
+        var totalSupply = await tokenContract.totalSupply();
+        return totalSupply;
 
     } catch (err) {
         console.log(err)
     }
 }
 
- export async function displayInventory() {
-    try {
-        tokenContract, cardContract= getContract();
 
-    } catch (err) {
-        console.log(err)
-    }
-}
 
 
 
