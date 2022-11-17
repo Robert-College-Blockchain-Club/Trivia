@@ -133,7 +133,7 @@ function selectAnswer(e){
     }
 }
 async function endGame(){
-    const time = 110
+    userTime = counterStop()
     await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect)
     displayResults()
 }
@@ -212,7 +212,7 @@ function displayResults() {
     displayResult.classList.remove("hide");
     document.getElementById("player-score").innerText = final_score;
     document.getElementById("player-time").innerText = record;
-    userTime = counterStop()
+    
     setTimeout(() => {
         timerScreen()
     }, 10000);
