@@ -10,13 +10,17 @@
     <div id="container">
         <button id="connect-btn" class="top-right">Connect to Metamask</button>
         <button id="mint-regular-btn" class="top-right">Mint Regular Card</button>
-        <button id="mint-premium-btn"class="top-right">Mint Premium Card</button>
+        <button id="mint-premium-btn" class="top-right">Mint Premium Card</button>
+        <p id="premium-balance"></p>
+        <p id="regular-balance">Regular Balance:</p>
+        <p id="token-balance">Token Balance:</p>
+        <p id="token-supply">Total Supply</p>
     
         <div id="mint-token-container">
-            <p id = "display-cost"></p>
+            <p id = "display-cost">Cost: 0.01 eth</p>
             <form>
                 <input id="amount-input" placeholder="enter token amount"/>
-                <button>Mint</button>
+                <button id="mint-token-btn">Mint</button>
             </form>
         </div>
     </div>
