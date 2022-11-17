@@ -1,6 +1,7 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
-import { questions,generateSampleQuestion, getOpenDbQuestions } from "./questions.js";
-import {counterStop, counterCall} from "./timer/countdown_timer.js";
+import { questions, generateSampleQuestion, getOpenDbQuestions } from "./questions.js"
+import { counterStop, counterCall } from "./countdown_timer.js"
+
 
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
@@ -19,6 +20,7 @@ let userTime
 
 
 
+
 startButton.addEventListener("click",startGame);
 nextButton.addEventListener("click",()=>{
     currentQuestionIndex++;
@@ -31,7 +33,7 @@ let shuffledQuestions, currentQuestionIndex, numCorrect;
 
 let final_score;
 
-export async function startGame(){
+export async function startGame() {
     //checkConnection();
     questions_list = await getOpenDbQuestions();
     if (window.ethereum !== "undefined") {
@@ -45,9 +47,28 @@ export async function startGame(){
 }
 
 function validatorForGame(accounts, arg) {
+    // First condition: wallet connected?
     if (accounts.length === 0) {
         // MetaMask is locked or the user has not connected any accounts
         walletAlternate(arg);
+
+    }
+    // Second condition: has the user ERC1155?
+    if (currentAccount.hasERC1155(currentAccount) === false) {
+        timerElement.classList.add("hide");
+        notice.innerText = "You do not have any ERC1155 tokens. The link to the marketplace to mint some is: " // link insertion needed
+        notice.classList.remove("hide");
+
+    }
+    if(currentAccount.hasPayed(currentAccount) === false) {
+
+        if (currentAccount.balanceOf() >= price){ // TODO: price will be determined + balanceOf declaration correct?
+            enterTrivia(); 
+        } else {
+            timerElement.classList.add("hide");
+            notice.innerText = "You do not have enough balance. The link to the marketplace to mint some ERC20 is: " // link insertion needed
+            notice.classList.remove("hide");            
+        } 
 
     }
     else {
@@ -81,6 +102,7 @@ export async function walletAlternate(arg) {
     }
 }
 
+
 function setNextQuestion(){
     resetState();
     scoreCount.innerText = numCorrect + "/" + currentQuestionIndex;
@@ -102,6 +124,7 @@ function showQuestion(question){
     })
 
 }
+
 
 function selectAnswer(e){
     const selectedButton = e.target;
@@ -133,6 +156,7 @@ function selectAnswer(e){
         endGame();
     }
 }
+
 async function endGame(){
     userTime = counterStop(); 
     await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect);
@@ -147,6 +171,7 @@ function setStatusClass(element,correct){
         element.classList.add("wrong");
     }
 }
+
 
 function resetState(){
     clearStatusClass(document.body);
@@ -171,7 +196,7 @@ async function addUserToFirebase(day, address, time, score) {
 
 function getTodayDate() {
     const date = new Date();
-    const formattedDate = date.getDate() + "_" + (date.getMonth()+1) + "_" + date.getFullYear();
+    const formattedDate = date.getDate() + "_" + (date.getMonth() + 1) + "_" + date.getFullYear();
     return formattedDate;
 }
 
@@ -192,7 +217,7 @@ _populateQlist()
 
 const qElement = document.getElementById("question-container");
 
-function timerScreen(){
+function timerScreen() {
     notice.classList.add("hide");
     qElement.classList.add("hide");
     displayResult.classList.add("hide");
@@ -200,7 +225,7 @@ function timerScreen(){
     nextButton.classList.add("hide");
     scoreCount.classList.add("hide");
 
-    
+
 }
 
 
