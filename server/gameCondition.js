@@ -8,6 +8,10 @@ const provider = ethers.providers.getDefaultProvider(network,{
 });
 
 // ERC20
+
+//status update:
+//claim works, distributeRewards works too.
+//to-do: make sure this is in-line with user flow, as in, we use provider.getSigner(0); and getDefaultProvider(window.ethereum); etc.
 const contractAddressERC20 = "0x5395207Da038a094325946df9495e61766754e92";
 const contractAbiERC20 = [
 	{
@@ -523,7 +527,7 @@ function hasERC1155(contractAddress, id) {
 function claim(amount) {
     try {
 
-        contractERC1155.claim(amount); // TODO: should we use a signer for enterTrivia?
+        triviaContractSigner.claim(amount); // TODO: should we use a signer for enterTrivia?
         
     } catch (error) {
 
@@ -584,4 +588,3 @@ const distributeRewards= async (playerList,totalPrizeAmount)=>{
 	const inputs = distributeRewardsListGenerator(playerList,totalPrizeAmount);
 	await triviaContractSigner.addPrizeBalance(inputs[0],inputs[1]);
 }
-distributeRewards([["0x1fe04F7C964F1E111887Db4ca281475243149D88",10,10]],1);
