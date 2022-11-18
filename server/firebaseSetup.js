@@ -91,7 +91,7 @@ function compare(player1, player2) {
 
 
 module.exports = {
-    addUserDataPoint, deleteUserDataPoint, fetchUserDataPoint
+    addUserDataPoint, deleteUserDataPoint, fetchUserDataPoint, getDataFromDay
 }
 
 
