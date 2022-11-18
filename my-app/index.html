@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="container">
+        <button id="connect-btn" class="top-right">Connect to Metamask</button>
+        <button id="mint-regular-btn" class="top-right">Mint Regular Card</button>
+        <button id="mint-premium-btn" class="top-right">Mint Premium Card</button>
+        <p id="premium-balance"></p>
+        <p id="regular-balance">Regular Balance:</p>
+        <p id="token-balance">Token Balance:</p>
+        <p id="token-supply">Total Supply</p>
+    
+        <div id="mint-token-container">
+            <p id = "display-cost">Cost: 0.01 eth</p>
+            
+            <input id="amount-input" type="text" placeholder="enter token amount"/>
+            <button id="mint-token-btn">Mint</button>
+        
+        </div>
+    </div>
+
+    <script type="module" src="./app.js"> </script>
+</body>
+</html>
