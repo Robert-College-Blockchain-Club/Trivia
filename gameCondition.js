@@ -1,7 +1,7 @@
 import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.5.4.esm.min.js";
 import { ERC20ABI, ERC1155ABI } from "./constants/constants.js"
 //require("dotenv").config();
-
+console.log(ERC20ABI);
 
 const network = "sepolia"
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -26,26 +26,30 @@ const contractAddressERC1155 = "0x85B714fDEeaabD026225e0362A6F865836974f42";
 const contractERC1155 = new ethers.Contract(contractAddressERC1155, ERC1155ABI, provider);
 
 // Returns true if user has ERC1155 tokens (!=0)
-export async function hasERC1155(accountAddress, id) {
-	const bigNumBal = await contractERC1155.balanceOf(accountAddress,id);
-	const num = bigNumBal.toNumber();
-	if (num !== 0) {
+export async function hasERC1155(accountAddress) {
+	const balanceRegular = await contractERC1155.balanceOf(accountAddress,0);
+    const balancePremium = await contractERC1155.balanceOf(accountAddress,1);
+    if( balanceRegular > 0 || balancePremium>0)
+    {
         return true;
-
-    } return false;
+    } else 
+    {
+        return false;
+    }
 }
-
-export function amountAvailable() {
-    const amount= triviaContract.rewardList(signer.getAddress());
+export async function amountAvailable() {
+    console.log("ıfrejıwqekmfwkmkfqwkm");
+    console.log(signer.getAddress());
+    const amount= await triviaContract.getReward(signer.getAddress());
     return amount;
 }
 
-export function claim(_amount) {
+export async function claim(_amount) {
     try {
         // amount to be an integer 
-        amountstr= _amount.toString() + "000000000000000000";
-        amount = ethers.BigNumber.from(amountstr);
-        triviaContractSigner.claim(amount); // TODO: should we use a signer for enterTrivia?
+        let amountstr= _amount.toString() + "000000000000000000";
+        let amount = ethers.BigNumber.from(amountstr);
+        await triviaContract.claim(amount); // TODO: should we use a signer for enterTrivia?
 
         
     } catch (error) {
@@ -84,6 +88,7 @@ const distributeRewardsListGenerator = (playerList,totalPrizeAmount) => {
 export const hasPayed = async (address) => {
     const filter = triviaContract.filters.hasPayed(address,null);
     const query = await triviaContract.queryFilter(filter);
+    if(query.length == 0) {return false;}
     let blockTime = query[query.length-1].args.blockTime.toNumber(); //check which index should be used
 
     const triviaHour = 19
