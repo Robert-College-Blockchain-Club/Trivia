@@ -17,11 +17,6 @@ export const timerElement = document.getElementById("countdown");
 const scoreCount = document.getElementById("scoreboard");
 const notice = document.getElementById("notice"); // will be displayed if wallet isn't connected
 const displayResult = document.getElementById("results"); // displaying results of the player in the end
-const noticeWarning = document.getElementById("notice-warning");
-const startAndConnect = document.getElementById("cnn_and_start");
-const triviaPayment = document.getElementById("enter_trivia");
-triviaPayment.addEventListener("click",enterTrivia);
-
 let userTime
 
 
@@ -53,8 +48,7 @@ export async function startGame() {
     }
 }
 
-async function validatorForGame(accounts, arg) {
-    console.log("readed validator for game")
+function validatorForGame(accounts, arg) {
     // First condition: wallet connected?
     if (accounts.length === 0) {
         // MetaMask is locked or the user has not connected any accounts
@@ -77,37 +71,27 @@ async function validatorForGame(accounts, arg) {
         setNextQuestion();
         counterCall();
         */
-        
     }
     // Second condition: has the user ERC1155?
-
-    //console.log(await hasERC1155(currentAccount,0))
-    while (!(await hasERC1155(currentAccount,0))) {
+    if (!hasERC1155(currentAccount)) {
         timerElement.classList.add("hide");
+        notice.innerText = "You do not have any ERC1155 tokens. The link to the marketplace to mint some is: " // link insertion needed
         notice.classList.remove("hide");
-        noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace" // link insertion needed
-        startAndConnect.classList.add("hide");
+
     }
-    //console.log("hasPayed(currentAccount)", await hasPayed(currentAccount))
-    while(!(await hasPayed(currentAccount))) {
-        console.log(await hasPayed(currentAccount))
-        timerElement.classList.add("hide");
-        startAndConnect.classList.add("hide");
-        noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below." // link insertion needed
-        notice.classList.remove("hide");
-    } 
-    numCorrect = 0;
-    notice.classList.add("hide");
-    timerElement.classList.add("hide");
-    shuffledQuestions = questions_list.sort(() => Math.random() - .5);
-    currentQuestionIndex = 0;
-    questionContainerElement.classList.remove("hide");
-    scoreCount.classList.remove("hide");
-    setNextQuestion();
-    counterCall();
+    if(!hasPayed(currentAccount)) {
 
-}
+        if (currentAccount.balanceOf() >= price){ // TODO: price will be determined + balanceOf declaration correct?
+            enterTrivia(); 
+        } else {
+            timerElement.classList.add("hide");
+            notice.innerText = "You do not have enough balance. The link to the marketplace to mint some ERC20 is: " // link insertion needed
+            notice.classList.remove("hide");            
+        } 
+
+    }
     
+}
 /**
  * 
  * @param {} arg: "start if game should start, not start if it shouldn't
@@ -282,6 +266,8 @@ async function showClaim() {
     await claim(claimVal);
 }
 
-claimAmount.innerText = ("Amount you can claim:" + await amountAvailable());
+const amount= await amountAvailable();
+console.log(amount)
+claimAmount.innerText = ("Amount you can claim:" + amount);
 
 //testButton.addEventListener("click",_populateQlist)
