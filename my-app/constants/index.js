@@ -1,5 +1,5 @@
-export const token_address = "0x09e0AC4342B0397187DA2096746a7f024c6435C3";
-export const card_address = "0x44158141A039103769f51D532Cd19d660bD664E1";
+export const token_address = "0x5395207Da038a094325946df9495e61766754e92";
+export const card_address = "0x85B714fDEeaabD026225e0362A6F865836974f42";
 export const tokenAbi = [
 	{
 		"inputs": [
