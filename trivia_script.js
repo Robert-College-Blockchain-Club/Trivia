@@ -116,6 +116,7 @@ async function validatorForGame(accounts, arg) {
 
         notice.classList.remove("hide");
         noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below.";
+        marketplaceButton.classList.remove("hide");
         triviaPayment.classList.remove("hide");
     }
     numCorrect = 0;
