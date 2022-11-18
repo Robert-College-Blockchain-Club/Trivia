@@ -84,7 +84,7 @@ async function validatorForGame(accounts, arg) {
     }
     //console.log("hasPayed(currentAccount)", await hasPayed(currentAccount))
     while (!(await hasPayed(currentAccount))) {
-        console.log(await hasPayed(currentAccount));
+        //console.log(await hasPayed(currentAccount));
         timerElement.classList.add("hide");
         startAndConnect.classList.add("hide");
         noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below."; // link insertion needed

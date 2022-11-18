@@ -22,6 +22,7 @@ const tokenSupply = document.getElementById("token-supply");
 connectButton.addEventListener("click", connect);
 mintTokenButton.addEventListener("click", mintTriviaToken)
 
+
 async function mintTriviaToken() {
     var inputVal = mintTokenInput.value;
     await mintToken(inputVal);
@@ -49,5 +50,7 @@ async function connect() {
     else {
         const accounts= await ethereum.request({method:"eth_requestAccounts"});
         const account = accounts[0];
-        connectButton.innerText= "connected";
-} }
+        connectButton.disabled = true;
+        connectButton.innerText= "Connected";
+    } 
+}
