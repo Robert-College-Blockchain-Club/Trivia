@@ -1,8 +1,7 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions, generateSampleQuestion, getOpenDbQuestions } from "./questions.js"
-import { counterStop, counterCall } from "./countdown_timer.js"
-
-
+import { counterStop, counterCall } from "./timer/countdown_timer.js"
+import { hasPayed, hasERC1155, claim, enterTrivia } from "./gameCondition.js";
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
 
@@ -53,14 +52,31 @@ function validatorForGame(accounts, arg) {
         walletAlternate(arg);
 
     }
+    else {
+        // set up game
+        if (currentAccount !== accounts[0]) {
+            currentAccount == accounts[0];
+        }
+        /*
+        numCorrect = 0;
+        notice.classList.add("hide");
+        timerElement.classList.add("hide");
+        shuffledQuestions = questions_list.sort(() => Math.random() - .5);
+        currentQuestionIndex = 0;
+        questionContainerElement.classList.remove("hide");
+        scoreCount.classList.remove("hide");
+        setNextQuestion();
+        counterCall();
+        */
+    }
     // Second condition: has the user ERC1155?
-    if (currentAccount.hasERC1155(currentAccount) === false) {
+    if (!hasERC1155(currentAccount)) {
         timerElement.classList.add("hide");
         notice.innerText = "You do not have any ERC1155 tokens. The link to the marketplace to mint some is: " // link insertion needed
         notice.classList.remove("hide");
 
     }
-    if(currentAccount.hasPayed(currentAccount) === false) {
+    if(!hasPayed(currentAccount)) {
 
         if (currentAccount.balanceOf() >= price){ // TODO: price will be determined + balanceOf declaration correct?
             enterTrivia(); 
@@ -71,23 +87,14 @@ function validatorForGame(accounts, arg) {
         } 
 
     }
-    else {
-        // set up game
-        if (currentAccount !== accounts[0]) {
-            currentAccount == accounts[0];
-        }
-        numCorrect = 0;
-        notice.classList.add("hide");
-        timerElement.classList.add("hide");
-        shuffledQuestions = questions_list.sort(() => Math.random() - .5);
-        currentQuestionIndex = 0;
-        questionContainerElement.classList.remove("hide");
-        scoreCount.classList.remove("hide");
-        setNextQuestion();
-        counterCall();
-    }
+    
 }
-
+/**
+ * 
+ * @param {} arg: "start if game should start, not start if it shouldn't
+ * calls connect function until connectButton isn't disabled, i.e, if user isn't connected
+ * basically calls connect until user is connect
+ */
 export async function walletAlternate(arg) {
     timerElement.classList.add("hide");
     notice.classList.remove("hide");
