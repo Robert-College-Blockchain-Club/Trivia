@@ -9,18 +9,13 @@
   --hue-neutral: 200;
   --hue-wrong: 0;
   --hue-correct: 145;
+  --background: #4A4873;
 }
 
 body {
-  --hue: var(--hue-neutral);
-  padding: 0;
+  background-color: rgb(62, 109, 156);
   margin: 0;
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  background-color: #20c4e5;
+  padding: 0;
 }
 
 body.correct {
@@ -31,14 +26,75 @@ body.wrong {
   --hue: var(--hue-wrong);
 }
 
-.container {
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px 10%;
+  padding-bottom: 30px 10%;
+  background-color: #24252a;
+  
+}
+
+.navlinks {
+  list-style: none;
+  display: flex;
+}
+
+.navlinks {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #edf0f1;
+  text-decoration: none;
+  
+}
+
+.navlinks li {
+  
+  padding: 0px 10px;
+}
+
+.navlinks li button {
+  padding: 9px 25px;
+  background-color: rgba(0, 136, 169, 1);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.navlinks li button:hover {
+  color: #0b6379;
+}
+
+
+.main_container {
+  margin-top: 200px;
+  margin-bottom: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.question_container {
+  background-color: rgb(253, 132, 31);
   width: 800px;
   max-width: 80%;
-  background-color: lightyellow;
   border-radius: 5px;
   padding: 10px;
   box-shadow: 0 0 10px 2px;
+
 }
+
+
+
+
+
+
+
+
+
 
 .btn-grid {
   display: grid;
@@ -69,6 +125,34 @@ body.wrong {
 .btn.wrong {
   --hue: var(--hue-wrong);
 }
+
+.countdown {
+  color: rgb(0, 18, 83);
+}
+
+.countdown h1 {
+  font-size: 40px;
+  text-shadow: 1px 1px 5px #789;
+  line-height: 30px;
+  margin: 10px 0 10px 0;
+}
+
+.countdown li {
+  display: inline-block;
+  font-size: 1.5em;
+  list-style-type: none;
+  padding: 1em;
+  text-transform: uppercase;
+  justify-content: center;
+  text-align: center;
+
+}
+
+.countdown li span {
+  display: block;
+  font-size: 4.5rem;
+}
+
 
 #connect-btn {
   align-items: center;
@@ -118,6 +202,7 @@ body.wrong {
 #connect-btn:disabled {
   box-shadow: #b6befd 0 3px 7px inset;
   transform: translateY(1px);
+  cursor: default;
 }
 
 
@@ -134,23 +219,6 @@ body.wrong {
   align-items: center;
 }
 
-#headline {
-  font-size: 40px;
-  line-height: 30px;
-  margin: 10px 0 10px 0;
-  text-shadow: 1px 1px 5px #789;
-  color: #132c87;
-}
-
-/*#twomin-timer {
-  position: relative;
-  margin: auto;
-  margin-top: 100px;
-  height: 40px;
-  width: 40px;
-  text-align: center;
-}
-*/
 
 #twomin-timer li {
   display: inline-block;
@@ -205,21 +273,7 @@ svg circle {
   float: right;
 }
 
-li {
-  display: inline-block;
-  font-size: 1.5em;
-  list-style-type: none;
-  padding: 1em;
-  text-transform: uppercase;
-  justify-content: center;
-  text-align: center;
-  color: #24146e;
-}
 
-li span {
-  display: block;
-  font-size: 4.5rem;
-}
 
 @media all and (max-width: 768px) {
   h1 {

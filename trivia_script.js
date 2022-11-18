@@ -3,9 +3,9 @@ import { counterStop, counterCall } from "./timer/countdown_timer.js";
 import { hasPayed, hasERC1155, claim, enterTrivia, amountAvailable } from "./gameCondition.js";
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
-/* Current button for the user to start the game */
+/* 
 const startButton = document.getElementById("start-btn");
-startButton.addEventListener("click", startGame);
+startButton.addEventListener("click", startGame); */
 
 /* Button inside the quiz to proceed to the next question */
 const nextButton = document.getElementById("next-btn");

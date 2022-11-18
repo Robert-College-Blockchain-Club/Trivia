@@ -28,8 +28,8 @@ const homeButton = document.getElementById("home-btn");
 
 connectButton.addEventListener("click", connect);
 mintTokenButton.addEventListener("click", mintTriviaToken);
-mintRegularButton.addEventListener("click", mintRegularCard);
-mintPremiumButton.addEventListener("click", mintPremiumCard);
+mintRegularButton.addEventListener("click", mintRegularCardFunc);
+mintPremiumButton.addEventListener("click", mintPremiumCardFunc);
 mintTokenInput.addEventListener("input", displayCost);
 
 const vals = await getBalances();
