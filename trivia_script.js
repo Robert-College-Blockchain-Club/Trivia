@@ -96,6 +96,8 @@ async function validatorForGame(accounts, arg) {
         claimAmount.classList.add("hide");
         claimButton.classList.add("hide");
         claimInput.classList.add("hide");
+        leaderboardButton.classList.add("hide");
+
 
         notice.classList.remove("hide");
         noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace";
@@ -110,6 +112,7 @@ async function validatorForGame(accounts, arg) {
         claimAmount.classList.add("hide");
         claimButton.classList.add("hide");
         claimInput.classList.add("hide");
+        leaderboardButton.classList.add("hide");
 
         notice.classList.remove("hide");
         noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below.";
