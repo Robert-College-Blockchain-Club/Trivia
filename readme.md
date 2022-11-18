@@ -1,1 +1,1 @@
-<h1>We are awesome!</h1>
+<h1>Trivia dApp</h1>

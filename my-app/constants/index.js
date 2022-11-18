@@ -1,5 +1,5 @@
-export const token_address= "0x09e0AC4342B0397187DA2096746a7f024c6435C3";
-export const card_address= "0x44158141A039103769f51D532Cd19d660bD664E1";
+export const token_address = "0x09e0AC4342B0397187DA2096746a7f024c6435C3";
+export const card_address = "0x44158141A039103769f51D532Cd19d660bD664E1";
 export const tokenAbi = [
 	{
 		"inputs": [
@@ -487,7 +487,7 @@ export const tokenAbi = [
 		"type": "function"
 	}
 ];
-export const cardAbi= [
+export const cardAbi = [
 	{
 		"inputs": [
 			{

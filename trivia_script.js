@@ -1,16 +1,14 @@
-// https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
-import { questions, generateSampleQuestion, getOpenDbQuestions } from "./questions.js"
-import { counterStop, counterCall } from "./timer/countdown_timer.js"
+import { getOpenDbQuestions } from "./questions.js";
+import { counterStop, counterCall } from "./timer/countdown_timer.js";
 import { hasPayed, hasERC1155, claim, enterTrivia, amountAvailable } from "./gameCondition.js";
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
-
 
 const startButton = document.getElementById("start-btn");
 const nextButton = document.getElementById("next-btn");
 const questionContainerElement = document.getElementById("question-container");
-const claimButton = document.getElementById("claim-btn")
-const claimAmount = document.getElementById("claim-amount")
-const claimInput = document.getElementById("claim-input")
+const claimButton = document.getElementById("claim-btn");
+const claimAmount = document.getElementById("claim-amount");
+const claimInput = document.getElementById("claim-input");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 export const timerElement = document.getElementById("countdown");
@@ -20,21 +18,17 @@ const displayResult = document.getElementById("results"); // displaying results 
 const noticeWarning = document.getElementById("notice-warning");
 const startAndConnect = document.getElementById("cnn_and_start");
 const triviaPayment = document.getElementById("enter_trivia");
-triviaPayment.addEventListener("click",enterTrivia);
+triviaPayment.addEventListener("click", enterTrivia);
 
-let userTime
-
-
+let userTime;
 
 
-
-startButton.addEventListener("click",startGame);
-nextButton.addEventListener("click",()=>{
+startButton.addEventListener("click", startGame);
+nextButton.addEventListener("click", () => {
     currentQuestionIndex++;
     setNextQuestion();
 })
 
-//const testButton = document.getElementById("test-btn")
 
 let shuffledQuestions, currentQuestionIndex, numCorrect;
 
@@ -54,18 +48,18 @@ export async function startGame() {
 }
 
 async function validatorForGame(accounts, arg) {
-    console.log("readed validator for game")
+    console.log("read validator for game");
     // First condition: wallet connected?
     if (accounts.length === 0) {
         // MetaMask is locked or the user has not connected any accounts
         walletAlternate(arg);
-
     }
     else {
         // set up game
         if (currentAccount !== accounts[0]) {
             currentAccount == accounts[0];
         }
+        //connectButton.innerText = "Connected";
         /*
         numCorrect = 0;
         notice.classList.add("hide");
@@ -77,7 +71,7 @@ async function validatorForGame(accounts, arg) {
         setNextQuestion();
         counterCall();
         */
-        
+
     }
     // Second condition: has the user ERC1155?
 
@@ -85,17 +79,17 @@ async function validatorForGame(accounts, arg) {
     while (!(await hasERC1155(currentAccount))) {
         timerElement.classList.add("hide");
         notice.classList.remove("hide");
-        noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace" // link insertion needed
+        noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace"; // link insertion needed
         startAndConnect.classList.add("hide");
     }
     //console.log("hasPayed(currentAccount)", await hasPayed(currentAccount))
-    while(!(await hasPayed(currentAccount))) {
-        console.log(await hasPayed(currentAccount))
+    while (!(await hasPayed(currentAccount))) {
+        console.log(await hasPayed(currentAccount));
         timerElement.classList.add("hide");
         startAndConnect.classList.add("hide");
-        noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below." // link insertion needed
+        noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below."; // link insertion needed
         notice.classList.remove("hide");
-    } 
+    }
     numCorrect = 0;
     notice.classList.add("hide");
     timerElement.classList.add("hide");
@@ -107,12 +101,12 @@ async function validatorForGame(accounts, arg) {
     counterCall();
 
 }
-    
+
 /**
  * 
- * @param {} arg: "start if game should start, not start if it shouldn't
+ * @param {} arg: start if game should start, not start if it shouldn't
  * calls connect function until connectButton isn't disabled, i.e, if user isn't connected
- * basically calls connect until user is connect
+ * basically calls connect until user is connected
  */
 export async function walletAlternate(arg) {
     timerElement.classList.add("hide");
@@ -121,6 +115,7 @@ export async function walletAlternate(arg) {
         await connect();
     }
     if (arg === "start") {
+        connectButton.add("hide"); // TODO: correct?
         startGame();
     }
     else {
@@ -129,30 +124,30 @@ export async function walletAlternate(arg) {
 }
 
 
-function setNextQuestion(){
+function setNextQuestion() {
     resetState();
     scoreCount.innerText = numCorrect + "/" + currentQuestionIndex;
     showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
-function showQuestion(question){
+function showQuestion(question) {
     questionElement.innerText = question.prompt; //check
     console.log(question);
     question.choices.forEach(choice => {
         const button = document.createElement("button");
         button.innerText = choice;
         button.classList.add('btn');
-        if(question.choices.indexOf(choice) == question.answer) {
+        if (question.choices.indexOf(choice) == question.answer) {
             button.dataset.correct = question.choices.indexOf(choice) == question.answer;
         }
-        button.addEventListener("click",selectAnswer);
+        button.addEventListener("click", selectAnswer);
         answerButtonsElement.appendChild(button);
     })
 
 }
 
 
-function selectAnswer(e){
+function selectAnswer(e) {
     const selectedButton = e.target;
     const correct = selectedButton.dataset.correct;
     if (!correct) {
@@ -174,23 +169,21 @@ function selectAnswer(e){
     })
     */
     nextButton.classList.remove("hide");
-    if(shuffledQuestions.length > currentQuestionIndex+1){
+    if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove("hide");
     } else {
-        //startButton.innerText = "restart"
-        //startButton.classList.remove("hide")
         endGame();
     }
 }
 
-async function endGame(){
-    userTime = counterStop(); 
+async function endGame() {
+    userTime = counterStop();
     await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect);
     displayResults();
 }
-function setStatusClass(element,correct){
+function setStatusClass(element, correct) {
     clearStatusClass(element);
-    if(correct){
+    if (correct) {
         element.classList.add("correct");
     }
     else {
@@ -199,10 +192,10 @@ function setStatusClass(element,correct){
 }
 
 
-function resetState(){
+function resetState() {
     clearStatusClass(document.body);
     nextButton.classList.add("hide");
-    while (answerButtonsElement.firstChild){
+    while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
@@ -215,7 +208,7 @@ function clearStatusClass(element) {
 async function addUserToFirebase(day, address, time, score) {
     const baseDomain = "http://localhost:3000/add_user/";
     const extention = day + "/" + address + "/" + time + "/" + score;
-    let response = await fetch(baseDomain+extention);
+    let response = await fetch(baseDomain + extention);
     let data = await response.json();
     return data;
 }
@@ -254,9 +247,7 @@ function timerScreen() {
 
 }
 
-
 function displayResults() {
-    // TODO: Fix placement
     notice.classList.add("hide");
     qElement.classList.add("hide");
     timerElement.classList.add("hide");
@@ -266,10 +257,10 @@ function displayResults() {
     displayResult.classList.remove("hide");
 
     final_score = numCorrect * 10;
-    document.getElementById("player-score").innerText = final_score;    
+    document.getElementById("player-score").innerText = final_score;
     document.getElementById("player-time").innerText = userTime;
     document.getElementById("player-time").innerText = record;
-    
+
     setTimeout(() => {
         timerScreen();
     }, 10000);
@@ -281,6 +272,6 @@ async function showClaim() {
     var claimVal = claimInput.value;
     await claim(claimVal);
 }
-const amount= await amountAvailable();
+const amount = await amountAvailable();
 //console.log(amount)
 claimAmount.innerText = ("Amount you can claim:" + amount);

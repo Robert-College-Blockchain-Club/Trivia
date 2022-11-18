@@ -6,7 +6,7 @@ import {// tokenContract, cardcontract, signer
     // returns bool success above success
     seeBalance, //erc20 balance, erc1155 regular balance, erc115 premium balance
     totalSupplyToken
-} from "./getFunctions.js"
+} from "./getFunctions.js";
 
 const connectButton = document.getElementById("connect-btn");
 const mintRegularButton = document.getElementById("mint-regular-btn");

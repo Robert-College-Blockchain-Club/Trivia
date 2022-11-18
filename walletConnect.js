@@ -1,4 +1,3 @@
-// eren's code!
 /**********************************************************/
 /* Handle chain (network) and chainChanged (per EIP-1193) */
 /**********************************************************/
@@ -21,20 +20,19 @@ function handleChainChanged(_chainId) {
 /* Handle user accounts and accountsChanged (per EIP-1193) */
 /***********************************************************/
 
-// I think this makes enables a metamask popup as soon as the site loads
+// This enables a metamask popup as soon as the site loads
 export let currentAccount = null;
 export function checkConnection() {
-  if(window.ethereum !== "undefined"){
+  if (window.ethereum !== "undefined") {
     ethereum.request({ method: 'eth_accounts' }).then(handleAccountsChanged).catch((err) => {
-    // Some unexpected error.
-    // For backwards compatibility reasons, if no accounts are available,
-    // eth_accounts will return an empty array.
-    console.error(err);
+      // Some unexpected error.
+      // For backwards compatibility reasons, if no accounts are available,
+      // eth_accounts will return an empty array.
+      console.error(err);
     });
   }
-  else{
-    //Metamask isn't installed
-    // TODO: add also an error message?
+  else {
+    // Metamask isn't installed
   }
 }
 
@@ -50,18 +48,13 @@ export function handleAccountsChanged(accounts) {
     // MetaMask is locked or the user has not connected any accounts
     walletAlternate();
     connectButton.disabled = false;
-    //connectButton.innerText = ("Connected");
-  
+
   } else if (accounts[0] !== currentAccount) {
-      currentAccount = accounts[0];
-      connectButton.disabled = true;
-      //connectButton.innerText = ("Connected");
-      // Do any other work!
+    currentAccount = accounts[0];
+    connectButton.disabled = true;
+    connectButton.innerText = ("Connected");
   }
 
-
-
-  
 }
 
 /*********************************************/
@@ -73,9 +66,8 @@ export function handleAccountsChanged(accounts) {
 // Otherwise, you popup-spam the user like it's 1999.
 // If you fail to retrieve the user's account(s), you should encourage the user
 // to initiate the attempt.
-//document.getElementById('connect-btn', connect);
 
-//eren's code:
+
 export const connectButton = document.getElementById("connect-btn");
 connectButton.addEventListener("click", connect);
 checkConnection();
@@ -97,7 +89,5 @@ export async function connect() {
         console.error(err);
       }
     });
-  //timerElement.classList.add("hide");
-  //connectButton.innerText = ("Connected");
 
 }

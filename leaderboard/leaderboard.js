@@ -6,39 +6,38 @@
     ["0x1c4F628498299159B5Ce8EB43fA7a27b59A08BE79259A8a58", 33, 5000]
 ]
 */
-//import { currentAccount, connectButton, connect } from "./walletConnect.js";
-const leaderboardButton = document.getElementById("leaderboard-btn")
+const leaderboardButton = document.getElementById("leaderboard-btn");
 
 let current_player;
-const right_now = new Date()
-const leaderboard_reveal_time = new Date()
-const trivia_hour = 19
-const trivia_minute = 0
-const leaderboard_delay_min = 3
-leaderboard_reveal_time.setHours(trivia_hour)
-leaderboard_reveal_time.setMinutes(trivia_minute + leaderboard_delay_min)
-leaderboard_reveal_time.setSeconds(0)
-leaderboard_reveal_time.setUTCMilliseconds(0)
+const right_now = new Date();
+const leaderboard_reveal_time = new Date();
+const trivia_hour = 19;
+const trivia_minute = 0;
+const leaderboard_delay_min = 3;
+leaderboard_reveal_time.setHours(trivia_hour);
+leaderboard_reveal_time.setMinutes(trivia_minute + leaderboard_delay_min);
+leaderboard_reveal_time.setSeconds(0);
+leaderboard_reveal_time.setUTCMilliseconds(0);
 //let player_list;
 
-showLeaderboard()
+showLeaderboard();
 
 async function showLeaderboard() {
-    let player_list = await getPlayerListInfo(getTodayDate())
-    sortforPlayerlength(player_list)
+    let player_list = await getPlayerListInfo(getTodayDate());
+    sortforPlayerlength(player_list);
 }
 
 function getTodayDate() {
-    console.log(right_now)
-    console.log(leaderboard_reveal_time)
-    if (right_now>leaderboard_reveal_time){
+    console.log(right_now);
+    console.log(leaderboard_reveal_time);
+    if (right_now > leaderboard_reveal_time) {
         const date = new Date();
         const formattedDate = date.getDate() + "_" + (date.getMonth() + 1) + "_" + date.getFullYear();
         return formattedDate;
     }
     else {
         const date = new Date();
-        const formattedDate = date.getDate()-1 + "_" + (date.getMonth() + 1) + "_" + date.getFullYear();
+        const formattedDate = date.getDate() - 1 + "_" + (date.getMonth() + 1) + "_" + date.getFullYear();
         return formattedDate;
     }
 }

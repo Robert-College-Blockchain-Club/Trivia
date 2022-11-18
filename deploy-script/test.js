@@ -37,23 +37,23 @@ describe("Unit", function () {
       expect(await triviaToken.balanceOf(acc1.address)).to.equal(ethers.BigNumber.from("9000000000000000000"));
     });
 
-    it ("Should let acc1 Approve ERC1155 contract", async function () {
+    it("Should let acc1 Approve ERC1155 contract", async function () {
       const amountApproved = ethers.BigNumber.from("100000000000000000000000");
       await triviaToken.connect(acc1).approve(triviaCard.address, amountApproved);
       expect(await triviaToken.allowance(acc1.address, triviaCard.address)).to.equal(amountApproved);
     });
 
-     it("should mint Regular Card for acc1", async function() {
+    it("should mint Regular Card for acc1", async function () {
       let tx = await triviaToken.connect(acc1).mint(9, { value: ethers.utils.parseEther("0.09") });
       await tx.wait();
 
-       const amountApproved = ethers.BigNumber.from("100000000000000000000000");
-       await triviaToken.connect(acc1).approve(triviaCard.address, amountApproved);
-       
-       await triviaCard.connect(acc1).mintRegular();
-       expect(await triviaCard.balanceOf(acc1.address,0)).to.equal(1);
-       expect(await triviaToken.balanceOf(acc1.address)).to.equal(ethers.BigNumber.from("4000000000000000000"));
-     });
+      const amountApproved = ethers.BigNumber.from("100000000000000000000000");
+      await triviaToken.connect(acc1).approve(triviaCard.address, amountApproved);
+
+      await triviaCard.connect(acc1).mintRegular();
+      expect(await triviaCard.balanceOf(acc1.address, 0)).to.equal(1);
+      expect(await triviaToken.balanceOf(acc1.address)).to.equal(ethers.BigNumber.from("4000000000000000000"));
+    });
 
     it("should let acc1 to enter Trivia", async function () {
       // mint

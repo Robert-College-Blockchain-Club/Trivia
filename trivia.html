@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles.css" rel="stylesheet">
-    <!--<script defer src="trivia_script.js" type="module"></script>-->
-    <title>Quiz HTML</title>
+    <title>Trivia dApp</title>
 </head>
+
 <body>
     <div class="container">
-        <!--<p id="test"></p>-->
         <div id="question-container" class="hide">
             <div id="question">Question</div>
-            <div id = "answer-buttons" class="btn-grid">
+            <div id="answer-buttons" class="btn-grid">
             </div>
         </div>
         <div class="controls">
-            <!--<button id="start-btn" class="start-btn btn">Start</button>-->
-            <!--<button id="test-btn">test button</button>-->
             <button id="next-btn" class="next-btn btn hide">Next</button>
         </div>
         <div id="results" class="hide">
@@ -39,7 +37,7 @@
             <button onclick="location.href='/leaderboard/leaderboard.html'">Leaderboard</button>
             <h1 id="bottom" style="text-align:center">Thanks for playing the game!</h1>
         </div>
-        
+
         <div id="countdown">
             <h1 id="headline">Next Round:</h1>
             <ul>
@@ -49,22 +47,19 @@
                 <li><span id="seconds"></span> Seconds</li>
             </ul>
         </div>
-        <button id="connect-btn" class="top-right">Connect to MetaMask</button> <!--commented out role="button"-->
-        <!--<button id="connect-btn" class="top-right">Connect to Metamask</button>-->
+        <button id="connect-btn" class="top-right">Connect to MetaMask</button>
         <button id="start-btn">Trigger Game</button>
         <button id="claim-btn">Claim $TRV</button>
         <p id="claim-amount">Amount you can claim: </p>
-        <input id="claim-input" type="text" placeholder="enter amount"/>
-        <!--<button id="leaderboard-btn">Leaderboard</button>-->
+        <input id="claim-input" type="text" placeholder="enter amount" />
         <div id="scoreboard" class="hide">
             <p1 id="score"></p1>
         </div>
         <div id="notice" class="hide">
             <h1 id="notice-warning"></h1>
             <h2>You cannot start the game</h2>
-            <button onclick="location.href='/marketplace/marketplace.html'">Marketplace</button>
+            <button onclick="location.href='/my-app/marketplace.html'">Marketplace</button>
             <button id="enter_trivia">Make Trivia Payment</button>
-            <!--<button id="connect-btn2" class="top-right">Connect</button>-->
         </div>
         <div id="twomin-timer" class="hide">
             <ul>
@@ -82,4 +77,5 @@
     <script src="walletConnect.js" type="module"></script>
     <script src="timer/countdown_timer.js" type="module"></script>
 </body>
+
 </html>

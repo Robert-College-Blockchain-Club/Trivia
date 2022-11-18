@@ -15,7 +15,7 @@ async function approveContract()  {
         const amountApproved = ethers.BigNumber.from("1000000000000000000000000");
         await tokenContract.approve(cardContract.address, amountApproved);
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
 
@@ -28,15 +28,15 @@ async function approveContract()  {
         if (await cardContract.balanceOf(signer.getAddress(), 0) == 1) 
         {
             success= true;
-            console.log("succesfully minted a regular card")
+            console.log("succesfully minted a regular card");
         } else 
         {
-            console.log("unsuccesful transaction, failed to mint")
+            console.log("unsuccesful transaction, failed to mint");
         }
         return success;
 
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
 
@@ -51,15 +51,15 @@ async function approveContract()  {
         if (await cardContract.balanceOf(signer.getAddress(), 1) == 1) 
         {
             success= true;
-            console.log("succesfully minted a premium card")
+            console.log("succesfully minted a premium card");
         } else 
         {
-            console.log("unsuccesful transaction, failed to mint")
+            console.log("unsuccesful transaction, failed to mint");
         }
         return success;
 
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
 
@@ -77,10 +77,10 @@ async function approveContract()  {
         {
             console.log("minted tokens with success");
         } else {
-            console.log("Unsuccesful mint,  debug")
+            console.log("Unsuccesful mint,  debug");
         } 
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
 
@@ -96,7 +96,7 @@ async function approveContract()  {
         
         return [tokenBalance, regularCardBalance, premiumCardBalance];
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
 
@@ -106,7 +106,7 @@ async function approveContract()  {
         return totalSupply;
 
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
 

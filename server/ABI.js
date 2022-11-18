@@ -1,4 +1,4 @@
-const ABI= [
+const ABI = [
 	{
 		"inputs": [
 			{
@@ -485,4 +485,4 @@ const ABI= [
 		"type": "function"
 	}
 ];
-module.exports = {ABI};
+module.exports = { ABI };
