@@ -9,6 +9,9 @@ import { // tokenContract, cardcontract, signer
     checkConnection
 } from "./getFunctions.js";
 
+import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.5.4.esm.min.js";
+
+
 const container = document.getElementById("container");
 const connectButton = document.getElementById("connect-btn");
 const mintRegularButton = document.getElementById("mint-regular-btn");
@@ -28,11 +31,12 @@ const homeButton = document.getElementById("home-btn");
 
 connectButton.addEventListener("click", connect);
 mintTokenButton.addEventListener("click", mintTriviaToken);
-mintRegularButton.addEventListener("click", mintRegularCard);
-mintPremiumButton.addEventListener("click", mintPremiumCard);
+mintRegularButton.addEventListener("click", mintRegularCardFunc);
+mintPremiumButton.addEventListener("click", mintPremiumCardFunc);
 mintTokenInput.addEventListener("input", displayCost);
 
 const vals = await getBalances();
+console.log(vals)
 tokenBalance.innerText = ("Token Balance:" + vals[0]);
 regularBalance.innerText = ("Regular Balance:" + vals[1]);
 premiumBalance.innerText = ("Premium Balance:" + vals[2]);
@@ -92,12 +96,13 @@ async function mintTriviaToken() {
     await mintToken(inputVal);
 }
 
+
 async function displayCost() {
     const inputVal = mintTokenInput.value;
     if (isNumeric(inputVal)) {
         const inputValInt = Number(inputVal);
-        const totalCost = inputValInt * 0.01;
-        costHolder.innerText = "Cost: " + totalCost.toString();
+        const totalCost = inputValInt * 10;
+        costHolder.innerText = "Cost ($): " + totalCost.toString();
     } else {
         costHolder.innerText = "Enter a Number";
     }
@@ -109,18 +114,20 @@ async function getBalances() {
     // vals[2] = premium card balance
     // vals [3] = totalSupply
     const vals = await seeBalance();
+    
     for (let i = 0; i < vals.length; i++) {
         console.log(vals[i].toString());
-        vals[i] = vals[i].toString();
-        if (vals[i].startsWith("0")) {
+        if (vals[i].toString().startsWith("0")) {
             vals[i] = "0";
         } else {
-            vals[i] = vals[i].split("0").shift();
+            vals[i] = vals[i].div(ethers.BigNumber.from("1000000000000000000"));
+            vals[i] = vals[i].toString()
         }
     }
 
     const totalSupplyBigNum = await totalSupplyToken();
-    const totalSupplyStr = totalSupplyBigNum.toString().split("000000000000000000").shift();
+    
+    const totalSupplyStr = totalSupplyBigNum.div(ethers.BigNumber.from("1000000000000000000")).toString();
     vals.push(totalSupplyStr);
 
     return vals;

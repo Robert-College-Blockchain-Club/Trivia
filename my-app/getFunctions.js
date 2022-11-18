@@ -71,31 +71,28 @@ export async function mintToken(_amount) {
     try {
         const [tokenContract, cardContract, signer] = await getContracts();
         const mintAmount = _amount.toString();
-        const etherNeededInt = 0.01 * Number(_amount);
-        const etherNeeded = { value: ethers.utils.parseEther(etherNeededInt.toString()) };
+
+        const weiNeededForOne = await tokenContract.convertEthUsd("10");
+        const etherNeededWei = weiNeededForOne.mul(_amount);
+        const etherNeeded = { value: etherNeededWei.toString()};
 
         let tx = await tokenContract.mint(mintAmount, etherNeeded);
         await tx.wait();
 
-        // if (await tokenContract.balanceOf(signer.getAddress()) === mintAmount) {
-        //     console.log("minted tokens with success");
-        // } else {
-        //     console.log("Unsuccesful mint,  debug");
-        // }
     } catch (err) {
-        console.log(err.code);
+        return err.code;
     }
 }
-
 export async function seeBalance() {
     try {
         const [tokenContract, cardContract, signer] = await getContracts();
         console.log(signer);
-        var tokenBalance;
+        let tokenBalance;
         var regularCardBalance;
         var premiumCardBalance;
 
         tokenBalance = await tokenContract.balanceOf(signer.getAddress());
+        //console.log("see balance:",tokenBalance.toString())
         regularCardBalance = await cardContract.balanceOf(signer.getAddress(), 0);
         premiumCardBalance = await cardContract.balanceOf(signer.getAddress(), 1);
 
