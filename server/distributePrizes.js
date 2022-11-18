@@ -1,6 +1,7 @@
 const { ethers } = require("ethers");
 const { getDataFromDay } = require("./firebaseSetup.js");
-const { ABI } = require("./ABI.js")
+const { ABI } = require("./ABI.js");
+require("dotenv").config();
 const contractAddressERC20 = "0x5395207Da038a094325946df9495e61766754e92";
 const privateKey = process.env.PRIVATE_KEY;
 console.log(privateKey);
