@@ -36,40 +36,50 @@
 
                 </div>
             </div>
-
+            <button onclick="location.href='/leaderboard/leaderboard.html'">Leaderboard</button>
             <h1 id="bottom" style="text-align:center">Thanks for playing the game!</h1>
-
         </div>
         
         <div id="countdown">
-            <h1 id="headline">For the next round to begin:</h1>
+            <h1 id="headline">Next Round:</h1>
             <ul>
-                <li><span id="days"></span> days</li>
+                <li><span id="days"></span> Days</li>
                 <li><span id="hours"></span> Hours</li>
                 <li><span id="minutes"></span> Minutes</li>
                 <li><span id="seconds"></span> Seconds</li>
             </ul>
         </div>
-        <button id="connect-btn" class="top-right">Connect to Metamask</button>
-        <button id="start-btn">Birden fazla basma</button>
+        <button id="connect-btn" class="top-right">Connect to MetaMask</button> <!--commented out role="button"-->
+        <!--<button id="connect-btn" class="top-right">Connect to Metamask</button>-->
+        <button id="start-btn">Trigger Game</button>
+        <button id="claim-btn">Claim $TRV</button>
+        <p id="claim-amount">Amount you can claim: </p>
+        <input id="claim-input" type="text" placeholder="enter amount"/>
+        <!--<button id="leaderboard-btn">Leaderboard</button>-->
         <div id="scoreboard" class="hide">
             <p1 id="score"></p1>
         </div>
         <div id="notice" class="hide">
-            <h1>Please connect to your wallet.</h1>
-            <h2>You cannot start the game without connecting!</h2>
+            <h1 id="notice-warning"></h1>
+            <h2>You cannot start the game</h2>
+            <button onclick="location.href='/marketplace/marketplace.html'">Marketplace</button>
+            <button id="enter_trivia">Make Trivia Payment</button>
             <!--<button id="connect-btn2" class="top-right">Connect</button>-->
         </div>
         <div id="twomin-timer" class="hide">
             <ul>
                 <li><span id="countdown_minutes"></span></li>
+                <li><span id="separator">:</span></li>
                 <li><span id="countdown_seconds"></span></li>
             </ul>
+            <svg>
+                <circle r="18" cx="20" cy="20"></circle>
+            </svg>
         </div>
     </div>
-    <script src="timer.js" type="module"></script>
-    <script src="trivia_script.js"></script>
+    <script src="timer/timer.js" type="module"></script>
+    <script src="trivia_script.js" type="module"></script>
     <script src="walletConnect.js" type="module"></script>
-    <script src="countdown_timer.js" type="module"></script>
+    <script src="timer/countdown_timer.js" type="module"></script>
 </body>
 </html>
