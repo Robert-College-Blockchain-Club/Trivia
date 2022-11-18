@@ -37,7 +37,7 @@ const notice = document.getElementById("notice");
 const noticeWarning = document.getElementById("notice-warning");
 
 /* Displays the leaderboard, score and count of that day */
-const displayResult = document.getElementById("results"); 
+const displayResult = document.getElementById("results");
 const leaderboardButton = document.getElementById("leaderboard");
 
 /* Includes start game and connect buttons */
@@ -93,21 +93,27 @@ async function validatorForGame(accounts, arg) {
     // Second condition: has the user ERC1155?
     while (!(await hasERC1155(currentAccount))) {
         timerElement.classList.add("hide");
+        claimAmount.classList.add("hide");
+        claimButton.classList.add("hide");
+        claimInput.classList.add("hide");
 
         notice.classList.remove("hide");
-        noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace"; 
+        noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace";
         marketplaceButton.classList.remove("hide");
-        
+
     }
 
     // Third condition: has the user payed the entry fee to enter the game?
     while (!(await hasPayed(currentAccount))) {
         timerElement.classList.add("hide");
         startAndConnect.classList.add("hide");
+        claimAmount.classList.add("hide");
+        claimButton.classList.add("hide");
+        claimInput.classList.add("hide");
 
         notice.classList.remove("hide");
         noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below.";
-        triviaPayment.classList.remove("hide"); 
+        triviaPayment.classList.remove("hide");
     }
     numCorrect = 0;
 
@@ -143,7 +149,7 @@ export async function walletAlternate(arg) {
         await connect();
     }
     if (arg === "start") {
-        connectButton.add("hide"); 
+        connectButton.add("hide");
         startGame();
     }
     else {
