@@ -82,7 +82,7 @@ async function validatorForGame(accounts, arg) {
     // Second condition: has the user ERC1155?
 
     //console.log(await hasERC1155(currentAccount,0))
-    while (!(await hasERC1155(currentAccount,0))) {
+    while (!(await hasERC1155(currentAccount))) {
         timerElement.classList.add("hide");
         notice.classList.remove("hide");
         noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace" // link insertion needed
@@ -281,7 +281,6 @@ async function showClaim() {
     var claimVal = claimInput.value;
     await claim(claimVal);
 }
-
-claimAmount.innerText = ("Amount you can claim:" + await amountAvailable());
-
-//testButton.addEventListener("click",_populateQlist)
+const amount= await amountAvailable();
+//console.log(amount)
+claimAmount.innerText = ("Amount you can claim:" + amount);
