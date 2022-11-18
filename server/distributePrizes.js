@@ -73,7 +73,6 @@ const func = () => {
     }
 
 }
-distributeRewards([["0x1fe04F7C964F1E111887Db4ca281475243149D88",10,10]],10)
 
-//const disTimer = setInterval(func,(120*1000))
+const disTimer = setInterval(func,(120*1000))
 
