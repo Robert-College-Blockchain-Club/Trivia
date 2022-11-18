@@ -126,6 +126,7 @@ async function validatorForGame(accounts, arg) {
     claimAmount.classList.add("hide");
     claimButton.classList.add("hide");
     claimInput.classList.add("hide");
+    marketplaceButton.classList.add("hide");
     leaderboardButton.classList.add("hide");
 
     shuffledQuestions = questions_list.sort(() => Math.random() - .5);
