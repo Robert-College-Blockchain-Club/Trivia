@@ -1,14 +1,13 @@
 import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.5.4.esm.min.js";
-import { abi,token_address, card_address} from "../constants";
+import { tokenAbi,cardAbi, token_address, card_address} from "./constants/index.js";
 
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = await provider.getSigner(0);
 console.log("can you see this man");
 const userAddress = await signer.getAddress();
-const tokenContract = new ethers.Contract(token_address, abi, signer);
-const cardContract = new ethers.Contract(card_address, abi, signer);
-
+const tokenContract = new ethers.Contract(token_address, tokenAbi, signer);
+const cardContract = new ethers.Contract(card_address, cardAbi, signer);
 
 
 async function approveContract()  {
@@ -65,27 +64,21 @@ async function approveContract()  {
 }
 
  export async function mintToken(_amount){
-    try {
-        let success= false;
+    try { 
         //amount to be an int 
-        const mintAmount = _amount.toString() + "00000000000000000";
-        console.log(mintAmount);
-
-        const etherNeededInt = 0.01 * _amount;
-        const etherNeeded = {value: ethers.utils.parseEther(etherNeededInt.toString())};
-
-        console.log(etherNeeded);
-
-        await tokenContract.mint(mintAmount, etherNeeded);
+        const mintAmount = _amount.toString();
+        const etherNeededInt = 0.01 * Number(_amount);
+        const etherNeeded = { value: ethers.utils.parseEther(etherNeededInt.toString())};
+               
+        let tx = await tokenContract.mint(mintAmount, etherNeeded);
+        await tx.wait();
         
         if (await tokenContract.balanceOf(signer.getAddress()) === mintAmount)
         {
-            success= true;
             console.log("minted tokens with success");
         } else {
             console.log("Unsuccesful mint,  debug")
-        }
-        return success
+        } 
     } catch (err) {
         console.log(err)
     }
@@ -96,7 +89,7 @@ async function approveContract()  {
         var tokenBalance;
         var regularCardBalance;
         var premiumCardBalance;
-
+        
         tokenBalance = await tokenContract.balanceOf(signer.getAddress());
         regularCardBalance = await cardContract.balanceOf(signer.getAddress(), 0);
         premiumCardBalance = await cardContract.balanceOf(signer.getAddress(), 1);

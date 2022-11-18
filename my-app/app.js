@@ -1,5 +1,4 @@
-import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.5.4.esm.min.js";
-//import { abi,token_address, card_address, prizes_address } from "../constants";
+
 import {// tokenContract, cardcontract, signer
     mintRegularCard, //buton 5 token
     mintPremiumCard, //buton  10 token
@@ -16,25 +15,27 @@ const premiumBalance = document.getElementById("premium-balance");
 const regularBalance = document.getElementById("regular-balance");
 const tokenBalance = document.getElementById("token-balance");
 const mintTokenButton = document.getElementById("mint-token-btn");
-const mintTokenInput = document.getElementById("amount-input")
-const tokenSupply = document.getElementById("token-supply")
+const mintTokenInput = document.getElementById("amount-input");
+const tokenSupply = document.getElementById("token-supply");
+
 
 connectButton.addEventListener("click", connect);
-mintTokenButton.addEventListener("click", getMintInput())
+mintTokenButton.addEventListener("click", mintTriviaToken)
 
-
-function getMintInput() {
-    mintToken(mintTokenInput.value)
+async function mintTriviaToken() {
+    var inputVal = mintTokenInput.value;
+    await mintToken(inputVal);
 }
 
+mintRegularButton.addEventListener("click", mintRegularCard);
+mintPremiumButton.addEventListener("click", mintPremiumCard); 
 
-mintRegularButton.addEventListener("click", mintRegularCard());
-mintPremiumButton.addEventListener("click", mintPremiumCard());
 
-tokenBalance.innerText = ("Token Balance:" + seeBalance()[0])
-premiumBalance.innerText = ("Premium Balance:" + seeBalance()[1])
-regularBalance.innerText = ("Regular Balance:" + seeBalance()[2])
-tokenSupply.innerText = ("Total Supply:" + totalSupplyToken)
+const [tokenBalanceVal, regularBalanceVal, premiumBalanceVal] = await seeBalance();
+tokenBalance.innerText = ("Token Balance:" + tokenBalanceVal);
+premiumBalance.innerText = ("Premium Balance:" + premiumBalanceVal);
+regularBalance.innerText = ("Regular Balance:" + regularBalanceVal);
+tokenSupply.innerText = ("Total Supply:" + await  totalSupplyToken());
 
 
 
@@ -50,4 +51,3 @@ async function connect() {
         const account = accounts[0];
         connectButton.innerText= "connected";
 } }
-
