@@ -1,13 +1,16 @@
 // https://github.com/WebDevSimplified/JavaScript-Quiz-App/blob/master/script.js 
 import { questions, generateSampleQuestion, getOpenDbQuestions } from "./questions.js"
 import { counterStop, counterCall } from "./timer/countdown_timer.js"
-import { hasPayed, hasERC1155, claim, enterTrivia } from "./gameCondition.js";
+import { hasPayed, hasERC1155, claim, enterTrivia, amountAvailable } from "./gameCondition.js";
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
 
 const startButton = document.getElementById("start-btn");
 const nextButton = document.getElementById("next-btn");
 const questionContainerElement = document.getElementById("question-container");
+const claimButton = document.getElementById("claim-btn")
+const claimAmount = document.getElementById("claim-amount")
+const claimInput = document.getElementById("claim-input")
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 export const timerElement = document.getElementById("countdown");
@@ -255,5 +258,14 @@ function displayResults() {
         timerScreen();
     }, 10000);
 }
+
+claimButton.addEventListener("click", showClaim)
+
+async function showClaim() {
+    var claimVal = claimInput.value;
+    await claim(claimVal);
+}
+
+claimAmount.innerText = ("Amount you can claim:" + await amountAvailable());
 
 //testButton.addEventListener("click",_populateQlist)

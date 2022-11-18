@@ -35,11 +35,16 @@ export function hasERC1155(contractAddress, id) {
     } return false;
 }
 
+export function amountAvailable() {
+    const amount= triviaContract.rewardList(signer.getAddress());
+    return amount;
+}
 
-
-export function claim(amount) {
+export function claim(_amount) {
     try {
-
+        // amount to be an integer 
+        amountstr= _amount.toString() + "000000000000000000";
+        amount = ethers.BigNumber.from(amountstr);
         triviaContractSigner.claim(amount); // TODO: should we use a signer for enterTrivia?
         
     } catch (error) {
