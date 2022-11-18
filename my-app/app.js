@@ -18,6 +18,9 @@ const mintTokenButton = document.getElementById("mint-token-btn");
 const mintTokenInput = document.getElementById("amount-input");
 const tokenSupply = document.getElementById("token-supply");
 
+/* To return to main (a.k.a timer) screen */
+const homeButton = document.getElementById("home-btn");
+
 
 connectButton.addEventListener("click", connect);
 mintTokenButton.addEventListener("click", mintTriviaToken)

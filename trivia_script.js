@@ -3,39 +3,54 @@ import { counterStop, counterCall } from "./timer/countdown_timer.js";
 import { hasPayed, hasERC1155, claim, enterTrivia, amountAvailable } from "./gameCondition.js";
 import { currentAccount, connectButton, connect } from "./walletConnect.js";
 
+/* Current button for the user to start the game */
 const startButton = document.getElementById("start-btn");
+startButton.addEventListener("click", startGame);
+
+/* Button inside the quiz to proceed to the next question */
 const nextButton = document.getElementById("next-btn");
+nextButton.addEventListener("click", () => { currentQuestionIndex++; setNextQuestion(); })
+
+/* Main container for the quiz */
 const questionContainerElement = document.getElementById("question-container");
+
+/* Token claim-related elements */
 const claimButton = document.getElementById("claim-btn");
 const claimAmount = document.getElementById("claim-amount");
 const claimInput = document.getElementById("claim-input");
+
+/* Button to direct the user to the marketplace */
+const marketplaceButton = document.getElementById("marketplace-btn");
+
+/* Quiz question and answers */
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
+
+/* Countdown for the next round */
 export const timerElement = document.getElementById("countdown");
+
+/* Score of the user while playing the game, i.e. how many correct/wrongs */
 const scoreCount = document.getElementById("scoreboard");
-const notice = document.getElementById("notice"); // will be displayed if wallet isn't connected
-const displayResult = document.getElementById("results"); // displaying results of the player in the end
+
+/* Will be displayed if the user wallet is not connected or the pre-game conditions aren't satisfied by any chance */
+const notice = document.getElementById("notice");
 const noticeWarning = document.getElementById("notice-warning");
+
+/* Displays the leaderboard, score and count of that day */
+const displayResult = document.getElementById("results"); 
+const leaderboardButton = document.getElementById("leaderboard");
+
+/* Includes start game and connect buttons */
 const startAndConnect = document.getElementById("cnn_and_start");
+
+/* Button for the user to make their trivia payment before starting the game */
 const triviaPayment = document.getElementById("enter_trivia");
 triviaPayment.addEventListener("click", enterTrivia);
 
-let userTime;
-
-
-startButton.addEventListener("click", startGame);
-nextButton.addEventListener("click", () => {
-    currentQuestionIndex++;
-    setNextQuestion();
-})
-
-
-let shuffledQuestions, currentQuestionIndex, numCorrect;
-
-let final_score;
+/* Init of some key variables */
+let userTime, shuffledQuestions, currentQuestionIndex, numCorrect, finalScore;
 
 export async function startGame() {
-    //checkConnection();
     questions_list = await getOpenDbQuestions();
     if (window.ethereum !== "undefined") {
         try {
@@ -49,6 +64,7 @@ export async function startGame() {
 
 async function validatorForGame(accounts, arg) {
     console.log("read validator for game");
+
     // First condition: wallet connected?
     if (accounts.length === 0) {
         // MetaMask is locked or the user has not connected any accounts
@@ -73,30 +89,40 @@ async function validatorForGame(accounts, arg) {
         */
 
     }
-    // Second condition: has the user ERC1155?
 
-    //console.log(await hasERC1155(currentAccount,0))
+    // Second condition: has the user ERC1155?
     while (!(await hasERC1155(currentAccount))) {
         timerElement.classList.add("hide");
+
         notice.classList.remove("hide");
-        noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace"; // link insertion needed
-        startAndConnect.classList.add("hide");
+        noticeWarning.innerText = "You do not have any ERC1155 tokens. You can mint some at the marketplace"; 
+        marketplaceButton.classList.remove("hide");
+        
     }
-    //console.log("hasPayed(currentAccount)", await hasPayed(currentAccount))
+
+    // Third condition: has the user payed the entry fee to enter the game?
     while (!(await hasPayed(currentAccount))) {
-        //console.log(await hasPayed(currentAccount));
         timerElement.classList.add("hide");
         startAndConnect.classList.add("hide");
-        noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below."; // link insertion needed
+
         notice.classList.remove("hide");
+        noticeWarning.innerText = "You have not made your payment for today's game. You can make your payment with the button below.";
+        triviaPayment.classList.remove("hide"); 
     }
     numCorrect = 0;
+
     notice.classList.add("hide");
     timerElement.classList.add("hide");
+    claimAmount.classList.add("hide");
+    claimButton.classList.add("hide");
+    claimInput.classList.add("hide");
+    leaderboardButton.classList.add("hide");
+
     shuffledQuestions = questions_list.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     questionContainerElement.classList.remove("hide");
     scoreCount.classList.remove("hide");
+
     setNextQuestion();
     counterCall();
 
@@ -110,12 +136,14 @@ async function validatorForGame(accounts, arg) {
  */
 export async function walletAlternate(arg) {
     timerElement.classList.add("hide");
+    leaderboardButton.classList.add("hide");
     notice.classList.remove("hide");
+    noticeWarning.innerText = "You cannot start the game, your wallet isn't connected!";
     while (connectButton.disabled === false) {
         await connect();
     }
     if (arg === "start") {
-        connectButton.add("hide"); // TODO: correct?
+        connectButton.add("hide"); 
         startGame();
     }
     else {
@@ -176,11 +204,14 @@ function selectAnswer(e) {
     }
 }
 
+/* Called in the end of the game */
 async function endGame() {
     userTime = counterStop();
     await addUserToFirebase(getTodayDate(), currentAccount, userTime, numCorrect);
     displayResults();
 }
+
+/* Helps us to display the correct color for user's input, i.e. correct or wrong */
 function setStatusClass(element, correct) {
     clearStatusClass(element);
     if (correct) {
@@ -191,7 +222,7 @@ function setStatusClass(element, correct) {
     }
 }
 
-
+/* Is used when preparing for the next question */
 function resetState() {
     clearStatusClass(document.body);
     nextButton.classList.add("hide");
@@ -200,6 +231,7 @@ function resetState() {
     }
 }
 
+/* Clears buttons' property of correct/wrong */
 function clearStatusClass(element) {
     element.classList.remove('correct');
     element.classList.remove('wrong');
@@ -220,19 +252,6 @@ function getTodayDate() {
 }
 
 let questions_list;
-/*
-function _populateQlist(){
-    populateQList(questions_list)
-}
-
-function populateQList(qList){
-    //testButton.classList.add("hide")
-    for(let i = 0; i <10;i++){
-        qList.push(generateSampleQuestion())
-    }
-}
-_populateQlist()
-*/
 
 const qElement = document.getElementById("question-container");
 
@@ -240,24 +259,33 @@ function timerScreen() {
     notice.classList.add("hide");
     qElement.classList.add("hide");
     displayResult.classList.add("hide");
-    timerElement.classList.remove("hide");
     nextButton.classList.add("hide");
     scoreCount.classList.add("hide");
 
+    timerElement.classList.remove("hide");
+    claimAmount.classList.remove("hide");
+    claimButton.classList.remove("hide");
+    claimInput.classList.remove("hide");
+    leaderboardButton.classList.remove("hide");
 
 }
 
+/* Displays results at the end of the game (time and score) */
 function displayResults() {
     notice.classList.add("hide");
     qElement.classList.add("hide");
     timerElement.classList.add("hide");
     nextButton.classList.add("hide");
     scoreCount.classList.add("hide");
+    claimAmount.classList.add("hide");
+    claimButton.classList.add("hide");
+    claimInput.classList.add("hide");
 
     displayResult.classList.remove("hide");
+    leaderboardButton.classList.remove("hide");
 
-    final_score = numCorrect * 10;
-    document.getElementById("player-score").innerText = final_score;
+    finalScore = numCorrect * 10; // for now, each correct is 10 points
+    document.getElementById("player-score").innerText = finalScore;
     document.getElementById("player-time").innerText = userTime;
 
     setTimeout(() => {
@@ -267,6 +295,7 @@ function displayResults() {
 
 claimButton.addEventListener("click", showClaim)
 
+/* Claim */
 async function showClaim() {
     var claimVal = claimInput.value;
     await claim(claimVal);

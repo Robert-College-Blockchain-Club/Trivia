@@ -8,6 +8,9 @@
 */
 const leaderboardButton = document.getElementById("leaderboard-btn");
 
+/* To return to main (a.k.a timer) screen */
+const homeButton = document.getElementById("home-btn");
+
 let current_player;
 const right_now = new Date();
 const leaderboard_reveal_time = new Date();
