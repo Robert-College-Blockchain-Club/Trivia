@@ -2,8 +2,6 @@
 /* Handle chain (network) and chainChanged (per EIP-1193) */
 /**********************************************************/
 
-import { walletAlternate } from "./trivia_script.js";
-
 const chainId = await ethereum.request({ method: 'eth_chainId' });
 
 //the following line causes the app to reload itself constantly

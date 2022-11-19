@@ -2,7 +2,7 @@ body {
     font-family: sans-serif;
     margin: 0;
     overflow-x: hidden;
-    background-color: rgb(227, 227, 28);
+    background-color: rgb(189, 189, 16);
 }
 
 .leaderboard {
@@ -12,6 +12,19 @@ body {
     display: block;
     padding: 1em;
     padding-top: 2em;
+    display: flex;
+    justify-content: center;
+    
+
+    
+    
+}
+
+.leaderboard caption {
+    color:black;
+    padding: 31px;
+    text-align: center;
+    font-size: 69px;
     
     
 }
@@ -62,7 +75,7 @@ table td:nth-child(2) {
     max-width: 5em;
 }
 tbody .player:nth-child(even) {
-    background-color: rgb(54, 194, 19);
+    background-color: rgb(0, 0, 0);
 }
 #winner {
     color: gold;
@@ -99,4 +112,45 @@ tbody .player:nth-child(even) {
         overflow-x: scroll;
 
     }
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px 10%;
+    padding-bottom: 30px 10%;
+    background-color: #24252a;
+
+}
+
+.navlinks {
+    list-style: none;
+    display: flex;
+}
+
+.navlinks {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    color: #edf0f1;
+    text-decoration: none;
+
+}
+
+.navlinks li {
+
+    padding: 0px 10px;
+}
+
+.navlinks li button {
+    padding: 9px 25px;
+    background-color: rgba(0, 136, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.navlinks li button:hover {
+    color: #0b6379;
 }
