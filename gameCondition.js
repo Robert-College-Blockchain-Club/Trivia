@@ -12,7 +12,7 @@ const signer = provider.getSigner(0);
 //status update:
 //claim, distributeRewards, enterTrivia works.
 //TODO: make sure this is in-line with user flow, as in, we use provider.getSigner(0); and getDefaultProvider(window.ethereum); etc.
-const contractAddressERC20 = "0x5395207Da038a094325946df9495e61766754e92";
+const contractAddressERC20 = "0x7A6441985E03C6891E7926Df3B32d491B26E855A";
 const triviaContract = new ethers.Contract(contractAddressERC20, ERC20ABI, signer);
 // const privateKey = process.env.PRIVATE_KEY;
 //console.log("private key",privateKey)
@@ -22,7 +22,7 @@ const triviaContract = new ethers.Contract(contractAddressERC20, ERC20ABI, signe
 //const triviaContractSigner = new ethers.Contract(contractAddressERC20,ERC20ABI, signer)
 
 /* ERC1155 */
-const contractAddressERC1155 = "0x85B714fDEeaabD026225e0362A6F865836974f42";
+const contractAddressERC1155 = "0x3264bc9BEb62B6420041eF07075802DeC634f137";
 const contractERC1155 = new ethers.Contract(contractAddressERC1155, ERC1155ABI, provider);
 
 // Returns true if user has ERC1155 tokens (!=0)
@@ -37,7 +37,7 @@ export async function hasERC1155(accountAddress) {
 export async function amountAvailable() {
     console.log("called amountAvailable");
     console.log(signer.getAddress());
-    const amount = await triviaContract.getReward(signer.getAddress());
+    const amount = await triviaContract.rewardList(signer.getAddress());
     return amount;
 }
 
