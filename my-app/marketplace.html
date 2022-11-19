@@ -16,37 +16,52 @@
             <ul class="navlinks">
                 <li><button id="home-btn" onclick="location.href='http://localhost:5500'">Play</button></li>
                 <li><button id="leaderboard"
-                    onclick="location.href='/leaderboard/leaderboard.html'">Leaderboard</button></li>
-                <li><button id="marketplace-btn" onclick="location.href='/my-app/marketplace.html'">Marketplace</button></li>
+                        onclick="location.href='/leaderboard/leaderboard.html'">Leaderboard</button></li>
+                <li><button id="marketplace-btn" onclick="location.href='/my-app/marketplace.html'">Marketplace</button>
+                </li>
             </ul>
         </nav>
     </header>
 
+
     <div id="main_container" class="main_container">
-        <p id="error"></p>
-
-        <div id="balances">
-            <p id="premium-balance"></p>
-            <p id="regular-balance">Regular Balance:</p>
-            <p id="token-balance">Token Balance:</p>
-            <p id="token-supply">Total Supply</p>
-        </div>
-
         <button id="connect-btn" class="top-right">Connect to Metamask</button>
-        <button id="mint-regular-btn" class="top-right">Mint Regular Card</button>
-        <button id="mint-premium-btn" class="top-right">Mint Premium Card</button>
-
-
-        <div id="mint-token-container">
-            <p id="display-cost"></p>
-
-            <input id="amount-input" type="text" placeholder="enter token amount" />
-            <button id="mint-token-btn">Mint</button>
-
+        
+        <div id="balance_container">
+            <div id="balances">
+                <p id="regular-balance" style="text-align:center; margin-top:100px">Regular Balance: </p>
+                <p id="premium-balance" style="text-align:center">Premium Balance: </p>
+                <p id="token-balance" style="text-align:center">Token Balance: </p>
+                <p id="token-supply" style="text-align:center">Total Supply: </p>
+            </div>
         </div>
-    </div>
 
-    <script type="module" src="./app.js"> </script>
+    
+        <div class="mint_container">
+            
+            <div class="mint-regular-btn">
+                <button id="mint-regular-btn" class="top-right">Mint Regular Card</button>
+            </div>
+
+            <div class="mint-premium-btn">
+                <button id="mint-premium-btn" class="top-right">Mint Premium Card</button>
+            </div>
+            
+            <div class="mint-token-container">
+                <div id="mint-token-container">
+                    <!--<p id="display-cost"></p>-->
+                    <input id="amount-input" type="text" placeholder="enter token amount" />
+                    <button id="mint-token-btn">Mint</button>
+    
+                </div>
+                
+            </div>
+            
+        </div>
+        <p id="error"></p>
+        </div>
+
+            <script type="module" src="./app.js"> </script>
 </body>
 
 </html>

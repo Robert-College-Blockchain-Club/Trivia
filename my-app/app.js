@@ -9,7 +9,6 @@ import { // tokenContract, cardcontract, signer
     checkConnection
 } from "./getFunctions.js";
 
-const container = document.getElementById("container");
 const connectButton = document.getElementById("connect-btn");
 const mintRegularButton = document.getElementById("mint-regular-btn");
 const mintPremiumButton = document.getElementById("mint-premium-btn");

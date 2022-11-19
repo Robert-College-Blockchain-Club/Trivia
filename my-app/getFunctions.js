@@ -83,7 +83,7 @@ export async function mintToken(_amount) {
         //     console.log("Unsuccesful mint,  debug");
         // }
     } catch (err) {
-        console.log(err.code);
+        return err.code;
     }
 }
 

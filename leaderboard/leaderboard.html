@@ -10,28 +10,43 @@
 </head>
 
 <body>
-    <div class="leaderboard">
+    <header>
+        <nav>
+            <ul class="navlinks">
+                <li><button id="home-btn" onclick="location.href='http://localhost:5500'">Play</button></li>
+                <li><button id="leaderboard-btn"
+                        onclick="location.href='/leaderboard/leaderboard.html'">Leaderboard</button></li>
+                <li><button id="marketplace-btn" onclick="location.href='/my-app/marketplace.html'">Marketplace</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-        <table>
-            <caption>Leaderboard</caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td>
-                        Address
-                    </td>
-                    <td>
-                        Time
-                    </td>
-                    <td>
-                        Score
-                    </td>
-                </tr>
-            </thead>
-
-            <tbody id="leaderboard"></tbody>
-        </table>
+    <div id="container">
+        <div class="leaderboard">
+            
+            <table>
+                <caption>Leaderboard</caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Address
+                        </td>
+                        <td>
+                            Time
+                        </td>
+                        <td>
+                            Score
+                        </td>
+                    </tr>
+                </thead>
+    
+                <tbody id="leaderboard"></tbody>
+            </table>
+        </div>
     </div>
+    
 </body>
 <script src="leaderboard.js" type="module"></script>
 
